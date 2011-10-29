@@ -1,0 +1,5 @@
+package gravityshock
+
+class Map {
+
+}
