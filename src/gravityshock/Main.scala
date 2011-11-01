@@ -28,7 +28,7 @@ object Main extends ApplicationListener{
                 
     world = new World()
     var map = new Map()
-    map.load(world, "")
+    map.load(world, "data/level1.svg")
     var spaceship = new Spaceship()
     world.add(spaceship)
     spaceship.create()
