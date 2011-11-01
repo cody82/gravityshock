@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.glutils.IndexData;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.VertexData;
 import com.badlogic.gdx
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
+import com.badlogic.gdx.graphics.OrthographicCamera
 
 class Map {
   var world: World = _
@@ -35,7 +39,7 @@ class Map {
     fixture = body.createFixture(shape, 1)
     
     var gl = gdx.Gdx.graphics.isGL20Available();
-    if(gl) {
+    if(false) {
     
     var a = new graphics.VertexAttribute(graphics.VertexAttributes.Usage.Position, 3, "pos")
     mesh = new graphics.Mesh(true, 4, 4, a)
@@ -52,9 +56,22 @@ class Map {
                                         "}";  
     shader = new ShaderProgram(vertexShader, fragmentShader)
     } 
+    
+    //var gl1 = Gdx.graphics.getGL10()
+    //gl1.
   }
   
   def render() = {
-    mesh.render(shader, graphics.GL20.GL_LINE_STRIP)
+    //mesh.render(shader, graphics.GL20.GL_LINE_STRIP)
+    //var gl = Gdx.graphics.getGL10()
+    var cam = new OrthographicCamera(640, 480)
+    cam.update()
+    var sr = new ShapeRenderer()
+    sr.setProjectionMatrix(cam.combined)
+    
+    sr.begin(ShapeType.Line)
+    sr.setColor(1, 1, 0, 1)
+    sr.line(0f, 0f, 100f, 100f)
+    sr.end()
   }
 }
