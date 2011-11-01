@@ -4,12 +4,13 @@ import com.badlogic.gdx.physics.box2d
 import com.badlogic.gdx.math.Vector2
 
 class World() {
-  var b2world: box2d.World = new box2d.World(new Vector2(0, 9.81f), true)
+  var b2world: box2d.World = new box2d.World(new Vector2(0, -9.81f), true)
   var actors: Array[Actor] = new Array[Actor](0)
   var map: Map = _
   
   def add(actor: Actor) = {
     actors = actors :+ actor
+    actor.world = this
   }
   
   def dispose = {
@@ -22,5 +23,8 @@ class World() {
   
   def render() = {
     map.render()
+    for(a <- actors) {
+      a.render()
+    }
   }
 }

@@ -70,8 +70,13 @@ class Map {
     sr.setProjectionMatrix(cam.combined)
     
     sr.begin(ShapeType.Line)
+    
+    var array = Array(new Vector2(-100, -100), new Vector2(100, -100), new Vector2(100, 100), new Vector2(-100, 100))
     sr.setColor(1, 1, 0, 1)
-    sr.line(0f, 0f, 100f, 100f)
+    for(i <- 0 until array.length - 1) {
+      sr.line(array(i).x, array(i).y, array(i+1).x, array(i+1).y)
+    }
+    sr.line(array.last.x, array.last.y, array(0).x, array(0).y)
     sr.end()
   }
 }

@@ -16,4 +16,8 @@ class Actor {
 
   def create() = {
   }
+  
+  def render() = {
+    
+  }
 }
