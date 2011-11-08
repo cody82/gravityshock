@@ -46,11 +46,25 @@ class Map {
 
     for(p <- paths) {
       var d = p.attribute("d").get.text
-      var coords = d.split(' ').filter((x) => x.length > 1)
-      var array = coords.map((x) => {
-          var v = x.split(',').map(y => y.toFloat)
-          new Vector2(v(0)*0.1f, v(1)*0.1f)
-        })
+      var coords = d.split(' ')
+      var cmd = ' '
+      var array = new Array[Vector2](0)
+      var last = new Vector2(0,0)
+      
+      for(c <- coords) {
+        if(c.length <= 1) {
+          cmd = c.charAt(0)
+        }
+        else {
+          var v = c.split(',').map(y => y.toFloat)
+          var v2 = new Vector2(v(0), -v(1))
+          if(cmd.isLower){
+            v2 = v2 add last
+          }
+          last = v2
+          array = array :+ v2
+        }
+      }
       
       points = points :+ array
       var shape = new box2d.ChainShape()

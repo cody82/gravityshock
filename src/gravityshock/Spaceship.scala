@@ -27,6 +27,7 @@ class Spaceship extends Actor {
     sr.begin(ShapeType.Line)
     
     var pos = body.getPosition()
+    var rad = body.getAngle()
    
     var array = Array(new Vector2(pos.x-10, pos.y-10), new Vector2(pos.x+10, pos.y-10), new Vector2(pos.x+10, pos.y+10), new Vector2(pos.x-10, pos.y+10))
     sr.setColor(1, 1, 0, 1)
