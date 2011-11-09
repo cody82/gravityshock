@@ -13,8 +13,12 @@ class Spaceship extends Actor {
     Glue.setType(bdef, box2d.BodyDef.BodyType.DynamicBody)
     
     body = world.b2world.createBody(bdef)
-    shape = new box2d.CircleShape()
-    shape.setRadius(10)
+    //shape = new box2d.CircleShape()
+    //shape.setRadius(10)
+    var s = new box2d.PolygonShape()
+    shape = s
+    s.set(Array(new Vector2(0, 5), new Vector2(-10, -5), new Vector2(10, -5)))
+    
     fixture = body.createFixture(shape, 1)
   }
   
@@ -29,7 +33,10 @@ class Spaceship extends Actor {
     var pos = body.getPosition()
     var rad = body.getAngle()
    
-    var array = Array(new Vector2(pos.x-10, pos.y-10), new Vector2(pos.x+10, pos.y-10), new Vector2(pos.x+10, pos.y+10), new Vector2(pos.x-10, pos.y+10))
+    sr.translate(pos.x, pos.y, 0)
+    sr.rotate(0, 0, 1, rad*180f/math.Pi.toFloat)
+    
+    var array = Array(new Vector2(0, 5), new Vector2(10, -5), new Vector2(-10, -5))
     sr.setColor(1, 1, 0, 1)
     for(i <- 0 until array.length - 1) {
       sr.line(array(i).x, array(i).y, array(i+1).x, array(i+1).y)
