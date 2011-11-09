@@ -41,7 +41,9 @@ object Main extends ApplicationListener{
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
     world.render()
-    world.tick(0.01f)
+
+    var t = Gdx.graphics.getDeltaTime()
+    world.tick(t)
 //		spriteBatch.begin();
 //		spriteBatch.setColor(Color.WHITE);
 //		spriteBatch.draw(texture, centerX - texture.getWidth() / 2, centerY - texture.getHeight() / 2, 0, 0, texture.getWidth(),

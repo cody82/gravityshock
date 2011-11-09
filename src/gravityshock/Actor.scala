@@ -20,4 +20,8 @@ class Actor {
   def render() = {
     
   }
+  
+  
+  def tick(dtime: Float) = {
+  }
 }

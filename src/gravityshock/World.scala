@@ -2,6 +2,7 @@ package gravityshock
 
 import com.badlogic.gdx.physics.box2d
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.Gdx
 
 class World() {
   var b2world: box2d.World = new box2d.World(new Vector2(0, -9.81f), true)
@@ -19,6 +20,9 @@ class World() {
   
   def tick(dtime: Float) = {
     b2world.step(dtime, 1, 1)
+    for(a <- actors) {
+      a.tick(dtime)
+    }
   }
   
   def render() = {
