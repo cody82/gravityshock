@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 object Main extends ApplicationListener{
 
@@ -19,7 +20,10 @@ object Main extends ApplicationListener{
         
         var world: World = _
   
-  
+      var cam: OrthographicCamera = _
+
+      var player: Spaceship = _
+      
 	override def create () {
 		font = new BitmapFont()
 		font.setColor(Color.RED)
@@ -29,9 +33,15 @@ object Main extends ApplicationListener{
     world = new World()
     var map = new Map()
     map.load(world, "data/level1.svg")
-    var spaceship = new Spaceship()
-    world.add(spaceship)
-    spaceship.create()
+    player = new Spaceship()
+    world.add(player)
+    player.create()
+    
+    //var musicfile = Gdx.files.internal("data/2ND_PM.ogg")
+    //var music = Gdx.audio.newMusic(musicfile)
+    //music.play
+    
+    cam = new OrthographicCamera(640, 480)
 	}
         
         override def render () {
@@ -39,11 +49,16 @@ object Main extends ApplicationListener{
 		//var centerY = Gdx.graphics.getHeight() / 2;
 
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-    world.render()
+    cam.update()
+    world.render(cam)
 
     var t = Gdx.graphics.getDeltaTime()
     world.tick(t)
+    
+    var v = player.body.getPosition()
+    cam.position.x = v.x
+    cam.position.y = v.y
+    
 //		spriteBatch.begin();
 //		spriteBatch.setColor(Color.WHITE);
 //		spriteBatch.draw(texture, centerX - texture.getWidth() / 2, centerY - texture.getHeight() / 2, 0, 0, texture.getWidth(),

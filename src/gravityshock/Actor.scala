@@ -1,6 +1,7 @@
 package gravityshock
 
 import com.badlogic.gdx.physics.box2d
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 class Actor {
   var body: box2d.Body = _
@@ -17,7 +18,7 @@ class Actor {
   def create() = {
   }
   
-  def render() = {
+  def render(cam: OrthographicCamera) = {
     
   }
   

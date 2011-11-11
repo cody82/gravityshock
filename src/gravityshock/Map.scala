@@ -97,11 +97,9 @@ class Map {
     //gl1.
   }
   
-  def render() = {
+  def render(cam: OrthographicCamera) = {
     //mesh.render(shader, graphics.GL20.GL_LINE_STRIP)
     //var gl = Gdx.graphics.getGL10()
-    var cam = new OrthographicCamera(640, 480)
-    cam.update()
     var sr = new ShapeRenderer()
     sr.setProjectionMatrix(cam.combined)
     

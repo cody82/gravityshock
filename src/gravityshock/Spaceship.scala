@@ -35,10 +35,8 @@ class Spaceship extends Actor {
     }
   }
   
-  override def render() = {
+  override def render(cam: OrthographicCamera) = {
         
-    var cam = new OrthographicCamera(640, 480)
-    cam.update()
     var sr = new ShapeRenderer()
     sr.setProjectionMatrix(cam.combined)
     

@@ -3,6 +3,7 @@ package gravityshock
 import com.badlogic.gdx.physics.box2d
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 class World() {
   var b2world: box2d.World = new box2d.World(new Vector2(0, -9.81f), true)
@@ -25,10 +26,10 @@ class World() {
     }
   }
   
-  def render() = {
-    map.render()
+  def render(cam: OrthographicCamera) = {
+    map.render(cam)
     for(a <- actors) {
-      a.render()
+      a.render(cam)
     }
   }
 }
