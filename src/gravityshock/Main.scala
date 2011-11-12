@@ -25,14 +25,15 @@ object Main extends ApplicationListener{
       var player: Spaceship = _
       
 	override def create () {
+  	  return
 		font = new BitmapFont()
 		font.setColor(Color.RED)
-		texture = new Texture(Gdx.files.internal("data/badlogic.jpg"))
+		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
 		spriteBatch = new SpriteBatch()
                 
     world = new World()
     var map = new Map()
-    map.load(world, "data/level1.svg")
+    map.load(world, "level1.svg")
     player = new Spaceship()
     world.add(player)
     player.create()
@@ -45,6 +46,7 @@ object Main extends ApplicationListener{
 	}
         
         override def render () {
+  	  return
 		//var centerX = Gdx.graphics.getWidth() / 2;
 		//var centerY = Gdx.graphics.getHeight() / 2;
 
@@ -68,6 +70,7 @@ object Main extends ApplicationListener{
 	}
         
   	override def resize (width: Int, height: Int) {
+  	  return
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
 	}
 
