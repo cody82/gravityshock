@@ -1,4 +1,4 @@
-package gravityshock
+package cody.gravityshock
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
