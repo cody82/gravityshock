@@ -1,0 +1,2 @@
+#!/bin/sh
+java -cp bin/:libs/gdx.jar:libs/gdx-natives.jar:libs/gdx-backend-jogl.jar:libs/gdx-backend-jogl-natives.jar com.badlogic.gdx.helloworld.HelloWorldDesktop
