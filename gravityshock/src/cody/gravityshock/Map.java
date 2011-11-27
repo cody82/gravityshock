@@ -28,6 +28,7 @@ import org.xml.sax.SAXException;
 public class Map {
 	World world;
 	ArrayList<ChainShape> shapes;
+	ArrayList<Color> colors;
 	Body body;
 	ArrayList<Fixture> fixtures;
 	ArrayList<ArrayList<Vector2>> points;
@@ -44,6 +45,7 @@ public class Map {
 		points = new ArrayList<ArrayList<Vector2>>();
 		fixtures = new ArrayList<Fixture>();
 		shapes = new ArrayList<ChainShape>();
+		colors = new ArrayList<Color>();
 		
 		BodyDef bdef = new BodyDef();
 		bdef.type = BodyDef.BodyType.StaticBody;
@@ -78,10 +80,24 @@ public class Map {
 		for(int i=0;i<list.getLength();++i){
 			Node n=list.item(i);
 			String d = n.getAttributes().getNamedItem("d").getTextContent();
+			String style = n.getAttributes().getNamedItem("style").getTextContent();
 			String[] split = d.split(" ");
 			char cmd = ' ';
 			Vector2 last = new Vector2(0,0);
 			ArrayList<Vector2> array = new ArrayList<Vector2>();
+			Color color = new Color();
+			color.a = 1;
+			
+			int stroke = style.indexOf("stroke:");
+			if(stroke >= 0){
+				String c = style.substring(stroke + 8, stroke + 8 + 6);
+				int r = Integer.parseInt(c.substring(0, 2), 16);
+				int g = Integer.parseInt(c.substring(2, 4), 16);
+				int b = Integer.parseInt(c.substring(4, 6), 16);
+				color.r = ((float)r)/255f;
+				color.g = ((float)g)/255f;
+				color.b = ((float)b)/255f;
+			}
 			
 			for(String s : split){
 				if(s.length()<=1){
@@ -97,13 +113,26 @@ public class Map {
 					array.add(v2);
 				}
 			}
-			
+			colors.add(color);
 			points.add(array);
 			ChainShape shape = new ChainShape();
 			shape.createLoop(array.toArray(new Vector2[0]));
 			shapes.add(shape);
 			Fixture fixture = body.createFixture(shape, 1);
 			fixtures.add(fixture);
+		}
+		
+
+		list = doc.getDocumentElement().getElementsByTagName("tspan");
+		for(int i=0;i<list.getLength();++i){
+			Node n=list.item(i);
+			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
+			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
+			String text = n.getTextContent();
+			if(text.equals("pickup")){
+				Pickup pickup = new Pickup(world);
+				pickup.body.setTransform(x, -y, 0);
+			}
 		}
 	}
 	
@@ -115,8 +144,10 @@ public class Map {
 	    
 	      sr.begin(ShapeType.Line);
 	    
-	      sr.setColor(1, 1, 0, 1);
-	    for(ArrayList<Vector2> array : points) {
+	    for(int j = 0; j < points.size(); ++j) {
+	    	ArrayList<Vector2> array = points.get(j);
+	    	Color c = colors.get(j);
+		      sr.setColor(c.r, c.g, c.b, c.a);
 	      for(int i = 0; i < array.size() - 1; ++i) {
 	        sr.line(array.get(i).x, array.get(i).y, array.get(i+1).x, array.get(i+1).y);
 	      }

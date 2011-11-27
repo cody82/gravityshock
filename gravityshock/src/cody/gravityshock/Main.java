@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 
 public class Main implements ApplicationListener {
@@ -28,18 +30,18 @@ public class Main implements ApplicationListener {
 		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
 		spriteBatch = new SpriteBatch();
                 
-    world = new World();
-    Map map = new Map();
-    map.load(world, "data/level1.svg");
-    player = new Spaceship();
-    world.add(player);
-    player.create();
+		world = new World();
+		Map map = new Map();
+		map.load(world, "data/level1.svg");
+		player = new Spaceship();
+		world.add(player);
+		player.create();
     
-    //var musicfile = Gdx.files.internal("data/2ND_PM.ogg")
-    //var music = Gdx.audio.newMusic(musicfile)
-    //music.play
+		//var musicfile = Gdx.files.internal("data/2ND_PM.ogg")
+		//var music = Gdx.audio.newMusic(musicfile)
+		//music.play
     
-    cam = new OrthographicCamera(640, 480);
+		cam = new OrthographicCamera(640, 480);
 	}
 
 	@Override
@@ -48,20 +50,25 @@ public class Main implements ApplicationListener {
 		//var centerY = Gdx.graphics.getHeight() / 2;
 
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
-    cam.update();
-    world.render(cam);
+		cam.update();
+		world.render(cam);
 
-    float t = Gdx.graphics.getDeltaTime();
-    world.tick(t);
+		float t = Gdx.graphics.getDeltaTime();
+		world.tick(t);
     
-    //Vector2 v = player.body.getPosition();
-    //cam.position.x = v.x;
-    //cam.position.y = v.y;
+		Vector2 v = player.body.getPosition();
+		cam.position.x = v.x;
+		cam.position.y = v.y;
     
+		int fps = (int)(1f/t);
+		spriteBatch.begin();
+		font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, 20);
+		spriteBatch.end();
 	}
 
 	@Override
 	public void resize (int width, int height) {
+	    cam.setToOrtho(false, width, height);
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
 	}
 

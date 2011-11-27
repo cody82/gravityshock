@@ -1,19 +1,20 @@
 package cody.gravityshock;
 
-import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
-public class Spaceship extends Actor {
+public class Pickup extends Actor{
 
-	public Spaceship(World _world) {
+	public Pickup(World _world) {
 		super(_world);
 	}
-	public Spaceship() {
+	public Pickup() {
 	}
 	
 	public void create() {
@@ -25,21 +26,12 @@ public class Spaceship extends Actor {
 	    //shape.setRadius(10)
 	    PolygonShape s = new PolygonShape();
 	    shape = s;
-	    s.set(new Vector2[]{new Vector2(0, 10), new Vector2(-10, -5), new Vector2(10, -5)});
+	    s.set(new Vector2[]{new Vector2(-5, 5), new Vector2(-5, -5), new Vector2(5, -5), new Vector2(5, 5)});
 	    
 	    fixture = body.createFixture(shape, 0.1f);
 	  }
 	  
 	  void tick(float dtime) {
-	    if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-	      body.applyForceToCenter(body.getWorldVector(new Vector2(0,1000)));
-	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-	      body.applyTorque(1000);
-	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-	      body.applyTorque(-1000);
-	    }
 	  }
 	  
 	  void render(OrthographicCamera cam) {
@@ -54,9 +46,9 @@ public class Spaceship extends Actor {
 	   
 	    sr.translate(pos.x, pos.y, 0);
 	    sr.rotate(0, 0, 1, rad*180f/(float)Math.PI);
-	    Vector2[] array = new Vector2[]{new Vector2(0, 10), new Vector2(10, -5), new Vector2(-10, -5)};
+	    Vector2[] array = new Vector2[]{new Vector2(-5, 5), new Vector2(-5, -5), new Vector2(5, -5), new Vector2(5, 5)};
 
-	    sr.setColor(1, 1, 1, 1);
+	    sr.setColor(1, 1, 0, 1);
 	    for(int i =0; i < array.length - 1; ++i) {
 	      sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
 	    }
