@@ -26,7 +26,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.94236332"
      inkscape:cx="-40.013599"
-     inkscape:cy="1171.2938"
+     inkscape:cy="955.45683"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -52,59 +52,75 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:none;stroke:#d45500;stroke-width:0.74434358000000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 227.60015,-279.48051 16.21706,114.61022 -3.92001,119.993454 -115.64014,23.07566 25.48003,-115.378324 -60.760074,-80.76482 -127.400161,66.91942 -25.480028,-55.38158 -90.160117,-4.61514 -56.84007,106.14805 25.48004,57.689162 -141.12019,-23.075665 -19.60002,108.455624 129.36016,62.304289 L -113.06895,219.7252 6.9883586,171.75798 161.33139,226.6479 326.13731,-44.876836 l 44.31998,-203.175104 -36.17158,-122.44302 -97.14285,-137.14286 -414.28572,11.42857 -128.57143,-74.28571 102.85715,-100 159.999997,-5.71429 25.714286,77.14286 168.571427,2.85714 31.42857,-77.14285 91.42857,0 L 382.85714,-824.78067 360,-961.92353 l -100,-51.42857 -288.571429,5.7143 -357.142861,71.42855 -31.42857,120 20,28.57143 54.28572,-28.57143 22.85714,-37.14285 48.57143,0 17.14286,20 2.85714,42.85714 -34.28572,57.14286 -111.42857,88.57143 -25.71428,65.71428 -22.85715,165.71429 71.42858,288.57143 125.71428,2.85714 57.14286,-122.85714 L -20,-241.92353 2.8571429,-219.06639 105.71429,-256.20925 z"
+       style="fill:none;stroke:#d45500;stroke-width:0.74434358px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 214.86621,-380.29089 16.21706,114.61022 -3.92001,119.99346 -115.64014,23.07566 25.48003,-115.37833 -60.760076,-80.76482 -127.400161,66.91942 -25.480028,-55.38158 -90.160115,-4.61514 -56.84007,106.14805 25.48004,57.68917 -141.12019,-23.07567 -19.60002,108.455626 129.36016,62.30428866 L -125.80289,118.91482 -5.7455835,70.947605 148.59745,125.83752 l 164.80592,-271.52473 44.31998,-203.17511 -36.17158,-122.44302 -97.14285,-137.14286 -414.28572,11.42857 -128.57143,-74.28571 102.85715,-100 159.999995,-5.71429 25.714286,77.14286 168.571429,2.85714 31.42857,-77.14285 91.42857,0 108.57143,-151.42857 -22.85714,-137.14285 -100,-51.4286 -288.571431,5.7143 -357.142859,71.4286 -31.42857,119.99997 20,28.57143 54.28572,-28.57143 22.85714,-37.14285 48.57143,0 17.14286,20 2.85714,42.85714 -34.28572,57.14286 -111.42857,88.57143 -25.71428,65.71428 -22.85715,165.71429 71.42858,288.57143 125.71428,2.85714 57.14286,-122.85714 171.428568,2.85714 22.8571428,22.85714 102.8571472,-37.14286 z"
        id="path3002"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccccccccccc" />
     <path
        style="fill:none;stroke:#008000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m -144.31801,-97.937256 20.16207,25.467884 38.201831,-1.061162 18.039751,-24.406722 z"
+       d="m -157.05195,-198.74763 20.16207,25.46788 38.201829,-1.06116 18.039751,-24.40672 z"
        id="path2985"
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
        style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-110.6717"
-       y="-115.96443"
+       x="-123.40564"
+       y="-216.77481"
        id="text2987"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2989"
-         x="-110.6717"
-         y="-115.96443">pickup</tspan></text>
+         x="-123.40564"
+         y="-216.77481">pickup</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-293.50217"
-       y="-883.79248"
+       x="-306.23611"
+       y="-984.60284"
        id="text2987-4"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2989-1"
-         x="-293.50217"
-         y="-883.79248">pickup</tspan></text>
+         x="-306.23611"
+         y="-984.60284">pickup</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="67.057114"
-       y="-625.68176"
+       x="54.32317"
+       y="-726.49213"
        id="text2987-8"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2989-8"
-         x="67.057114"
-         y="-625.68176">pickup</tspan></text>
+         x="54.32317"
+         y="-726.49213">pickup</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="70.29953"
-       y="-825.94678"
+       x="57.565586"
+       y="-926.75714"
        id="text2987-8-9"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="70.29953"
-         y="-825.94678"
+         x="57.565586"
+         y="-926.75714"
          id="tspan3011">enemy</tspan></text>
+    <path
+       style="fill:none;stroke:#00ffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 6.3669709,71.848635 0,-32.89601 24.4067231,0 0,-8.4893 -61.547387,0 0,7.42813 26.5290457,0 1.0611618,30.7737 z"
+       id="path2992"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="1.3240098"
+       y="25.105045"
+       id="text2987-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2989-9"
+         x="1.3240098"
+         y="25.105045">home</tspan></text>
   </g>
 </svg>

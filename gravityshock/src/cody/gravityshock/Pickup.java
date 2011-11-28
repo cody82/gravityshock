@@ -10,7 +10,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 public class Pickup extends Actor{
-
+	public boolean returned = false;
+	
 	public Pickup(World _world) {
 		super(_world);
 	}

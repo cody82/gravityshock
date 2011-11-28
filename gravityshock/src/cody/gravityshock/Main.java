@@ -63,6 +63,7 @@ public class Main implements ApplicationListener {
 		int fps = (int)(1f/t);
 		spriteBatch.begin();
 		font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, 20);
+		font.draw(spriteBatch, "score: " + Integer.toString(player.score), 20, 40);
 		spriteBatch.end();
 	}
 

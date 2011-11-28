@@ -133,6 +133,10 @@ public class Map {
 				Pickup pickup = new Pickup(world);
 				pickup.body.setTransform(x, -y, 0);
 			}
+			else if(text.equals("home")){
+				Home home = new Home(world);
+				home.body.setTransform(x, -y, 0);
+			}
 		}
 	}
 	
