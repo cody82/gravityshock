@@ -27,6 +27,7 @@ public class Projectile extends Actor{
 	    shape = new CircleShape();
 	    shape.setRadius(1);
 	    fixture = body.createFixture(shape, 1f);
+		fixture.setRestitution(0.5f);
 	  }
 	  
 	  void tick(float dtime) {

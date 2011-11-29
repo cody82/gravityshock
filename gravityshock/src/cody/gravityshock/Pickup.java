@@ -30,6 +30,7 @@ public class Pickup extends Actor{
 	    s.set(new Vector2[]{new Vector2(-5, 5), new Vector2(-5, -5), new Vector2(5, -5), new Vector2(5, 5)});
 	    
 	    fixture = body.createFixture(shape, 0.1f);
+		fixture.setRestitution(0.3f);
 	  }
 	  
 	  void tick(float dtime) {

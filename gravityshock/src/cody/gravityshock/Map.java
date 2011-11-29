@@ -136,6 +136,7 @@ public class Map {
 			shape.createLoop(array.toArray(new Vector2[0]));
 			shapes.add(shape);
 			Fixture fixture = body.createFixture(shape, 1);
+			fixture.setRestitution(0.2f);
 			fixtures.add(fixture);
 			}
 		}

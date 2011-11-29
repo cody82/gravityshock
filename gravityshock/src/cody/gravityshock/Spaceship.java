@@ -30,14 +30,20 @@ public class Spaceship extends Actor {
 	    s.set(new Vector2[]{new Vector2(0, 10), new Vector2(-10, -5), new Vector2(10, -5)});
 	    
 	    fixture = body.createFixture(shape, 0.1f);
+		fixture.setRestitution(0.5f);
 	  }
 
 	  float shoot_time;
+	  boolean thrust;
 	  void tick(float dtime) {
 		  shoot_time+=dtime;
 	    if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+	    	thrust=true;
 	      body.applyForceToCenter(body.getWorldVector(new Vector2(0,1000)));
 	    }
+	    else
+	    	thrust = false;
+	    
 	    float omega = 0;
 	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 	    	omega+=3;
@@ -118,7 +124,13 @@ public class Spaceship extends Actor {
 			  sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
 		  }
 		  sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
+		  
 		  sr.end();
-
+		  if(thrust){
+			  sr.begin(ShapeType.FilledRectangle);
+			  sr.setColor(1, 1, 0, 0.5f);
+			  sr.filledRect(-5, -10, 10, 5);
+			  sr.end();
+		  }
 	  }
 }

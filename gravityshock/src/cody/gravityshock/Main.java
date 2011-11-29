@@ -26,7 +26,7 @@ public class Main implements ApplicationListener {
 	@Override
 	public void create () {
 		font = new BitmapFont();
-		font.setColor(Color.RED);
+		font.setColor(Color.WHITE);
 		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
 		spriteBatch = new SpriteBatch();
                 
@@ -65,6 +65,7 @@ public class Main implements ApplicationListener {
 		spriteBatch.begin();
 		font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, 20);
 		font.draw(spriteBatch, "score: " + Integer.toString(player.score), 20, 40);
+		font.draw(spriteBatch, "speed: " + Integer.toString((int)player.body.getLinearVelocity().len()) + "m/s", 20, 60);
 		spriteBatch.end();
 	}
 
