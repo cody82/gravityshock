@@ -23,7 +23,6 @@ public class Projectile extends Actor{
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.DynamicBody;
 	    bdef.bullet = true;
-	    
 	    body = world.b2world.createBody(bdef);
 	    shape = new CircleShape();
 	    shape.setRadius(1);

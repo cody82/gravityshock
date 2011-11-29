@@ -26,11 +26,22 @@ public class World {
 	    b2world.dispose();
 	  }
 	  
+	  float last;
 	  public void tick(float dtime) {
-	    b2world.step(dtime, 1, 1);
-	    for(Actor a : (ArrayList<Actor>)actors.clone()) {
-	      a.tick(dtime);
-	    }
+		  float timestep = 1f/120f;
+		  dtime+=last;
+		  if(dtime<timestep)
+			  return;
+
+		  float t = 0;
+		  while(t + timestep < dtime){
+			  b2world.step(timestep, 1, 1);
+			  for(Actor a : (ArrayList<Actor>)actors.clone()) {
+				  a.tick(timestep);
+			  }
+			  t += timestep;
+		  }
+		  last = dtime - t;
 	  }
 	  
 	  public void render(OrthographicCamera cam) {

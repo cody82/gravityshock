@@ -22,6 +22,7 @@ public class Spaceship extends Actor {
 	    bdef.type = BodyDef.BodyType.DynamicBody;
 	    
 	    body = world.b2world.createBody(bdef);
+	    //body.setLinearDamping(1);
 	    //shape = new box2d.CircleShape()
 	    //shape.setRadius(10)
 	    PolygonShape s = new PolygonShape();
@@ -37,12 +38,15 @@ public class Spaceship extends Actor {
 	    if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 	      body.applyForceToCenter(body.getWorldVector(new Vector2(0,1000)));
 	    }
+	    float omega = 0;
 	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-	      body.applyTorque(1000);
+	    	omega+=3;
 	    }
 	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-	      body.applyTorque(-1000);
+	    	omega-=3;
 	    }
+	    body.setAngularVelocity(omega);
+	    
 	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
 	    	if(shoot_time > 0.1f){
 	    		shoot();

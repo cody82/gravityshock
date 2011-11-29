@@ -49,11 +49,12 @@ public class Main implements ApplicationListener {
 		//var centerX = Gdx.graphics.getWidth() / 2;
 		//var centerY = Gdx.graphics.getHeight() / 2;
 
+		float t = Gdx.graphics.getDeltaTime();
+		
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 		cam.update();
 		world.render(cam);
 
-		float t = Gdx.graphics.getDeltaTime();
 		world.tick(t);
     
 		Vector2 v = player.body.getPosition();
