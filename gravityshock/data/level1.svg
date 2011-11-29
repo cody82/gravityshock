@@ -26,7 +26,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.94236332"
      inkscape:cx="-40.013599"
-     inkscape:cy="955.45683"
+     inkscape:cy="1464.8145"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -122,5 +122,15 @@
          id="tspan2989-9"
          x="1.3240098"
          y="25.105045">home</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 56.241578,-909.72607 -180.397518,64.73087 -217.53817,117.78897 -13.79511,129.46174 198.43727,145.37918 154.9296263,-38.20183 200.5595937,15.91743 84.89294,134.76755 -24.40672,216.47702 -276.963241,44.568795 -185.703319,-6.366971"
+       id="path3015"
+       inkscape:connector-curvature="0">
+      <desc
+         id="desc3019">speed=10</desc>
+      <title
+         id="title3017">enemy</title>
+    </path>
   </g>
 </svg>

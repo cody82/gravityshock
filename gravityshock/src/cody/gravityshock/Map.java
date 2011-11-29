@@ -81,12 +81,23 @@ public class Map {
 			Node n=list.item(i);
 			String d = n.getAttributes().getNamedItem("d").getTextContent();
 			String style = n.getAttributes().getNamedItem("style").getTextContent();
+			
 			String[] split = d.split(" ");
 			char cmd = ' ';
 			Vector2 last = new Vector2(0,0);
 			ArrayList<Vector2> array = new ArrayList<Vector2>();
 			Color color = new Color();
 			color.a = 1;
+			
+			String type = "";
+			NodeList children = n.getChildNodes();
+			for(int k=0;k<children.getLength();++k){
+				Node n2 = children.item(k);
+				if(n2.getNodeName().equals("title")){
+					type = n2.getTextContent();
+					break;
+				}
+			}
 			
 			int stroke = style.indexOf("stroke:");
 			if(stroke >= 0){
@@ -113,6 +124,12 @@ public class Map {
 					array.add(v2);
 				}
 			}
+			
+			if(type.equals("enemy")){
+				Enemy enemy = new Enemy(world, array);
+				enemy.body.setTransform(array.get(0).x, array.get(0).y, 0);
+			}
+			else {
 			colors.add(color);
 			points.add(array);
 			ChainShape shape = new ChainShape();
@@ -120,6 +137,7 @@ public class Map {
 			shapes.add(shape);
 			Fixture fixture = body.createFixture(shape, 1);
 			fixtures.add(fixture);
+			}
 		}
 		
 
