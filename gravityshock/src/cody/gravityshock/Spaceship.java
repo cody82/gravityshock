@@ -30,8 +30,10 @@ public class Spaceship extends Actor {
 	    
 	    fixture = body.createFixture(shape, 0.1f);
 	  }
-	  
+
+	  float shoot_time;
 	  void tick(float dtime) {
+		  shoot_time+=dtime;
 	    if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 	      body.applyForceToCenter(body.getWorldVector(new Vector2(0,1000)));
 	    }
@@ -40,6 +42,12 @@ public class Spaceship extends Actor {
 	    }
 	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 	      body.applyTorque(-1000);
+	    }
+	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+	    	if(shoot_time > 0.1f){
+	    		shoot();
+	    		shoot_time = 0;
+	    	}
 	    }
 	    
 	    for(Actor a : world.actors) {
@@ -82,6 +90,11 @@ public class Spaceship extends Actor {
 		  score++;
 	  }
 	  
+	  void shoot(){
+		  Projectile p = new Projectile(world);
+		  p.body.setTransform(body.getWorldPoint(new Vector2(0,15)), body.getAngle());
+		  p.body.setLinearVelocity(body.getWorldVector(new Vector2(0,1000)));
+	  }
 	  void render(OrthographicCamera cam) {
 	        
 		  ShapeRenderer sr = new ShapeRenderer();

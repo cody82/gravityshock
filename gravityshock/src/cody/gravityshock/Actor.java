@@ -30,4 +30,8 @@ public abstract class Actor {
 			  void tick(float dtime) {
 			  }
 
+			  public void dispose(){
+				  world.b2world.destroyBody(body);
+				  body = null;
+			  }
 }

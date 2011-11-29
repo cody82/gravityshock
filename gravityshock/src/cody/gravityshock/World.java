@@ -28,7 +28,7 @@ public class World {
 	  
 	  public void tick(float dtime) {
 	    b2world.step(dtime, 1, 1);
-	    for(Actor a : actors) {
+	    for(Actor a : (ArrayList<Actor>)actors.clone()) {
 	      a.tick(dtime);
 	    }
 	  }
