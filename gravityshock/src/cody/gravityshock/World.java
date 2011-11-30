@@ -30,8 +30,10 @@ public class World {
 	  public void tick(float dtime) {
 		  float timestep = 1f/120f;
 		  dtime+=last;
-		  if(dtime<timestep)
+		  if(dtime<timestep){
+			  last = dtime;
 			  return;
+		  }
 
 		  float t = 0;
 		  while(t + timestep < dtime){
