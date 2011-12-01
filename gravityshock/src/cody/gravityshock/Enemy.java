@@ -37,7 +37,7 @@ public class Enemy extends Actor{
 	    //shape = new box2d.CircleShape()
 	    //shape.setRadius(10)
 	    
-	    for(int i = 0; i < svg.pathCount() - 2;++i) {
+	    for(int i = 0; i < svg.pathCount();++i) {
 	    	PolygonShape s = new PolygonShape();
 	    	shape = s;
 	    	s.set(svg.getPath(i).points);
