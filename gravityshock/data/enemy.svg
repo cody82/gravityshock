@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -12,7 +13,7 @@
    height="297mm"
    id="svg4798"
    version="1.1"
-   inkscape:version="0.46"
+   inkscape:version="0.48.2 r9819"
    sodipodi:docname="enemy.svg"
    sodipodi:version="0.32"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
@@ -41,8 +42,8 @@
      showgrid="false"
      inkscape:window-width="1600"
      inkscape:window-height="844"
-     inkscape:window-x="22"
-     inkscape:window-y="24"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata4">
@@ -67,8 +68,21 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M -32.056213,1.0113119 -32.520796,27.957114 -19.512477,1.0113119 z"
+       d="m -32.056213,1.0113119 0,20.9062261 12.543736,-20.9062261 z"
        id="path4815"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 23.229139,1.4759188 36.237457,23.311316 35.772875,1.4759188 z"
+       id="path4815-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -17.189563,1.4759188 0.46458255,10.302992 19.97706,1.9405015 z"
+       id="path4815-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>
