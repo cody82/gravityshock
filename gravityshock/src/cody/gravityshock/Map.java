@@ -177,6 +177,6 @@ public class Map {
 	      sr.line(array.get(array.size()-1).x, array.get(array.size()-1).y, array.get(0).x, array.get(0).y);
 	    }
 	      sr.end();
-		
+	      sr.dispose();
 	}
 }

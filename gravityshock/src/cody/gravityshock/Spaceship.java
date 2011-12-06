@@ -132,5 +132,6 @@ public class Spaceship extends Actor {
 			  sr.filledRect(-5, -10, 10, 5);
 			  sr.end();
 		  }
+		  sr.dispose();
 	  }
 }

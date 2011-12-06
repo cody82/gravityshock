@@ -85,6 +85,6 @@ public class Enemy extends Actor{
 	    	sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
 	    }
 	    sr.end();
-
+	    sr.dispose();
 	  }
 }
