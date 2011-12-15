@@ -137,6 +137,7 @@ public class Map {
 			shapes.add(shape);
 			Fixture fixture = body.createFixture(shape, 1);
 			fixture.setRestitution(0.2f);
+			fixture.setUserData(this);
 			fixtures.add(fixture);
 			}
 		}

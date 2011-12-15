@@ -17,6 +17,17 @@ public class Spaceship extends Actor {
 	public Spaceship() {
 	}
 	
+	public int health = 100;
+	
+	public void damage() {
+		if(health <= 0)
+			return;
+		health -= 10;
+		if(health <= 0) {
+			  world.actors.remove(this);
+			  dispose();
+		}
+	}
 	public void create() {
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.DynamicBody;
@@ -31,6 +42,7 @@ public class Spaceship extends Actor {
 	    
 	    fixture = body.createFixture(shape, 0.1f);
 		fixture.setRestitution(0.5f);
+		fixture.setUserData(this);
 	  }
 
 	  float shoot_time;

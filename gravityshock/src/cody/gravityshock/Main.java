@@ -46,8 +46,6 @@ public class Main implements ApplicationListener {
 
 	@Override
 	public void render () {
-		//var centerX = Gdx.graphics.getWidth() / 2;
-		//var centerY = Gdx.graphics.getHeight() / 2;
 
 		float t = Gdx.graphics.getDeltaTime();
 		
@@ -57,6 +55,12 @@ public class Main implements ApplicationListener {
 
 		world.tick(t);
     
+		if(player.health <= 0) {
+			spriteBatch.begin();
+			font.draw(spriteBatch, "GAME OVER", Gdx.graphics.getWidth()/2 - font.getSpaceWidth()*9, Gdx.graphics.getHeight()/2 + font.getLineHeight()/2);
+			spriteBatch.end();
+		}
+		else {
 		Vector2 v = player.body.getPosition();
 		cam.position.x = v.x;
 		cam.position.y = v.y;
@@ -66,7 +70,9 @@ public class Main implements ApplicationListener {
 		font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, 20);
 		font.draw(spriteBatch, "score: " + Integer.toString(player.score), 20, 40);
 		font.draw(spriteBatch, "speed: " + Integer.toString((int)player.body.getLinearVelocity().len()) + "m/s", 20, 60);
+		font.draw(spriteBatch, "health: " + Integer.toString(player.health) + "%", 20, 80);
 		spriteBatch.end();
+		}
 	}
 
 	@Override
