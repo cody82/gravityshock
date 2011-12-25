@@ -1,5 +1,8 @@
 package cody.gravityshock;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import com.gemserk.util.ScreenshotSaver;
 
 public class Main implements ApplicationListener {
 	SpriteBatch spriteBatch;
@@ -26,6 +30,9 @@ public class Main implements ApplicationListener {
     
     int lifes = 5;
     int level = 0;
+    
+    boolean record = false;
+    int frame = 1;
     
     void createPlayer(){
     	Spaceship oldplayer = player;
@@ -52,7 +59,7 @@ public class Main implements ApplicationListener {
 		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
 		spriteBatch = new SpriteBatch();
                 
-    
+		
 		//var musicfile = Gdx.files.internal("data/2ND_PM.ogg")
 		//var music = Gdx.audio.newMusic(musicfile)
 		//music.play
@@ -66,12 +73,17 @@ public class Main implements ApplicationListener {
 	public void render () {
 
 		float t = Gdx.graphics.getDeltaTime();
+		if(record) {
+			// 30 FPS
+			t = 1f/30f;
+		}
 		
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Gdx.graphics.getGL10().glEnable(GL10.GL_BLEND);
 		cam.update();
 		world.render(cam);
 
+		
 		world.tick(t);
 		map.tick(t);
     
@@ -105,6 +117,17 @@ public class Main implements ApplicationListener {
 			font.draw(spriteBatch, "fuel: " + Integer.toString((int)player.fuel), 20, 140);
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, 160);
 			spriteBatch.end();
+		}
+
+		if(record) {
+			
+		try {
+			File f = new File(String.format("screen%06d.png", frame++));
+			ScreenshotSaver.saveScreenshot(f);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 	}
 
