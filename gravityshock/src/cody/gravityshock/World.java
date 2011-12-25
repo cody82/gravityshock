@@ -13,13 +13,21 @@ public class World implements ContactListener {
 	ArrayList<Actor> actors;
 	Map map;
 	  
-	ArrayList<Spaceship> collisions;
+	public class CollisionInfo {
+		public CollisionInfo(Spaceship _ship, Vector2 _pos) {
+			ship = _ship;
+			pos = _pos;
+		}
+		public Spaceship ship;
+		public Vector2 pos;
+	}
+	ArrayList<CollisionInfo> collisions;
 	
 	  public World(){
 		  b2world = new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -9.81f), true);
 		  b2world.setContactListener(this);
 		  actors = new ArrayList<Actor>();
-		  collisions = new ArrayList<Spaceship>();
+		  collisions = new ArrayList<CollisionInfo>();
 	  }
 	  
 	  public void add(Actor actor) {
@@ -46,7 +54,7 @@ public class World implements ContactListener {
 			  for(Actor a : (ArrayList<Actor>)actors.clone()) {
 				  a.tick(timestep);
 			  }
-			  for(Spaceship s : collisions) {
+			  for(CollisionInfo s : collisions) {
 				  OnCollide(s);
 			  }
 			  collisions.clear();
@@ -62,8 +70,8 @@ public class World implements ContactListener {
 	    }
 	  }
 
-	  void OnCollide(Spaceship s) {
-		  s.damage();
+	  void OnCollide(CollisionInfo s) {
+		  s.ship.damage(s);
 	  }
 	@Override
 	public void beginContact(Contact contact) {
@@ -77,11 +85,11 @@ public class World implements ContactListener {
 			System.out.println(o1.getClass().getName() + " | " + o2.getClass().getName());
 			if(o1 instanceof Spaceship) {
 				if(o2 instanceof Map)
-					collisions.add((Spaceship)o1);
+					collisions.add(new CollisionInfo((Spaceship)o1, ((Spaceship) o1).body.getPosition()));
 			}
 			if(o2 instanceof Spaceship) {
 				if(o1 instanceof Map)
-					collisions.add((Spaceship)o2);
+					collisions.add(new CollisionInfo((Spaceship)o2, ((Spaceship) o2).body.getPosition()));
 			}
 		}
 	}

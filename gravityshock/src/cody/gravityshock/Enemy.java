@@ -18,7 +18,7 @@ public class Enemy extends Actor{
 	float path_pos = 0;
 	float path_speed = 10;
 	
-	Svg svg;
+	static Svg svg;
 	
 	public Enemy(World _world, ArrayList<Vector2> _path) {
 		super(_world);
@@ -28,7 +28,8 @@ public class Enemy extends Actor{
 	}
 	
 	public void create() {
-		svg = new Svg("data/enemy.svg");
+		if(svg == null)
+			svg = new Svg("data/enemy.svg");
 		
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.StaticBody;

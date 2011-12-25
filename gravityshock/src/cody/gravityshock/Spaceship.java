@@ -19,11 +19,13 @@ public class Spaceship extends Actor {
 	
 	public int health = 100;
 	
-	public void damage() {
+	public void damage(World.CollisionInfo i) {
 		if(health <= 0)
 			return;
 		health -= 10;
 		if(health <= 0) {
+			  Explosion x = new Explosion(world);
+			  x.position = i.pos.cpy();
 			  world.actors.remove(this);
 			  dispose();
 		}
@@ -73,6 +75,8 @@ public class Spaceship extends Actor {
 	    }
 	    
 	    for(Actor a : world.actors) {
+	    	if(a.body == null)
+	    		continue;
 		      float dist = body.getPosition().dst(a.body.getPosition());
 		      if(!connected && a instanceof Pickup && dist < 25){
 		    	  connect((Pickup)a);

@@ -31,10 +31,14 @@ public abstract class Actor {
 			  }
 
 			  public void dispose(){
-				  body.destroyFixture(fixture);
-				  world.b2world.destroyBody(body);
-				  body = null;
-				  shape.dispose();
-				  shape = null;
+				  if(body != null) {
+					  body.destroyFixture(fixture);
+					  world.b2world.destroyBody(body);
+					  body = null;
+				  }
+				  if(shape != null) {
+					  shape.dispose();
+					  shape = null;
+				  }
 			  }
 }
