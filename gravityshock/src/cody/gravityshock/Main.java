@@ -27,9 +27,12 @@ public class Main implements ApplicationListener {
     int level = 1;
     
     void createPlayer(){
+    	Spaceship oldplayer = player;
 		player = new Spaceship();
 		world.add(player);
 		player.create();
+		if(oldplayer != null)
+			player.score = oldplayer.score;
     }
     
 	@Override
