@@ -22,9 +22,10 @@ public class Main implements ApplicationListener {
     OrthographicCamera cam;
 
     Spaceship player;
-  
+    Map map;
+    
     int lifes = 5;
-    int level = 1;
+    int level = 0;
     
     void createPlayer(){
     	Spaceship oldplayer = player;
@@ -35,6 +36,15 @@ public class Main implements ApplicationListener {
 			player.score = oldplayer.score;
     }
     
+    void nextLevel() {
+    	level++;
+		world = new World();
+		map = new Map();
+		map.load(world, "data/level" + level + ".svg");
+		createPlayer();
+		player.score = 0;
+    	
+    }
 	@Override
 	public void create () {
 		font = new BitmapFont();
@@ -42,9 +52,6 @@ public class Main implements ApplicationListener {
 		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
 		spriteBatch = new SpriteBatch();
                 
-		world = new World();
-		Map map = new Map();
-		map.load(world, "data/level" + level + ".svg");
     
 		//var musicfile = Gdx.files.internal("data/2ND_PM.ogg")
 		//var music = Gdx.audio.newMusic(musicfile)
@@ -52,7 +59,7 @@ public class Main implements ApplicationListener {
     
 		cam = new OrthographicCamera(640, 480);
 		
-		createPlayer();
+		nextLevel();
 	}
 
 	@Override
@@ -66,6 +73,7 @@ public class Main implements ApplicationListener {
 		world.render(cam);
 
 		world.tick(t);
+		map.tick(t);
     
 		if(player.health <= 0) {
 			if(lifes <= 1) {
@@ -78,6 +86,9 @@ public class Main implements ApplicationListener {
 				lifes--;
 			}
 		}
+		else if(player.score >= map.getGoalScore()) {
+			nextLevel();
+		}
 		else {
 			Vector2 v = player.body.getPosition();
 			cam.position.x = v.x;
@@ -86,11 +97,13 @@ public class Main implements ApplicationListener {
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
 			font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, 20);
-			font.draw(spriteBatch, "score: " + Integer.toString(player.score), 20, 40);
+			font.draw(spriteBatch, "score: " + Integer.toString(player.score) + "/" + Integer.toString(map.getGoalScore()), 20, 40);
 			font.draw(spriteBatch, "speed: " + Integer.toString((int)player.body.getLinearVelocity().len()) + "m/s", 20, 60);
 			font.draw(spriteBatch, "health: " + Integer.toString(player.health) + "%", 20, 80);
 			font.draw(spriteBatch, "lifes: " + Integer.toString(lifes), 20, 100);
 			font.draw(spriteBatch, "level: " + Integer.toString(level), 20, 120);
+			font.draw(spriteBatch, "fuel: " + Integer.toString((int)player.fuel), 20, 140);
+			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, 160);
 			spriteBatch.end();
 		}
 	}

@@ -34,7 +34,9 @@ public class Map {
 	ArrayList<ArrayList<Vector2>> points;
 	Mesh mesh;
 	ShaderProgram shader;
-			  
+	ArrayList<Pickup> pickups;
+	float age;
+	
 	public void load(World _world, String filename) {
 			    world = _world;
 			    world.map = this;
@@ -46,6 +48,7 @@ public class Map {
 		fixtures = new ArrayList<Fixture>();
 		shapes = new ArrayList<ChainShape>();
 		colors = new ArrayList<Color>();
+		pickups = new ArrayList<Pickup>();
 		
 		BodyDef bdef = new BodyDef();
 		bdef.type = BodyDef.BodyType.StaticBody;
@@ -152,6 +155,7 @@ public class Map {
 			if(text.equals("pickup")){
 				Pickup pickup = new Pickup(world);
 				pickup.body.setTransform(x, -y, 0);
+				pickups.add(pickup);
 			}
 			else if(text.equals("home")){
 				Home home = new Home(world);
@@ -160,6 +164,13 @@ public class Map {
 		}
 	}
 	
+	public int getGoalScore() {
+		return pickups.size();
+	}
+	
+	public void tick(float dtime) {
+		age += dtime;
+	}
 	public void render(OrthographicCamera cam) {
 	    //mesh.render(shader, graphics.GL20.GL_LINE_STRIP)
 	    //var gl = Gdx.graphics.getGL10()

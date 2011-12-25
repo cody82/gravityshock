@@ -18,6 +18,7 @@ public class Spaceship extends Actor {
 	}
 	
 	public int health = 100;
+	public float fuel = 100;
 	
 	public void damage(World.CollisionInfo i) {
 		if(health <= 0)
@@ -51,9 +52,10 @@ public class Spaceship extends Actor {
 	  boolean thrust;
 	  void tick(float dtime) {
 		  shoot_time+=dtime;
-	    if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+	    if(Gdx.input.isKeyPressed(Input.Keys.UP) && fuel > 0f){
 	    	thrust=true;
 	      body.applyForceToCenter(body.getWorldVector(new Vector2(0,1000)));
+	      fuel -= dtime;
 	    }
 	    else
 	    	thrust = false;
