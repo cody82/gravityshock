@@ -82,7 +82,7 @@ public class World implements ContactListener {
 		Object o2 = f2.getUserData();
 		
 		if(o1 != null && o2 != null) {
-			System.out.println(o1.getClass().getName() + " | " + o2.getClass().getName());
+			//System.out.println(o1.getClass().getName() + " | " + o2.getClass().getName());
 			if(o1 instanceof Spaceship) {
 				if(o2 instanceof Map)
 					collisions.add(new CollisionInfo((Spaceship)o1, ((Spaceship) o1).body.getPosition()));
