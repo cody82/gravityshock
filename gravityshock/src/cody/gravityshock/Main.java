@@ -45,7 +45,7 @@ public class Main implements ApplicationListener {
 	GL10 gl10;
 	GL20 gl20;
 	
-	float zoom = 2f;
+	float zoom = 1f;
 	
     void createPlayer(){
     	Spaceship oldplayer = player;
