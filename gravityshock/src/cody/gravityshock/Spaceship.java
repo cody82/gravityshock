@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Input;
 
@@ -28,8 +29,14 @@ public class Spaceship extends Actor {
 		if(health <= 0) {
 			  Explosion x = new Explosion(world);
 			  x.position = i.pos.cpy();
-			  world.actors.remove(this);
-			  dispose();
+			  if(connected) {
+				  world.b2world.destroyJoint(pickupjoint);
+				  pickupjoint = null;
+				  connected = false;
+				  pickup = null;
+			  }
+			  //world.actors.remove(this);
+			  //dispose();
 		}
 	}
 	public void create() {
@@ -51,9 +58,16 @@ public class Spaceship extends Actor {
 
 	  float shoot_time;
 	  boolean thrust;
+	  
+	  public float control_direction;
+	  public float control_thrust;
+	  public boolean control_shoot;
+	  
 	  void tick(float dtime) {
 		  shoot_time+=dtime;
-	    if(Gdx.input.isKeyPressed(Input.Keys.UP) && fuel > 0f){
+		  
+		  
+	    if(control_thrust > 0 && fuel > 0f && health > 0){
 	    	thrust=true;
 	      body.applyForceToCenter(body.getWorldVector(new Vector2(0,1000)));
 	      fuel -= dtime;
@@ -62,15 +76,18 @@ public class Spaceship extends Actor {
 	    	thrust = false;
 	    
 	    float omega = 0;
-	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+	    
+	    if(control_direction > 0){
 	    	omega+=3;
 	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+	    if(control_direction < 0){
 	    	omega-=3;
 	    }
-	    body.setAngularVelocity(omega);
+	    if(fuel > 0 && health > 0) {
+	    	body.setAngularVelocity(omega);
+	    }
 	    
-	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+	    if(control_shoot && health > 0){
 	    	if(shoot_time > 0.1f){
 	    		shoot();
 	    		shoot_time = 0;
@@ -95,7 +112,7 @@ public class Spaceship extends Actor {
 	  Pickup pickup;
 	  
 	  void connect(Pickup p) {
-		  if(p.returned)
+		  if(p.returned || health <= 0)
 			  return;
 		  
 		  pickup = p;
@@ -124,10 +141,11 @@ public class Spaceship extends Actor {
 		  p.body.setTransform(body.getWorldPoint(new Vector2(0,15)), body.getAngle());
 		  p.body.setLinearVelocity(body.getWorldVector(new Vector2(0,1000)));
 	  }
+	  static ShapeRenderer sr = new ShapeRenderer();
 	  void render(OrthographicCamera cam) {
 	        
-		  ShapeRenderer sr = new ShapeRenderer();
 		  sr.setProjectionMatrix(cam.combined);
+		    sr.setTransformMatrix(new Matrix4().idt());
 	    
 		  sr.begin(ShapeType.Line);
 	    
@@ -138,7 +156,12 @@ public class Spaceship extends Actor {
 		  sr.rotate(0, 0, 1, rad*180f/(float)Math.PI);
 		  Vector2[] array = new Vector2[]{new Vector2(0, 10), new Vector2(10, -5), new Vector2(-10, -5)};
 
-		  sr.setColor(1, 1, 1, 1);
+		  if(health > 0) {
+			  sr.setColor(1, 1, 1, 1);
+		  }
+		  else {
+			  sr.setColor(0.4f, 0.4f, 0.4f, 1);
+		  }
 		  for(int i =0; i < array.length - 1; ++i) {
 			  sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
 		  }
@@ -151,6 +174,5 @@ public class Spaceship extends Actor {
 			  sr.filledRect(-5, -10, 10, 5);
 			  sr.end();
 		  }
-		  sr.dispose();
 	  }
 }

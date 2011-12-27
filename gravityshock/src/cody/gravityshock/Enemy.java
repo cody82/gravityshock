@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -63,11 +64,12 @@ public class Enemy extends Actor{
 			  }
 		  }
 	  }
-	  
+
+	  static ShapeRenderer sr = new ShapeRenderer();
 	  void render(OrthographicCamera cam) {
 	        
-		  ShapeRenderer sr = new ShapeRenderer();
 	    sr.setProjectionMatrix(cam.combined);
+	    sr.setTransformMatrix(new Matrix4().idt());
 	    
 	    sr.begin(ShapeType.Line);
 	    
@@ -86,6 +88,5 @@ public class Enemy extends Actor{
 	    	sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
 	    }
 	    sr.end();
-	    sr.dispose();
 	  }
 }

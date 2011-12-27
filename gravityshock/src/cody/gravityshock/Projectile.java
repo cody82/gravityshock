@@ -3,6 +3,7 @@ package cody.gravityshock;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -37,12 +38,13 @@ public class Projectile extends Actor{
 			  dispose();
 		  }
 	  }
+
+	  static ShapeRenderer sr = new ShapeRenderer();
 	  
 	  void render(OrthographicCamera cam) {
-	        
-		  ShapeRenderer sr = new ShapeRenderer();
+
 	    sr.setProjectionMatrix(cam.combined);
-	    
+	    sr.setTransformMatrix(new Matrix4().idt());
 	    sr.begin(ShapeType.Line);
 	    
 	    Vector2 pos = body.getPosition();
@@ -52,13 +54,12 @@ public class Projectile extends Actor{
 	    sr.rotate(0, 0, 1, rad*180f/(float)Math.PI);
 	    Vector2[] array = new Vector2[]{new Vector2(-1, 1), new Vector2(-1, -1), new Vector2(1, -1), new Vector2(1, 1)};
 
-	    sr.setColor(1, 1, 0, 1);
+	    sr.setColor(1, 1, 0, (3f-age)/3f);
 	    for(int i =0; i < array.length - 1; ++i) {
 	      sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
 	    }
 	    sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
 	    sr.end();
-	    sr.dispose();
 	  }
 
 

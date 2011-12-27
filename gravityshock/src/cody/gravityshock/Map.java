@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
@@ -171,11 +172,13 @@ public class Map {
 	public void tick(float dtime) {
 		age += dtime;
 	}
+
+	static ShapeRenderer sr = new ShapeRenderer();
 	public void render(OrthographicCamera cam) {
 	    //mesh.render(shader, graphics.GL20.GL_LINE_STRIP)
 	    //var gl = Gdx.graphics.getGL10()
-		ShapeRenderer sr = new ShapeRenderer();
 	    sr.setProjectionMatrix(cam.combined);
+	    sr.setTransformMatrix(new Matrix4().idt());
 	    
 	      sr.begin(ShapeType.Line);
 	    
@@ -189,6 +192,5 @@ public class Map {
 	      sr.line(array.get(array.size()-1).x, array.get(array.size()-1).y, array.get(0).x, array.get(0).y);
 	    }
 	      sr.end();
-	      sr.dispose();
 	}
 }

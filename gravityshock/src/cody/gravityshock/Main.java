@@ -6,6 +6,7 @@ import java.nio.IntBuffer;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
@@ -44,6 +45,8 @@ public class Main implements ApplicationListener {
 	GL10 gl10;
 	GL20 gl20;
 	
+	float zoom = 2f;
+	
     void createPlayer(){
     	Spaceship oldplayer = player;
 		player = new Spaceship();
@@ -61,6 +64,31 @@ public class Main implements ApplicationListener {
 		createPlayer();
 		player.score = 0;
     	
+    }
+    
+    void controls() {
+
+	    if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+	    	player.control_thrust=1f;
+	    }
+	    else
+	    	player.control_thrust=0f;
+	    
+	    float omega = 0;
+	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+	    	omega+=1f;
+	    }
+	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+	    	omega-=1f;
+	    }
+	    player.control_direction = omega;
+	    
+	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+	    	player.control_shoot = true;
+	    }
+	    else {
+	    	player.control_shoot = false;
+	    }
     }
 	@Override
 	public void create () {
@@ -110,12 +138,10 @@ public class Main implements ApplicationListener {
 		gl20 = Gdx.graphics.getGL20();
 
 		cam.update();
+
+		controls();
 		
 		if(gl20 != null) {
-			framebuffer.begin();
-			clear();
-			world.render(cam);
-			framebuffer.end();
 			framebuffer2.begin();
 			clear();
 			world.render(cam);
@@ -128,21 +154,27 @@ public class Main implements ApplicationListener {
     
 
 		if(gl20 != null) {
-			//clear();
 			Texture texture = framebuffer.getColorBufferTexture();
 			Texture texture2 = framebuffer2.getColorBufferTexture();
-			
 
 			SpriteBatch spriteBatch2 = new SpriteBatch();
-			spriteBatch2.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE);
+			
+			framebuffer.begin();
 			spriteBatch2.begin();
 			spriteBatch2.setProjectionMatrix(spriteBatch2.getProjectionMatrix().setToOrtho2D(0, 1, 1, -1));
 			spriteBatch2.disableBlending();
-			spriteBatch2.setColor(0.2f, 0.2f, 0.2f, 1);
-			spriteBatch2.draw(texture, 0, 0, 1, 1);
-			spriteBatch2.enableBlending();
+			spriteBatch2.draw(texture2, 0, 0, 1, 1);
+			spriteBatch2.end();
+
+			framebuffer.end();
+
+			spriteBatch2.begin();
 			spriteBatch2.setColor(1, 1, 1, 1);
 			spriteBatch2.draw(texture2, 0, 0, 1, 1);
+			spriteBatch2.setColor(1, 1, 1, 1);
+			spriteBatch2.enableBlending();
+			spriteBatch2.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE);
+			spriteBatch2.draw(texture, 0, 0, 1, 1);
 			spriteBatch2.end();
 			spriteBatch2.dispose();
 		}
@@ -197,7 +229,7 @@ public class Main implements ApplicationListener {
 	@Override
 	public void resize (int width, int height) {
 		//if(gl20 == null) {
-			cam.setToOrtho(false, width, height);
+			cam.setToOrtho(false, ((float)width / zoom), ((float)height / zoom));
 			spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
 		//}
 
