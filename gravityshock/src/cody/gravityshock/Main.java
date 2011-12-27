@@ -7,6 +7,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -78,8 +79,17 @@ public class Main implements ApplicationListener {
 			t = 1f/30f;
 		}
 		
-		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
-		Gdx.graphics.getGL10().glEnable(GL10.GL_BLEND);
+		GL10 gl10 = Gdx.graphics.getGL10();
+		if(gl10 != null) {
+			gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			gl10.glEnable(GL10.GL_BLEND);
+		}
+		else {
+
+			GL20 gl20 = Gdx.graphics.getGL20();
+			gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			gl20.glEnable(GL20.GL_BLEND);
+		}
 		cam.update();
 		world.render(cam);
 
