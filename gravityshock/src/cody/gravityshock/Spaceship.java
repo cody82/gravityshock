@@ -2,6 +2,7 @@ package cody.gravityshock;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
+import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -98,12 +99,12 @@ public class Spaceship extends Actor {
 			  return;
 		  
 		  pickup = p;
-		  DistanceJointDef def = new DistanceJointDef();
+		  RopeJointDef def = new RopeJointDef();
 		  def.bodyA = body;
 		  def.bodyB = p.body;
 		  def.collideConnected = true;
-		  def.length = 25;
-		  def.type = JointDef.JointType.DistanceJoint;
+		  def.maxLength = 25;
+		  def.type = JointDef.JointType.RopeJoint;
 		  pickupjoint = world.b2world.createJoint(def);
 		  connected = true;
 	  }
