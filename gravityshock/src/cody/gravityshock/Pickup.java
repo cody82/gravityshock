@@ -52,7 +52,11 @@ public class Pickup extends Actor{
 	    sr.rotate(0, 0, 1, rad*180f/(float)Math.PI);
 	    Vector2[] array = new Vector2[]{new Vector2(-5, 5), new Vector2(-5, -5), new Vector2(5, -5), new Vector2(5, 5)};
 
-	    sr.setColor(1, 1, 0, 1);
+	    if(returned)
+	    	sr.setColor(0, 1, 0, 1);
+	    else
+	    	sr.setColor(0, 0, 1, 1);
+	    	
 	    for(int i =0; i < array.length - 1; ++i) {
 	      sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
 	    }
