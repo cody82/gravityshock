@@ -25,7 +25,12 @@ public class Spaceship extends Actor {
 	public void damage(World.CollisionInfo i) {
 		if(health <= 0)
 			return;
-		health -= 10;
+		
+		float damage = Math.abs(i.impulse) * 0.06f;
+		if(damage < 0.5f)
+			return;
+		health -= damage;
+		
 		if(health <= 0) {
 			  Explosion x = new Explosion(world);
 			  x.position = i.pos.cpy();

@@ -14,12 +14,14 @@ public class World implements ContactListener {
 	Map map;
 	  
 	public class CollisionInfo {
-		public CollisionInfo(Spaceship _ship, Vector2 _pos) {
+		public CollisionInfo(Spaceship _ship, Vector2 _pos, float _impulse) {
 			ship = _ship;
 			pos = _pos;
+			impulse = _impulse;
 		}
 		public Spaceship ship;
 		public Vector2 pos;
+		public float impulse;
 	}
 	ArrayList<CollisionInfo> collisions;
 	
@@ -75,23 +77,6 @@ public class World implements ContactListener {
 	  }
 	@Override
 	public void beginContact(Contact contact) {
-		Fixture f1 = contact.getFixtureA();
-		Fixture f2 = contact.getFixtureB();
-		
-		Object o1 = f1.getUserData();
-		Object o2 = f2.getUserData();
-		
-		if(o1 != null && o2 != null) {
-			//System.out.println(o1.getClass().getName() + " | " + o2.getClass().getName());
-			if(o1 instanceof Spaceship) {
-				if(o2 instanceof Map)
-					collisions.add(new CollisionInfo((Spaceship)o1, ((Spaceship) o1).body.getPosition()));
-			}
-			if(o2 instanceof Spaceship) {
-				if(o1 instanceof Map)
-					collisions.add(new CollisionInfo((Spaceship)o2, ((Spaceship) o2).body.getPosition()));
-			}
-		}
 	}
 
 	@Override
@@ -101,9 +86,29 @@ public class World implements ContactListener {
 	}
 
 	@Override
-	public void postSolve(Contact arg0, ContactImpulse arg1) {
-		// TODO Auto-generated method stub
+	public void postSolve(Contact contact, ContactImpulse contactimpulse) {
+		float[] impulses = contactimpulse.getNormalImpulses();
+		float impulse = 0;
+		for(float f : impulses)
+			impulse += f;
+				
+		Fixture f1 = contact.getFixtureA();
+		Fixture f2 = contact.getFixtureB();
 		
+		Object o1 = f1.getUserData();
+		Object o2 = f2.getUserData();
+		
+		if(o1 != null && o2 != null) {
+			//System.out.println(o1.getClass().getName() + " | " + o2.getClass().getName() + ": " + impulse);
+			if(o1 instanceof Spaceship) {
+				if(o2 instanceof Map)
+					collisions.add(new CollisionInfo((Spaceship)o1, ((Spaceship) o1).body.getPosition(), impulse));
+			}
+			if(o2 instanceof Spaceship) {
+				if(o1 instanceof Map)
+					collisions.add(new CollisionInfo((Spaceship)o2, ((Spaceship) o2).body.getPosition(), impulse));
+			}
+		}
 	}
 
 	@Override
