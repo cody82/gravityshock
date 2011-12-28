@@ -103,6 +103,15 @@ public class Map {
 				}
 			}
 			
+			String desc = "";
+			for(int k=0;k<children.getLength();++k){
+				Node n2 = children.item(k);
+				if(n2.getNodeName().equals("desc")){
+					desc = n2.getTextContent();
+					break;
+				}
+			}
+			
 			int stroke = style.indexOf("stroke:");
 			if(stroke >= 0){
 				String c = style.substring(stroke + 8, stroke + 8 + 6);
@@ -141,7 +150,8 @@ public class Map {
 			shapes.add(shape);
 			Fixture fixture = body.createFixture(shape, 1);
 			fixture.setRestitution(0.2f);
-			fixture.setUserData(this);
+			if(!desc.contains("landingzone"))
+				fixture.setUserData(this);
 			fixtures.add(fixture);
 			}
 		}
