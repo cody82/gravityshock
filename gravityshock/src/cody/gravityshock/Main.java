@@ -195,8 +195,12 @@ public class Main implements ApplicationListener {
 		}
 		else {
 			Vector2 v = player.body.getPosition();
-			cam.position.x = v.x;
-			cam.position.y = v.y;
+			Vector2 cp = new Vector2(cam.position.x, cam.position.y);
+			Vector2 d = v.sub(cp);
+			float l = d.len();
+			Vector2 result = cp.add(d.mul(Math.min(t * 2f, 1f)));
+			cam.position.x = result.x;
+			cam.position.y = result.y;
 	    
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
