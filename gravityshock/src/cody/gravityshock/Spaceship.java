@@ -84,7 +84,8 @@ public class Spaceship extends Actor {
 	    	omega-=3;
 	    }
 	    if(fuel > 0 && health > 0) {
-	    	body.setAngularVelocity(omega);
+	    	float av = body.getAngularVelocity();
+	    	body.applyTorque(Math.signum((omega - av)) * 8000);
 	    }
 	    
 	    if(control_shoot && health > 0){
