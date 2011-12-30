@@ -28,9 +28,11 @@ public class Main implements ApplicationListener {
 
     World world;
 
-    OrthographicCamera cam;
-
-    Spaceship player;
+    int numplayers = 2;
+    
+    OrthographicCamera[] cams;
+    
+    Spaceship[] players;
     Map map;
     
     int lifes = 5;
@@ -47,13 +49,15 @@ public class Main implements ApplicationListener {
 	
 	float zoom = 1f;
 	
-    void createPlayer(){
-    	Spaceship oldplayer = player;
-		player = new Spaceship();
-		world.add(player);
-		player.create();
+    void createPlayer(int index){
+
+    	Spaceship oldplayer = players[index];
+    	players[index] = new Spaceship();
+		world.add(players[index]);
+		players[index].create();
 		if(oldplayer != null)
-			player.score = oldplayer.score;
+			players[index].score = oldplayer.score;
+    	
     }
     
     void nextLevel() {
@@ -61,18 +65,20 @@ public class Main implements ApplicationListener {
 		world = new World();
 		map = new Map();
 		map.load(world, "data/level" + level + ".svg");
-		createPlayer();
-		player.score = 0;
-    	
+		for(int i =0;i<numplayers;++i)
+		{
+			createPlayer(i);
+			players[i].score = 0;
+		}
     }
     
     void controls() {
-
+    	{
 	    if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-	    	player.control_thrust=1f;
+	    	players[0].control_thrust=1f;
 	    }
 	    else
-	    	player.control_thrust=0f;
+	    	players[0].control_thrust=0f;
 	    
 	    float omega = 0;
 	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
@@ -81,14 +87,39 @@ public class Main implements ApplicationListener {
 	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 	    	omega-=1f;
 	    }
-	    player.control_direction = omega;
+	    players[0].control_direction = omega;
 	    
 	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-	    	player.control_shoot = true;
+	    	players[0].control_shoot = true;
 	    }
 	    else {
-	    	player.control_shoot = false;
+	    	players[0].control_shoot = false;
 	    }
+    	}
+	    
+    	if(numplayers > 1) {
+	    if(Gdx.input.isKeyPressed(Input.Keys.W)){
+	    	players[1].control_thrust=1f;
+	    }
+	    else
+	    	players[1].control_thrust=0f;
+	    
+	    float omega = 0;
+	    if(Gdx.input.isKeyPressed(Input.Keys.A)){
+	    	omega+=1f;
+	    }
+	    if(Gdx.input.isKeyPressed(Input.Keys.D)){
+	    	omega-=1f;
+	    }
+	    players[1].control_direction = omega;
+	    
+	    if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)){
+	    	players[1].control_shoot = true;
+	    }
+	    else {
+	    	players[1].control_shoot = false;
+	    }
+    	}
     }
 	@Override
 	public void create () {
@@ -109,7 +140,11 @@ public class Main implements ApplicationListener {
 		//var music = Gdx.audio.newMusic(musicfile)
 		//music.play
     
-		cam = new OrthographicCamera(256, 256);
+		cams = new OrthographicCamera[numplayers];
+		players = new Spaceship[numplayers];
+		
+		for(int i=0;i<numplayers;++i)
+			cams[i] = new OrthographicCamera(256, 256);
 		
 		nextLevel();
 	}
@@ -137,22 +172,38 @@ public class Main implements ApplicationListener {
 		gl10 = Gdx.graphics.getGL10();
 		gl20 = Gdx.graphics.getGL20();
 
-		cam.update();
+		cams[0].update();
 
 		controls();
+		
+		gl10.glViewport(0, 0, window_width / numplayers, window_height);
 		
 		if(gl20 != null) {
 			framebuffer2.begin();
 			clear();
-			world.render(cam);
+			world.render(cams[0]);
 			framebuffer2.end();
 		}
 		else {
 			clear();
-			world.render(cam);
+			world.render(cams[0]);
 		}
-    
+		
+		if(numplayers > 1){
+			cams[1].update();
+			gl10.glViewport(window_width / 2, 0, window_width / 2, window_height);
+			
+			if(gl20 != null) {
+				framebuffer2.begin();
+				world.render(cams[1]);
+				framebuffer2.end();
+			}
+			else {
+				world.render(cams[1]);
+			}
+		}
 
+		
 		if(gl20 != null) {
 			Texture texture = framebuffer.getColorBufferTexture();
 			Texture texture2 = framebuffer2.getColorBufferTexture();
@@ -179,42 +230,48 @@ public class Main implements ApplicationListener {
 			spriteBatch2.dispose();
 		}
 
-		if(player.health <= 0) {
+		for(int i=0;i<numplayers;++i) {
+		if(players[i].health <= 0) {
 			if(lifes <= 1) {
 				spriteBatch.begin();
 				font.draw(spriteBatch, "GAME OVER", Gdx.graphics.getWidth()/2 - font.getSpaceWidth()*9, Gdx.graphics.getHeight()/2 + font.getLineHeight()/2);
 				spriteBatch.end();
 			}
 			else {
-				createPlayer();
+				createPlayer(i);
 				lifes--;
 			}
 		}
-		else if(player.score >= map.getGoalScore()) {
+		else if(players[i].score >= map.getGoalScore()) {
 			nextLevel();
+			break;
 		}
 		else {
-			Vector2 v = player.body.getPosition();
-			Vector2 cp = new Vector2(cam.position.x, cam.position.y);
+			Vector2 v = players[i].body.getPosition();
+			Vector2 cp = new Vector2(cams[i].position.x, cams[i].position.y);
 			Vector2 d = v.sub(cp);
 			float l = d.len();
 			Vector2 result = cp.add(d.mul(Math.min(t * 2f, 1f)));
-			cam.position.x = result.x;
-			cam.position.y = result.y;
-	    
+			cams[i].position.x = result.x;
+			cams[i].position.y = result.y;
+			
+
+			gl10.glViewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
+			
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
 			font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, 20);
-			font.draw(spriteBatch, "score: " + Integer.toString(player.score) + "/" + Integer.toString(map.getGoalScore()), 20, 40);
-			font.draw(spriteBatch, "speed: " + Integer.toString((int)player.body.getLinearVelocity().len()) + "m/s", 20, 60);
-			font.draw(spriteBatch, "health: " + Integer.toString(player.health) + "%", 20, 80);
+			font.draw(spriteBatch, "score: " + Integer.toString(players[i].score) + "/" + Integer.toString(map.getGoalScore()), 20, 40);
+			font.draw(spriteBatch, "speed: " + Integer.toString((int)players[i].body.getLinearVelocity().len()) + "m/s", 20, 60);
+			font.draw(spriteBatch, "health: " + Integer.toString(players[i].health) + "%", 20, 80);
 			font.draw(spriteBatch, "lifes: " + Integer.toString(lifes), 20, 100);
 			font.draw(spriteBatch, "level: " + Integer.toString(level), 20, 120);
-			font.draw(spriteBatch, "fuel: " + Integer.toString((int)player.fuel), 20, 140);
+			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, 140);
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, 160);
 			spriteBatch.end();
 		}
-
+		}
+		
 		if(record) {
 			
 		try {
@@ -230,12 +287,18 @@ public class Main implements ApplicationListener {
 		map.tick(t);
 	}
 
+	int window_width = 640;
+	int window_height = 400;
+	
 	@Override
 	public void resize (int width, int height) {
-		//if(gl20 == null) {
-			cam.setToOrtho(false, ((float)width / zoom), ((float)height / zoom));
-			spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
-		//}
+		window_width = width;
+		window_height = height;
+		for(int i=0;i<numplayers;++i) {
+			cams[i].setToOrtho(false, ((float)(width/numplayers) / zoom), ((float)height / zoom));
+			
+			spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width/numplayers, height);
+		}
 
 			if(Gdx.graphics.isGL20Available()) {
 				framebuffer.dispose();
