@@ -28,14 +28,13 @@ public class Main implements ApplicationListener {
 
     World world;
 
-    int numplayers = 1;
+    public int numplayers = 1;
     
     OrthographicCamera[] cams;
     
     Spaceship[] players;
     Map map;
     
-    int lifes = 5;
     int level = 0;
     
     boolean record = false;
@@ -55,9 +54,10 @@ public class Main implements ApplicationListener {
     	players[index] = new Spaceship();
 		world.add(players[index]);
 		players[index].create();
-		if(oldplayer != null)
+		if(oldplayer != null) {
 			players[index].score = oldplayer.score;
-    	
+			players[index].lifes = oldplayer.lifes;
+		}
     }
     
     void nextLevel() {
@@ -164,6 +164,14 @@ public class Main implements ApplicationListener {
 		}
 		
 	}
+	
+	int getTotalScore() {
+		int score = 0;
+		for(Spaceship s : players) {
+			score += s.score;
+		}
+		return score;
+	}
 	@Override
 	public void render () {
 
@@ -236,17 +244,17 @@ public class Main implements ApplicationListener {
 
 		for(int i=0;i<numplayers;++i) {
 		if(players[i].health <= 0) {
-			if(lifes <= 1) {
+			if(players[i].lifes <= 1) {
 				spriteBatch.begin();
-				font.draw(spriteBatch, "GAME OVER", Gdx.graphics.getWidth()/2 - font.getSpaceWidth()*9, Gdx.graphics.getHeight()/2 + font.getLineHeight()/2);
+				font.draw(spriteBatch, "GAME OVER", i * (window_width / numplayers) + (window_width / numplayers) / 2 - font.getSpaceWidth()*9, Gdx.graphics.getHeight()/2 + font.getLineHeight()/2);
 				spriteBatch.end();
 			}
 			else {
 				createPlayer(i);
-				lifes--;
+				players[i].lifes--;
 			}
 		}
-		else if(players[i].score >= map.getGoalScore()) {
+		else if(getTotalScore() >= map.getGoalScore()) {
 			nextLevel();
 			break;
 		}
@@ -268,7 +276,7 @@ public class Main implements ApplicationListener {
 			font.draw(spriteBatch, "score: " + Integer.toString(players[i].score) + "/" + Integer.toString(map.getGoalScore()), 20, 40);
 			font.draw(spriteBatch, "speed: " + Integer.toString((int)players[i].body.getLinearVelocity().len()) + "m/s", 20, 60);
 			font.draw(spriteBatch, "health: " + Integer.toString(players[i].health) + "%", 20, 80);
-			font.draw(spriteBatch, "lifes: " + Integer.toString(lifes), 20, 100);
+			font.draw(spriteBatch, "lifes: " + Integer.toString(players[i].lifes), 20, 100);
 			font.draw(spriteBatch, "level: " + Integer.toString(level), 20, 120);
 			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, 140);
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, 160);

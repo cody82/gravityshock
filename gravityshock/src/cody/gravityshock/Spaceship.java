@@ -21,6 +21,7 @@ public class Spaceship extends Actor {
 	
 	public int health = 100;
 	public float fuel = 100;
+    public int lifes = 5;
 	
 	public void damage(World.CollisionInfo i) {
 		if(health <= 0)
