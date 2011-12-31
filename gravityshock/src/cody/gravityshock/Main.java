@@ -246,7 +246,8 @@ public class Main implements ApplicationListener {
 		if(players[i].health <= 0) {
 			if(players[i].lifes <= 1) {
 				spriteBatch.begin();
-				font.draw(spriteBatch, "GAME OVER", i * (window_width / numplayers) + (window_width / numplayers) / 2 - font.getSpaceWidth()*9, Gdx.graphics.getHeight()/2 + font.getLineHeight()/2);
+				gl10.glViewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
+				font.draw(spriteBatch, "GAME OVER", (window_width / numplayers) / 2 - font.getSpaceWidth()*9, Gdx.graphics.getHeight()/2 + font.getLineHeight()/2);
 				spriteBatch.end();
 			}
 			else {
