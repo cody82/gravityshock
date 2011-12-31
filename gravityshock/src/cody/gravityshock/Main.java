@@ -74,8 +74,6 @@ public class Main implements ApplicationListener {
     
     void controls() {
     	float ax = Gdx.input.getAccelerometerX();
-    	float ay = Gdx.input.getAccelerometerY();
-    	float az = Gdx.input.getAccelerometerZ();
     	
     	{
 	    if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isTouched()){
@@ -85,12 +83,17 @@ public class Main implements ApplicationListener {
 	    	players[0].control_thrust=0f;
 	    
 	    float omega = 0;
-	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || ax > 0){
+	    
+	    omega += ax * 0.5f;
+	    
+	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 	    	omega+=1f;
 	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || ax < 0){
+	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 	    	omega-=1f;
 	    }
+	    omega = Math.max(-1f, Math.min(1f, omega));
+	    
 	    players[0].control_direction = omega;
 	    
 	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
