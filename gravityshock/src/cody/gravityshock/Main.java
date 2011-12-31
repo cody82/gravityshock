@@ -28,7 +28,7 @@ public class Main implements ApplicationListener {
 
     World world;
 
-    int numplayers = 2;
+    int numplayers = 1;
     
     OrthographicCamera[] cams;
     
@@ -73,18 +73,22 @@ public class Main implements ApplicationListener {
     }
     
     void controls() {
+    	float ax = Gdx.input.getAccelerometerX();
+    	float ay = Gdx.input.getAccelerometerY();
+    	float az = Gdx.input.getAccelerometerZ();
+    	
     	{
-	    if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+	    if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isTouched()){
 	    	players[0].control_thrust=1f;
 	    }
 	    else
 	    	players[0].control_thrust=0f;
 	    
 	    float omega = 0;
-	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || ax > 0){
 	    	omega+=1f;
 	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || ax < 0){
 	    	omega-=1f;
 	    }
 	    players[0].control_direction = omega;
