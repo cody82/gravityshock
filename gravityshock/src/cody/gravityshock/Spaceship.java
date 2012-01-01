@@ -81,14 +81,8 @@ public class Spaceship extends Actor {
 	    else
 	    	thrust = false;
 	    
-	    float omega = 0;
+	    float omega = control_direction * 3f;
 	    
-	    if(control_direction > 0){
-	    	omega+=3;
-	    }
-	    if(control_direction < 0){
-	    	omega-=3;
-	    }
 	    if(fuel > 0 && health > 0) {
 	    	float av = body.getAngularVelocity();
 	    	body.applyTorque(Math.signum((omega - av)) * 8000);
