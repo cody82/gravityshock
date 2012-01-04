@@ -288,6 +288,8 @@ public class Main implements ApplicationListener {
 		}
 		}
 		
+		LineDrawer.DrawLine(new Vector2(0,0), new Vector2(100,100), 4);
+		
 		if(record) {
 			
 		try {
