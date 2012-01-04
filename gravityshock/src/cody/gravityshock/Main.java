@@ -287,8 +287,9 @@ public class Main implements ApplicationListener {
 			spriteBatch.end();
 		}
 		}
-		
-		LineDrawer.DrawLine(new Vector2(0,0), new Vector2(100,100), 4);
+		Vector2 v1 = new Vector2(0,0);
+		Vector2 v2 = new Vector2(100,100);
+		LineDrawer.DrawLine(v1, v2, 10, new Color(1,0,0,1));
 		
 		if(record) {
 			
