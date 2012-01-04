@@ -73,10 +73,60 @@ public class Main implements ApplicationListener {
     }
     
     void controls() {
-    	float ax = Gdx.input.getAccelerometerX();
+    	float ax = 0f;//Gdx.input.getAccelerometerX();
+    	
+    	boolean touch_shoot = false;
+    	float touch_direction = 0f;
+    	boolean touch_thrust = false;
+    	
+    	for(int i=0;i<5;++i) {
+    		if(Gdx.input.isTouched(i)) {
+    			int x = Gdx.input.getX(i);
+    			int y = Gdx.input.getY(i);
+    			if(x > window_width * 3 / 4) {
+    				if(y > window_height / 2)
+    					touch_shoot = true;
+    				else
+        				touch_thrust = true;
+    			}
+    			else {
+    				
+    				float vx = cams[0].position.x + x - window_width/2;
+    				float vy = cams[0].position.y - y + window_height/2;
+    				Vector2 dir = new Vector2(vx, vy).sub(players[0].body.getPosition());
+    				float angle1 = dir.angle() -90;
+    				float angle2 = players[0].body.getAngle() * 180f / (float)Math.PI;
+    				angle2 = (((int)angle2) % 360 + 360) % 360;
+    				angle1 = (((int)angle1) % 360 + 360) % 360;
+    				//float diff = angle1 - angle2;
+    				if(angle2 > 180) {
+    					if(angle1 < angle2 && angle1 > angle2 -180) {
+    						touch_direction = -1;
+    					}
+    					else {
+    						touch_direction = 1;
+    					}
+    				}
+    				else {
+    					if(angle1 > angle2 && angle1 < angle2 + 180) {
+    						touch_direction = 1;
+    					}
+    					else {
+    						touch_direction = -1;
+    					}
+    					
+    				}
+    				//System.out.println(Float.toString(angle1) + " " + Float.toString(angle2));
+    			}
+    			/*if(y > window_height * 3 / 4 && x < window_width / 2) {
+    				touch_direction = -(float)(x - (window_width / 4)) / (float)(window_width / 2);
+    			}*/
+    			
+    		}
+    	}
     	
     	{
-	    if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isTouched()){
+	    if(Gdx.input.isKeyPressed(Input.Keys.UP) || touch_thrust){
 	    	players[0].control_thrust=1f;
 	    }
 	    else
@@ -85,6 +135,7 @@ public class Main implements ApplicationListener {
 	    float omega = 0;
 	    
 	    omega += ax * 0.5f;
+	    omega += touch_direction;
 	    
 	    if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 	    	omega+=1f;
@@ -96,7 +147,7 @@ public class Main implements ApplicationListener {
 	    
 	    players[0].control_direction = omega;
 	    
-	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || touch_shoot){
 	    	players[0].control_shoot = true;
 	    }
 	    else {
