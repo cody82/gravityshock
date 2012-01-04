@@ -2,7 +2,10 @@ package cody.gravityshock;
 
 import cody.svg.Svg;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -30,6 +33,9 @@ public class Explosion extends Actor{
 	public void create() {
 		if(svg == null)
 			svg = new Svg("data/explosion1.svg");
+		if(mesh == null) {
+			mesh = Util.createMesh(svg, 3);
+		}
 	}
 	  
 	  void tick(float dtime) {
@@ -40,9 +46,17 @@ public class Explosion extends Actor{
 		  }
 	  }
 
-	  static ShapeRenderer sr = new ShapeRenderer();
+	  static Mesh mesh;
+	  
 	  void render(OrthographicCamera cam) {
-		    sr.setProjectionMatrix(cam.combined);
+		    Vector2 pos = position;
+		    float scale = (float)Math.sqrt((double)age) * 0.8f;
+
+	cam.apply(Gdx.graphics.getGL10());
+	Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
+	Gdx.graphics.getGL10().glScalef(scale, scale, 0);
+		  mesh.render(GL10.GL_TRIANGLES);
+		    /*sr.setProjectionMatrix(cam.combined);
 		    sr.setTransformMatrix(new Matrix4().idt());
 		    
 		    sr.begin(ShapeType.Line);
@@ -65,6 +79,6 @@ public class Explosion extends Actor{
 		    	}
 		    	sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
 		    }
-		    sr.end();
+		    sr.end();*/
 	  }
 }

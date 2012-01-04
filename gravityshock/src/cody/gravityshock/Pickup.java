@@ -2,6 +2,9 @@ package cody.gravityshock;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -28,39 +31,35 @@ public class Pickup extends Actor{
 	    //shape.setRadius(10)
 	    PolygonShape s = new PolygonShape();
 	    shape = s;
-	    s.set(new Vector2[]{new Vector2(-5, 5), new Vector2(-5, -5), new Vector2(5, -5), new Vector2(5, 5)});
+	    Vector2[] array = new Vector2[]{new Vector2(-5, 5), new Vector2(-5, -5), new Vector2(5, -5), new Vector2(5, 5)};
+	    s.set(array);
 	    
 	    fixture = body.createFixture(shape, 0.1f);
 		fixture.setRestitution(0.3f);
+		
+		if(mesh == null) {
+			mesh = Util.createMesh(array, new Color(0,0,1,1), 3, true);
+			mesh2 = Util.createMesh(array, new Color(0,1,0,1), 3, true);
+		}
 	  }
 	  
 	  void tick(float dtime) {
 	  }
 
-	  static ShapeRenderer sr = new ShapeRenderer();
-	  void render(OrthographicCamera cam) {
-	        
-		    sr.setTransformMatrix(new Matrix4().idt());
-	    sr.setProjectionMatrix(cam.combined);
-	    
-	    sr.begin(ShapeType.Line);
-	    
-	    Vector2 pos = body.getPosition();
-	    float rad = body.getAngle();
-	   
-	    sr.translate(pos.x, pos.y, 0);
-	    sr.rotate(0, 0, 1, rad*180f/(float)Math.PI);
-	    Vector2[] array = new Vector2[]{new Vector2(-5, 5), new Vector2(-5, -5), new Vector2(5, -5), new Vector2(5, 5)};
+	  static Mesh mesh;
+	  static Mesh mesh2;
 
-	    if(returned)
-	    	sr.setColor(0, 1, 0, 1);
-	    else
-	    	sr.setColor(0, 0, 1, 1);
-	    	
-	    for(int i =0; i < array.length - 1; ++i) {
-	      sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
-	    }
-	    sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
-	    sr.end();
+	  void render(OrthographicCamera cam) {
+		  Vector2 pos = body.getPosition();
+		  float rad = body.getAngle();
+
+	cam.apply(Gdx.graphics.getGL10());
+	Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
+	Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
+		  
+	if(!returned)
+		  mesh.render(GL10.GL_TRIANGLES);
+	else
+		  mesh2.render(GL10.GL_TRIANGLES);
 	  }
 }
