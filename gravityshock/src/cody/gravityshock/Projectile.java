@@ -1,5 +1,7 @@
 package cody.gravityshock;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -39,27 +41,21 @@ public class Projectile extends Actor{
 		  }
 	  }
 
-	  static ShapeRenderer sr = new ShapeRenderer();
-	  
 	  void render(OrthographicCamera cam) {
+		  Vector2 pos = body.getPosition();
+		  float rad = body.getAngle();
+		  
+cam.apply(Gdx.graphics.getGL10());
+Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
+Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
 
-	    sr.setProjectionMatrix(cam.combined);
-	    sr.setTransformMatrix(new Matrix4().idt());
-	    sr.begin(ShapeType.Line);
-	    
-	    Vector2 pos = body.getPosition();
-	    float rad = body.getAngle();
-	   
-	    sr.translate(pos.x, pos.y, 0);
-	    sr.rotate(0, 0, 1, rad*180f/(float)Math.PI);
 	    Vector2[] array = new Vector2[]{new Vector2(-1, 1), new Vector2(-1, -1), new Vector2(1, -1), new Vector2(1, 1)};
 
-	    sr.setColor(1, 1, 0, (3f-age)/3f);
+	    Color c = new Color(1, 1, 0, (3f-age)/3f);
 	    for(int i =0; i < array.length - 1; ++i) {
-	      sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
+			  LineDrawer.DrawLine(array[i], array[i+1], 3, c);
 	    }
-	    sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
-	    sr.end();
+		  LineDrawer.DrawLine(array[array.length-1], array[0], 3, c);
 	  }
 
 

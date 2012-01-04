@@ -183,24 +183,19 @@ public class Map {
 		age += dtime;
 	}
 
-	static ShapeRenderer sr = new ShapeRenderer();
 	public void render(OrthographicCamera cam) {
 	    //mesh.render(shader, graphics.GL20.GL_LINE_STRIP)
 	    //var gl = Gdx.graphics.getGL10()
-	    sr.setProjectionMatrix(cam.combined);
-	    sr.setTransformMatrix(new Matrix4().idt());
+		cam.apply(Gdx.graphics.getGL10());
 	    
-	      sr.begin(ShapeType.Line);
 	    
 	    for(int j = 0; j < points.size(); ++j) {
 	    	ArrayList<Vector2> array = points.get(j);
 	    	Color c = colors.get(j);
-		      sr.setColor(c.r, c.g, c.b, c.a);
 	      for(int i = 0; i < array.size() - 1; ++i) {
-	        sr.line(array.get(i).x, array.get(i).y, array.get(i+1).x, array.get(i+1).y);
+			  LineDrawer.DrawLine(array.get(i), array.get(i+1), 3, c);
 	      }
-	      sr.line(array.get(array.size()-1).x, array.get(array.size()-1).y, array.get(0).x, array.get(0).y);
+		  LineDrawer.DrawLine(array.get(array.size()-1), array.get(0), 3, c);
 	    }
-	      sr.end();
 	}
 }

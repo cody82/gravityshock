@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -142,38 +144,41 @@ public class Spaceship extends Actor {
 		  p.body.setTransform(body.getWorldPoint(new Vector2(0,15)), body.getAngle());
 		  p.body.setLinearVelocity(body.getWorldVector(new Vector2(0,1000)));
 	  }
-	  static ShapeRenderer sr = new ShapeRenderer();
+
 	  void render(OrthographicCamera cam) {
-	        
-		  sr.setProjectionMatrix(cam.combined);
-		    sr.setTransformMatrix(new Matrix4().idt());
-	    
-		  sr.begin(ShapeType.Line);
-	    
+
 		  Vector2 pos = body.getPosition();
 		  float rad = body.getAngle();
-	   
-		  sr.translate(pos.x, pos.y, 0);
-		  sr.rotate(0, 0, 1, rad*180f/(float)Math.PI);
+		  
+cam.apply(Gdx.graphics.getGL10());
+Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
+Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
+		  
 		  Vector2[] array = new Vector2[]{new Vector2(0, 10), new Vector2(10, -5), new Vector2(-10, -5)};
 
+		  Color c;
 		  if(health > 0) {
-			  sr.setColor(1, 1, 1, 1);
+			  c = new Color(1, 1, 1, 1);
 		  }
 		  else {
-			  sr.setColor(0.4f, 0.4f, 0.4f, 1);
+			  c = new Color(0.4f, 0.4f, 0.4f, 1);
 		  }
 		  for(int i =0; i < array.length - 1; ++i) {
-			  sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
+			  //sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
+			  LineDrawer.DrawLine(array[i], array[i+1], 3, c);
 		  }
-		  sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
+		  //LineDrawer.DrawLine(array[0], array[0+1], 3, c);
+		  //LineDrawer.DrawLine(array[1], array[1+1], 3, c);
+		  //sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
+		  LineDrawer.DrawLine(array[array.length-1], array[0], 3, c);
 		  
-		  sr.end();
+		  
+		  
 		  if(thrust){
-			  sr.begin(ShapeType.FilledRectangle);
-			  sr.setColor(1, 1, 0, 0.5f);
-			  sr.filledRect(-5, -10, 10, 5);
-			  sr.end();
+			  c = new Color(1, 1, 0, 1);
+			  LineDrawer.DrawLine(new Vector2(-5,-15), new Vector2(-5,-5), 3, c);
+			  LineDrawer.DrawLine(new Vector2(5,-15), new Vector2(5,-5), 3, c);
+			  LineDrawer.DrawLine(new Vector2(0,-15), new Vector2(0,-5), 3, c);
 		  }
 	  }
 }

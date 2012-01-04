@@ -20,7 +20,7 @@ public class LineDrawer {
 		dir.sub(from);
 		float dist = dir.len();
 		dir.mul(1f/dist);
-		Vector2 ortho = new Vector2(-dir.x, dir.y).mul(thickness);
+		Vector2 ortho = new Vector2(-dir.y, dir.x).mul(thickness);
 		Vector2 from_left = from.cpy();
 		from_left.add(ortho);
 		Vector2 from_right = from.cpy();
@@ -33,7 +33,6 @@ public class LineDrawer {
 		Gdx.graphics.getGL10().glEnable(GL10.GL_BLEND);
 		
 		ImmediateModeRenderer10 renderer = new ImmediateModeRenderer10();
-
 		renderer.begin(GL11.GL_TRIANGLE_STRIP);
 		renderer.color(color.r, color.g, color.b, color.a);
 		renderer.vertex(from.x, from.y, 0);
