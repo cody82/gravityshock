@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.IntBuffer;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -21,7 +22,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 
 import com.gemserk.util.ScreenshotSaver;
 
-public class Main implements ApplicationListener {
+public class Main extends Game {
 	SpriteBatch spriteBatch;
 	Texture texture;
 	BitmapFont font;
@@ -205,6 +206,8 @@ public class Main implements ApplicationListener {
 			cams[i] = new OrthographicCamera(256, 256);
 		
 		nextLevel();
+		
+		this.setScreen(new Menu());
 	}
 
 	void clear() {
@@ -228,8 +231,8 @@ public class Main implements ApplicationListener {
 	}
 	@Override
 	public void render () {
-
-		float t = Gdx.graphics.getDeltaTime();
+super.render();
+		/*float t = Gdx.graphics.getDeltaTime();
 		if(record) {
 			// 30 FPS
 			t = 1f/30f;
@@ -351,7 +354,7 @@ public class Main implements ApplicationListener {
 		}
 		
 		world.tick(t);
-		map.tick(t);
+		map.tick(t);*/
 	}
 
 	int window_width = 640;
