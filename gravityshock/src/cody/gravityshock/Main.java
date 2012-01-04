@@ -219,6 +219,14 @@ public class Main implements ApplicationListener {
 		
 	}
 	
+	void viewport(int x, int y, int width, int height) {
+		if(gl10 != null) {
+			gl10.glViewport(x, y, width, height);
+		}
+		else if(gl20 != null){
+			gl20.glViewport(x, y, width, height);
+		}
+	}
 	int getTotalScore() {
 		int score = 0;
 		for(Spaceship s : players) {
@@ -242,29 +250,31 @@ public class Main implements ApplicationListener {
 
 		controls();
 		
-		gl10.glViewport(0, 0, window_width / numplayers, window_height);
 		
 		if(gl20 != null) {
 			framebuffer2.begin();
+			viewport(0, 0, window_width / numplayers, window_height);
 			clear();
 			world.render(cams[0]);
 			framebuffer2.end();
 		}
 		else {
+			viewport(0, 0, window_width / numplayers, window_height);
 			clear();
 			world.render(cams[0]);
 		}
 		
 		if(numplayers > 1){
 			cams[1].update();
-			gl10.glViewport(window_width / 2, 0, window_width / 2, window_height);
 			
 			if(gl20 != null) {
 				framebuffer2.begin();
+				viewport(window_width / 2, 0, window_width / numplayers, window_height);
 				world.render(cams[1]);
 				framebuffer2.end();
 			}
 			else {
+				viewport(window_width / 2, 0, window_width / numplayers, window_height);
 				world.render(cams[1]);
 			}
 		}
@@ -276,6 +286,7 @@ public class Main implements ApplicationListener {
 
 			SpriteBatch spriteBatch2 = new SpriteBatch();
 			
+
 			framebuffer.begin();
 			spriteBatch2.begin();
 			spriteBatch2.setProjectionMatrix(spriteBatch2.getProjectionMatrix().setToOrtho2D(0, 1, 1, -1));
@@ -300,7 +311,7 @@ public class Main implements ApplicationListener {
 		if(players[i].health <= 0) {
 			if(players[i].lifes <= 1) {
 				spriteBatch.begin();
-				gl10.glViewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
+				viewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
 				font.draw(spriteBatch, "GAME OVER", (window_width / numplayers) / 2 - font.getSpaceWidth()*9, Gdx.graphics.getHeight()/2 + font.getLineHeight()/2);
 				spriteBatch.end();
 			}
@@ -323,7 +334,7 @@ public class Main implements ApplicationListener {
 			cams[i].position.y = result.y;
 			
 
-			gl10.glViewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
+			viewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
 			
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
