@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import cody.svg.*;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -46,6 +49,10 @@ public class Enemy extends Actor{
 	    
 	    	fixture = body.createFixture(shape, 0.1f);
 	    }
+	    
+	    if(mesh == null) {
+	    	mesh = Util.createMesh(svg, 3);
+	    }
 	  }
 	  
 	  void tick(float dtime) {
@@ -64,29 +71,19 @@ public class Enemy extends Actor{
 			  }
 		  }
 	  }
+	  
+	  static Mesh mesh;
 
-	  static ShapeRenderer sr = new ShapeRenderer();
 	  void render(OrthographicCamera cam) {
-	        
-	    sr.setProjectionMatrix(cam.combined);
-	    sr.setTransformMatrix(new Matrix4().idt());
-	    
-	    sr.begin(ShapeType.Line);
-	    
-	    Vector2 pos = body.getPosition();
-	    float rad = body.getAngle();
-	   
-	    sr.translate(pos.x, pos.y, 0);
-	    sr.rotate(0, 0, 1, rad*180f/(float)Math.PI);
-	    for(int j=0;j<svg.pathCount();++j) {
-	    	Vector2[] array = svg.getPath(j).points;
-	    	Color c = svg.getPath(j).color;
-	    	sr.setColor(c.r, c.g, c.b, c.a);
-	    	for(int i =0; i < array.length - 1; ++i) {
-	    		sr.line(array[i].x, array[i].y, array[i+1].x, array[i+1].y);
-	    	}
-	    	sr.line(array[array.length-1].x, array[array.length-1].y, array[0].x, array[0].y);
-	    }
-	    sr.end();
+		  Vector2 pos = body.getPosition();
+		  float rad = body.getAngle();
+
+		  Matrix4 matrix = cam.combined.cpy();
+		  matrix.translate(pos.x, pos.y, 0);
+		  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
+	//Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
+	//Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
+		  
+	Util.render(mesh, GL10.GL_TRIANGLES, matrix);
 	  }
 }
