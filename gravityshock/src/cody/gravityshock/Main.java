@@ -218,7 +218,7 @@ public class Main implements ApplicationListener {
 		}
 		
 	}
-	
+	 
 	void viewport(int x, int y, int width, int height) {
 		if(gl10 != null) {
 			gl10.glViewport(x, y, width, height);
