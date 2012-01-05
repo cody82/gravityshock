@@ -59,6 +59,6 @@ public class Explosion extends Actor{
 	//Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
 	//Gdx.graphics.getGL10().glScalef(scale, scale, 0);
 
-			Util.render(mesh, GL10.GL_TRIANGLES, matrix);
+			Util.render(mesh, GL10.GL_TRIANGLES, matrix, (3f - age)/3f);
 	  }
 }

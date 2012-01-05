@@ -46,7 +46,7 @@ public class Projectile extends Actor{
 		  }
 	  }
 
-		static Mesh mesh;
+	  static Mesh mesh;
 	  void render(OrthographicCamera cam) {
 
 		  Vector2 pos = body.getPosition();
@@ -56,10 +56,8 @@ public class Projectile extends Actor{
 		  Matrix4 matrix = cam.combined.cpy();
 		  matrix.translate(pos.x, pos.y, 0);
 		  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
-	//cam.apply(Gdx.graphics.getGL10());
-	//Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
-	//Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
-	Util.render(mesh, GL10.GL_TRIANGLES, matrix);
+
+		  Util.render(mesh, GL10.GL_TRIANGLES, matrix, (3f - age)/3f);
 	  }
 
 

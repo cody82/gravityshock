@@ -157,11 +157,14 @@ public class Util {
 	}
 	
 	public static void render(Mesh mesh, int primitiveType, Matrix4 projModelView) {
+		render(mesh, primitiveType, projModelView, 1f);
+	}
+	
+	public static void render(Mesh mesh, int primitiveType, Matrix4 projModelView, float alpha) {
 		if(Gdx.graphics.isGL20Available()) {
 			ShaderProgram shader = getStandardShader();
 			shader.begin();
-			String[] uniforms = shader.getUniforms();
-			String[] attributes = shader.getAttributes();
+			shader.setUniformf("u_alpha", alpha);
 			shader.setUniformMatrix("u_projModelView", projModelView);
 			mesh.render(shader, primitiveType);
 			shader.end();
@@ -191,9 +194,10 @@ public class Util {
 	static final String standardFragmentShader = "#ifdef GL_ES\n" +
 			"precision mediump float;\n" +
 			"#endif\n" +
+			"uniform float u_alpha; \n" + 
 			"varying vec4 v_color; \n" + 
 			"void main() \n" +
 			"{ \n" +
-			" gl_FragColor = v_color;\n" +
+			" gl_FragColor = v_color * u_alpha;\n" +
 			"} \n";
 }
