@@ -53,13 +53,17 @@ public class Pickup extends Actor{
 		  Vector2 pos = body.getPosition();
 		  float rad = body.getAngle();
 
-	cam.apply(Gdx.graphics.getGL10());
-	Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
-	Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
+
+		  Matrix4 matrix = cam.combined.cpy();
+		  matrix.translate(pos.x, pos.y, 0);
+		  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
+	//cam.apply(Gdx.graphics.getGL10());
+	//Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
+	//Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
 		  
 	if(!returned)
-		  mesh.render(GL10.GL_TRIANGLES);
+		Util.render(mesh, GL10.GL_TRIANGLES, matrix);
 	else
-		  mesh2.render(GL10.GL_TRIANGLES);
+		Util.render(mesh2, GL10.GL_TRIANGLES, matrix);
 	  }
 }

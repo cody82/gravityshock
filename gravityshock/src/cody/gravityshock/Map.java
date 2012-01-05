@@ -187,26 +187,11 @@ public class Map {
 
 	static ShapeRenderer sr = new ShapeRenderer();
 	public void render(OrthographicCamera cam) {
-		cam.apply(Gdx.graphics.getGL10());
+
+		  Matrix4 matrix = cam.combined.cpy();
+		//cam.apply(Gdx.graphics.getGL10());
 		for(Mesh m : meshes) {
-			m.render(GL10.GL_TRIANGLES);
+			Util.render(m, GL10.GL_TRIANGLES, matrix);
 		}
-	    //mesh.render(shader, graphics.GL20.GL_LINE_STRIP)
-	    //var gl = Gdx.graphics.getGL10()
-	    /*sr.setProjectionMatrix(cam.combined);
-	    sr.setTransformMatrix(new Matrix4().idt());
-	    
-	      sr.begin(ShapeType.Line);
-	    
-	    for(int j = 0; j < points.size(); ++j) {
-	    	ArrayList<Vector2> array = points.get(j);
-	    	Color c = colors.get(j);
-		      sr.setColor(c.r, c.g, c.b, c.a);
-	      for(int i = 0; i < array.size() - 1; ++i) {
-	        sr.line(array.get(i).x, array.get(i).y, array.get(i+1).x, array.get(i+1).y);
-	      }
-	      sr.line(array.get(array.size()-1).x, array.get(array.size()-1).y, array.get(0).x, array.get(0).y);
-	    }
-	      sr.end();*/
 	}
 }

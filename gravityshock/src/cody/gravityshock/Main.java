@@ -189,10 +189,10 @@ public class Main implements ApplicationListener {
 		GL10 gl10 = Gdx.graphics.getGL10();
 		GL20 gl20 = Gdx.graphics.getGL20();
 		
-		if(Gdx.graphics.isGL20Available()) {
+		/*if(Gdx.graphics.isGL20Available()) {
 			framebuffer = new FrameBuffer(Pixmap.Format.RGB888, 128, 128, false);
 			framebuffer2 = new FrameBuffer(Pixmap.Format.RGB888, 512, 512, false);
-		}
+		}*/
 
 		//var musicfile = Gdx.files.internal("data/2ND_PM.ogg")
 		//var music = Gdx.audio.newMusic(musicfile)
@@ -251,36 +251,36 @@ public class Main implements ApplicationListener {
 		controls();
 		
 		
-		if(gl20 != null) {
+		/*if(gl20 != null) {
 			framebuffer2.begin();
 			viewport(0, 0, window_width / numplayers, window_height);
 			clear();
 			world.render(cams[0]);
 			framebuffer2.end();
 		}
-		else {
+		else {*/
 			viewport(0, 0, window_width / numplayers, window_height);
 			clear();
 			world.render(cams[0]);
-		}
+		//}
 		
 		if(numplayers > 1){
 			cams[1].update();
 			
-			if(gl20 != null) {
+			/*if(gl20 != null) {
 				framebuffer2.begin();
 				viewport(window_width / 2, 0, window_width / numplayers, window_height);
 				world.render(cams[1]);
 				framebuffer2.end();
 			}
-			else {
+			else {*/
 				viewport(window_width / 2, 0, window_width / numplayers, window_height);
 				world.render(cams[1]);
-			}
+			//}
 		}
 
 		
-		if(gl20 != null) {
+		/*if(gl20 != null) {
 			Texture texture = framebuffer.getColorBufferTexture();
 			Texture texture2 = framebuffer2.getColorBufferTexture();
 
@@ -305,7 +305,7 @@ public class Main implements ApplicationListener {
 			spriteBatch2.draw(texture, 0, 0, 1, 1);
 			spriteBatch2.end();
 			spriteBatch2.dispose();
-		}
+		}*/
 
 		for(int i=0;i<numplayers;++i) {
 		if(players[i].health <= 0) {
@@ -378,12 +378,12 @@ public class Main implements ApplicationListener {
 			spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width/numplayers, height);
 		}
 
-			if(Gdx.graphics.isGL20Available()) {
+			/*if(Gdx.graphics.isGL20Available()) {
 				framebuffer.dispose();
 				framebuffer2.dispose();
 				framebuffer = new FrameBuffer(Pixmap.Format.RGB888, width / 4, height / 4, false);
 				framebuffer2 = new FrameBuffer(Pixmap.Format.RGB888, width, height, false);
-			}
+			}*/
 	}
 
 	@Override
