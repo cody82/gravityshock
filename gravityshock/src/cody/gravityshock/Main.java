@@ -207,7 +207,7 @@ public class Main extends Game {
 		
 		nextLevel();
 		
-		this.setScreen(new MainMenu());
+		//this.setScreen(new MainMenu());
 	}
 
 	void clear() {
@@ -240,7 +240,7 @@ public class Main extends Game {
 	@Override
 	public void render () {
 super.render();
-		/*float t = Gdx.graphics.getDeltaTime();
+		float t = Gdx.graphics.getDeltaTime();
 		if(record) {
 			// 30 FPS
 			t = 1f/30f;
@@ -365,7 +365,7 @@ super.render();
 		}
 		
 		world.tick(t);
-		map.tick(t);*/
+		map.tick(t);
 	}
 
 	int window_width = 640;
