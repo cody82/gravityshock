@@ -207,7 +207,7 @@ public class Main extends Game {
 		
 		nextLevel();
 		
-		this.setScreen(new Menu());
+		this.setScreen(new MainMenu());
 	}
 
 	void clear() {

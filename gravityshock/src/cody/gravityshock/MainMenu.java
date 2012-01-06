@@ -39,7 +39,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 
 
-public class Menu implements Screen {
+public class MainMenu implements Screen {
 
     String[] listEntries = {"This is a list entry", "And another one", "The meaning of life", "Is hard to come by",
             "This is a list entry", "And another one", "The meaning of life", "Is hard to come by", "This is a list entry",
@@ -76,69 +76,60 @@ public class Menu implements Screen {
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        ((Label)ui.findActor("label")).setText("fps: " + Gdx.graphics.getFramesPerSecond());
+        //((Label)ui.findActor("label")).setText("fps: " + Gdx.graphics.getFramesPerSecond());
 
         ui.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         ui.draw();
-        Table.drawDebug(ui);
+        //Table.drawDebug(ui);
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
         ui.setViewport(width, height, false);
-
-	}
+    }
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
 		
 	}
-
+	Window window;
 	@Override
 	public void show() {
 
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("data/uiskin.json"), Gdx.files.internal("data/uiskin.png"));
-        TextureRegion image = new TextureRegion(new Texture(Gdx.files.internal("data/badlogicsmall.jpg")));
-        TextureRegion image2 = new TextureRegion(new Texture(Gdx.files.internal("data/badlogic.jpg")));
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        Window window = new Window("window", "Dialog", ui, skin.getStyle(WindowStyle.class), 420, 440);
+        window = new Window("window", "GravityShock", ui, skin.getStyle(WindowStyle.class), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         window.x = window.y = 0;
 
         // Group.debug = true;
 
-        final Button button = new Button("Single", skin.getStyle(ButtonStyle.class), "button-sl") {
+        final Button button = new Button("Start Singleplayer Game", skin.getStyle(ButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
 				return isChecked;
         	}
         };
+        
+        final Button button2 = new Button("Start Two-Player Splitscreen Game", skin.getStyle(ButtonStyle.class), "button-sl") {
+        	@Override
+        	public boolean touchDown(float x, float y, int pointer) {
+				return isChecked;
+        	}
+        };
+        //final Label fpsLabel = new Label("fps:", skin.getStyle(LabelStyle.class), "label");
 
-        final Button buttonMulti = new Button("Multi\nLine\nToggle", skin.getStyle("toggle", ButtonStyle.class), "button-ml-tgl");
-        final Button imgButton = new Button(new Image(image), skin.getStyle(ButtonStyle.class));
-        final Button imgToggleButton = new Button(new Image(image), skin.getStyle("toggle", ButtonStyle.class));
-        final CheckBox checkBox = new CheckBox("Check me", skin.getStyle(CheckBoxStyle.class), "checkbox");
-        final Slider slider = new Slider(0, 10, 1, skin.getStyle(SliderStyle.class), "slider");
-        final TextField textfield = new TextField("", skin.getStyle(TextFieldStyle.class), "textfield");
-        final ComboBox combobox = new ComboBox(new String[] {"Android", "Windows", "Linux", "OSX"}, ui,
-                skin.getStyle(ComboBoxStyle.class), "combo");
-        final Image imageActor = new Image(image2);
-        final FlickScrollPane scrollPane = new FlickScrollPane(imageActor, ui, "scroll");
-        final List list = new List(listEntries, skin.getStyle(ListStyle.class), "list");
-        final ScrollPane scrollPane2 = new ScrollPane(list, ui, skin.getStyle(ScrollPaneStyle.class), "scroll2");
-        final SplitPane splitPane = new SplitPane(scrollPane, scrollPane2, false, ui, skin.getStyle("default-horizontal",
-                SplitPaneStyle.class), "split");
-        final Label fpsLabel = new Label("fps:", skin.getStyle(LabelStyle.class), "label");
-
-        // window.debug();
+        //window.debug();
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
-        window.add(button).fill(0f, 0f);
-        window.add(buttonMulti);
+        window.add(button).expandX().minHeight(50);
+        window.row();
+        window.add(button2).fill(0f, 0f);
+        /*window.add(buttonMulti);
         window.add(imgButton);
         window.add(imgToggleButton);
         window.row();
@@ -151,21 +142,7 @@ public class Menu implements Screen {
         window.add(splitPane).fill().expand().colspan(4).minHeight(200);
         window.row();
         window.add(fpsLabel).colspan(4);
-
-        textfield.setTextFieldListener(new TextFieldListener() {
-                @Override
-                public void keyTyped (TextField textField, char key) {
-                        if (key == '\n') textField.getOnscreenKeyboard().show(false);
-                }
-        });
-
-        slider.setValueChangedListener(new ValueChangedListener() {
-
-                @Override
-                public void changed (Slider slider, float value) {
-                        Gdx.app.log("UITest", "slider: " + value);
-                }
-        });
+*/
 
         ui.addActor(window);
 
