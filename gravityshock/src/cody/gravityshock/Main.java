@@ -190,10 +190,10 @@ public class Main extends Game {
 		GL10 gl10 = Gdx.graphics.getGL10();
 		GL20 gl20 = Gdx.graphics.getGL20();
 		
-		if(Gdx.graphics.isGL20Available()) {
+		/*if(Gdx.graphics.isGL20Available()) {
 			framebuffer = new FrameBuffer(Pixmap.Format.RGB888, 128, 128, false);
 			framebuffer2 = new FrameBuffer(Pixmap.Format.RGB888, 512, 512, false);
-		}
+		}*/
 
 		//var musicfile = Gdx.files.internal("data/2ND_PM.ogg")
 		//var music = Gdx.audio.newMusic(musicfile)
@@ -221,7 +221,15 @@ public class Main extends Game {
 		}
 		
 	}
-	
+	 
+	void viewport(int x, int y, int width, int height) {
+		if(gl10 != null) {
+			gl10.glViewport(x, y, width, height);
+		}
+		else if(gl20 != null){
+			gl20.glViewport(x, y, width, height);
+		}
+	}
 	int getTotalScore() {
 		int score = 0;
 		for(Spaceship s : players) {
@@ -245,40 +253,43 @@ super.render();
 
 		controls();
 		
-		gl10.glViewport(0, 0, window_width / numplayers, window_height);
 		
-		if(gl20 != null) {
+		/*if(gl20 != null) {
 			framebuffer2.begin();
+			viewport(0, 0, window_width / numplayers, window_height);
 			clear();
 			world.render(cams[0]);
 			framebuffer2.end();
 		}
-		else {
+		else {*/
+			viewport(0, 0, window_width / numplayers, window_height);
 			clear();
 			world.render(cams[0]);
-		}
+		//}
 		
 		if(numplayers > 1){
 			cams[1].update();
-			gl10.glViewport(window_width / 2, 0, window_width / 2, window_height);
 			
-			if(gl20 != null) {
+			/*if(gl20 != null) {
 				framebuffer2.begin();
+				viewport(window_width / 2, 0, window_width / numplayers, window_height);
 				world.render(cams[1]);
 				framebuffer2.end();
 			}
-			else {
+			else {*/
+				viewport(window_width / 2, 0, window_width / numplayers, window_height);
 				world.render(cams[1]);
-			}
+			//}
 		}
 
 		
-		if(gl20 != null) {
+		/*if(gl20 != null) {
 			Texture texture = framebuffer.getColorBufferTexture();
 			Texture texture2 = framebuffer2.getColorBufferTexture();
 
 			SpriteBatch spriteBatch2 = new SpriteBatch();
 			
+
 			framebuffer.begin();
 			spriteBatch2.begin();
 			spriteBatch2.setProjectionMatrix(spriteBatch2.getProjectionMatrix().setToOrtho2D(0, 1, 1, -1));
@@ -297,13 +308,13 @@ super.render();
 			spriteBatch2.draw(texture, 0, 0, 1, 1);
 			spriteBatch2.end();
 			spriteBatch2.dispose();
-		}
+		}*/
 
 		for(int i=0;i<numplayers;++i) {
 		if(players[i].health <= 0) {
 			if(players[i].lifes <= 1) {
 				spriteBatch.begin();
-				gl10.glViewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
+				viewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
 				font.draw(spriteBatch, "GAME OVER", (window_width / numplayers) / 2 - font.getSpaceWidth()*9, Gdx.graphics.getHeight()/2 + font.getLineHeight()/2);
 				spriteBatch.end();
 			}
@@ -326,7 +337,7 @@ super.render();
 			cams[i].position.y = result.y;
 			
 
-			gl10.glViewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
+			viewport(i * (window_width / numplayers), 0, (window_width / numplayers), window_height);
 			
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
@@ -370,12 +381,12 @@ super.render();
 			spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width/numplayers, height);
 		}
 
-			if(Gdx.graphics.isGL20Available()) {
+			/*if(Gdx.graphics.isGL20Available()) {
 				framebuffer.dispose();
 				framebuffer2.dispose();
 				framebuffer = new FrameBuffer(Pixmap.Format.RGB888, width / 4, height / 4, false);
 				framebuffer2 = new FrameBuffer(Pixmap.Format.RGB888, width, height, false);
-			}
+			}*/
 	}
 
 	@Override

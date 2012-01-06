@@ -12,6 +12,6 @@ public class MainDesktop {
 			}
 		}
 		
-		new JoglApplication(main, "GravityShock", 800, 450, false);
+		new JoglApplication(main, "GravityShock", 800, 450, true);
 	}
 }

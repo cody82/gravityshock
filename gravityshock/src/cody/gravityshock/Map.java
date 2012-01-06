@@ -33,10 +33,10 @@ public class Map {
 	Body body;
 	ArrayList<Fixture> fixtures;
 	ArrayList<ArrayList<Vector2>> points;
-	Mesh mesh;
 	ShaderProgram shader;
 	ArrayList<Pickup> pickups;
 	float age;
+	ArrayList<Mesh> meshes;
 	
 	public void load(World _world, String filename) {
 			    world = _world;
@@ -50,6 +50,7 @@ public class Map {
 		shapes = new ArrayList<ChainShape>();
 		colors = new ArrayList<Color>();
 		pickups = new ArrayList<Pickup>();
+		meshes = new ArrayList<Mesh>();
 		
 		BodyDef bdef = new BodyDef();
 		bdef.type = BodyDef.BodyType.StaticBody;
@@ -145,6 +146,7 @@ public class Map {
 			else {
 			colors.add(color);
 			points.add(array);
+			meshes.add(Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true));
 			ChainShape shape = new ChainShape();
 			shape.createLoop(array.toArray(new Vector2[0]));
 			shapes.add(shape);
@@ -185,22 +187,11 @@ public class Map {
 
 	static ShapeRenderer sr = new ShapeRenderer();
 	public void render(OrthographicCamera cam) {
-	    //mesh.render(shader, graphics.GL20.GL_LINE_STRIP)
-	    //var gl = Gdx.graphics.getGL10()
-	    sr.setProjectionMatrix(cam.combined);
-	    sr.setTransformMatrix(new Matrix4().idt());
-	    
-	      sr.begin(ShapeType.Line);
-	    
-	    for(int j = 0; j < points.size(); ++j) {
-	    	ArrayList<Vector2> array = points.get(j);
-	    	Color c = colors.get(j);
-		      sr.setColor(c.r, c.g, c.b, c.a);
-	      for(int i = 0; i < array.size() - 1; ++i) {
-	        sr.line(array.get(i).x, array.get(i).y, array.get(i+1).x, array.get(i+1).y);
-	      }
-	      sr.line(array.get(array.size()-1).x, array.get(array.size()-1).y, array.get(0).x, array.get(0).y);
-	    }
-	      sr.end();
+
+		  Matrix4 matrix = cam.combined.cpy();
+		//cam.apply(Gdx.graphics.getGL10());
+		for(Mesh m : meshes) {
+			Util.render(m, GL10.GL_TRIANGLES, matrix);
+		}
 	}
 }
