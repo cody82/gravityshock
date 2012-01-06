@@ -10,9 +10,14 @@ public class MainGame extends Game{
 	}
 
 	public void start() {
-		Main main = new Main();
+		Main main = new Main(this);
 		main.numplayers = numplayers;
 		this.setScreen(main);
+		
+	}
+
+	public void startMainMenu() {
+		this.setScreen(new MainMenu(this));
 		
 	}
 }

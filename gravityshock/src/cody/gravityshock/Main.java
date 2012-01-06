@@ -50,6 +50,11 @@ public class Main implements Screen {
 	
 	float zoom = 1f;
 	
+	MainGame game;
+	public Main(MainGame _game) {
+		game = _game;
+	}
+	
     void createPlayer(int index){
 
     	Spaceship oldplayer = players[index];
@@ -311,6 +316,7 @@ public class Main implements Screen {
 			spriteBatch2.dispose();
 		}*/
 
+		boolean game_over = true;
 		for(int i=0;i<numplayers;++i) {
 		if(players[i].health <= 0) {
 			if(players[i].lifes <= 1) {
@@ -322,13 +328,16 @@ public class Main implements Screen {
 			else {
 				createPlayer(i);
 				players[i].lifes--;
+				game_over = false;
 			}
 		}
 		else if(getTotalScore() >= map.getGoalScore()) {
 			nextLevel();
+			game_over = false;
 			break;
 		}
 		else {
+			game_over = false;
 			Vector2 v = players[i].body.getPosition();
 			Vector2 cp = new Vector2(cams[i].position.x, cams[i].position.y);
 			Vector2 d = v.sub(cp);
@@ -352,6 +361,11 @@ public class Main implements Screen {
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, 160);
 			spriteBatch.end();
 		}
+		}
+		
+		if(game_over) {
+			game.startMainMenu();
+			return;
 		}
 		
 		if(record) {
