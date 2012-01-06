@@ -7,6 +7,7 @@ import java.nio.IntBuffer;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -22,7 +23,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 
 import com.gemserk.util.ScreenshotSaver;
 
-public class Main extends Game {
+public class Main implements Screen {
 	SpriteBatch spriteBatch;
 	Texture texture;
 	BitmapFont font;
@@ -181,7 +182,7 @@ public class Main extends Game {
     	}
     }
 	@Override
-	public void create () {
+	public void show () {
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
@@ -211,6 +212,7 @@ public class Main extends Game {
 	}
 
 	void clear() {
+        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
 		if(gl10 != null) {
 			gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 			gl10.glEnable(GL10.GL_BLEND);
@@ -238,8 +240,7 @@ public class Main extends Game {
 		return score;
 	}
 	@Override
-	public void render () {
-super.render();
+	public void render (float t2) {
 		float t = Gdx.graphics.getDeltaTime();
 		if(record) {
 			// 30 FPS
@@ -404,4 +405,8 @@ super.render();
 
 	}
 
+	@Override
+	public void hide () {
+
+	}
 }

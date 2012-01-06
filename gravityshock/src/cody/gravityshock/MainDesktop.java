@@ -4,7 +4,7 @@ import com.badlogic.gdx.backends.jogl.JoglApplication;
 
 public class MainDesktop {
 	public static void main (String[] argv) {
-		Main main = new Main();
+		MainGame main = new MainGame();
 
 		for(int i = 0;i<argv.length;++i) {
 			if(argv[i].equals("--numplayers")) {

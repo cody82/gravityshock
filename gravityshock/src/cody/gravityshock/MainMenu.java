@@ -52,7 +52,10 @@ public class MainMenu implements Screen {
     SpriteBatch batch;
     Actor root;
 
-
+    MainGame game;
+    public MainMenu(MainGame _game) {
+    	game = _game;
+    }
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
@@ -73,7 +76,7 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void render(float arg0) {
-        Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         //((Label)ui.findActor("label")).setText("fps: " + Gdx.graphics.getFramesPerSecond());
@@ -111,6 +114,8 @@ public class MainMenu implements Screen {
         final Button button = new Button("Start Singleplayer Game", skin.getStyle(ButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
+        		game.numplayers = 1;
+        		game.start();
 				return isChecked;
         	}
         };
@@ -118,6 +123,15 @@ public class MainMenu implements Screen {
         final Button button2 = new Button("Start Two-Player Splitscreen Game", skin.getStyle(ButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
+        		game.numplayers = 2;
+        		game.start();
+				return isChecked;
+        	}
+        };
+        final Button button3 = new Button("Quit", skin.getStyle(ButtonStyle.class), "button-sl") {
+        	@Override
+        	public boolean touchDown(float x, float y, int pointer) {
+        		Gdx.app.exit();
 				return isChecked;
         	}
         };
@@ -126,9 +140,11 @@ public class MainMenu implements Screen {
         //window.debug();
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
-        window.add(button).expandX().minHeight(50);
+        window.add(button).fill(0f, 0f);
         window.row();
         window.add(button2).fill(0f, 0f);
+        window.row();
+        window.add(button3).fill(0f, 0f);
         /*window.add(buttonMulti);
         window.add(imgButton);
         window.add(imgToggleButton);
