@@ -26,7 +26,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1"
      inkscape:cx="-73.953715"
-     inkscape:cy="1312.0634"
+     inkscape:cy="1913.8241"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -130,5 +130,27 @@
        id="path2985-9"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-5.2050362"
+       y="-619.44568"
+       id="text2987-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2989-95"
+         x="-5.2050362"
+         y="-619.44568">turret</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-35.446907"
+       y="-1106.4106"
+       id="text2987-5-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2989-95-3"
+         x="-35.446907"
+         y="-1106.4106">turret</tspan></text>
   </g>
 </svg>
