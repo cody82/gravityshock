@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.IntBuffer;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -137,6 +138,7 @@ public class Main implements Screen {
     	float touch_direction = 0f;
     	boolean touch_thrust = false;
     	
+    	if(Gdx.app.getType() == ApplicationType.Android)
     	for(int i=0;i<5;++i) {
     		if(Gdx.input.isTouched(i)) {
     			int x = Gdx.input.getX(i);
@@ -418,7 +420,8 @@ public class Main implements Screen {
 			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, y+120);
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, y+140);
 			spriteBatch.end();
-			drawbuttons();
+			if(Gdx.app.getType() == ApplicationType.Android)
+				drawbuttons();
 		}
 		}
 		
