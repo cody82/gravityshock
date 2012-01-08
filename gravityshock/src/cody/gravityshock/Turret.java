@@ -56,12 +56,12 @@ public class Turret extends Actor implements RayCastCallback {
 		Vector2 pos = body.getPosition().cpy();
 		pos.add(dir);
 
-		float angle = dir.cpy().nor().angle();
-		System.out.println(angle);
+		float angle = dir.cpy().nor().angle() /180f * (float)Math.PI;
+
 		body.setTransform(body.getPosition(), angle);
-		  Projectile p = new Projectile(world);
-		  p.body.setTransform(body.getPosition(), angle);
-		  p.body.setLinearVelocity(dir.mul(10));
+		Projectile p = new Projectile(world);
+		p.body.setTransform(body.getPosition(), angle);
+		p.body.setLinearVelocity(dir.mul(10));
 	}
 	
 	
