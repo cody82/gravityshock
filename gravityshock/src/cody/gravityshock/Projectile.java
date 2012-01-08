@@ -33,6 +33,7 @@ public class Projectile extends Actor{
 	    shape.setRadius(1);
 	    fixture = body.createFixture(shape, 1f);
 		fixture.setRestitution(0.5f);
+		fixture.setUserData(this);
 		
 		if(mesh == null)
 			mesh = Util.createMesh(new Vector2[]{new Vector2(-1,-1), new Vector2(1,-1), new Vector2(1,1), new Vector2(-1,1)}, new Color(1,1,0,1), 2, true);

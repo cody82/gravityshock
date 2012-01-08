@@ -101,11 +101,11 @@ public class World implements ContactListener {
 		if(o1 != null && o2 != null) {
 			//System.out.println(o1.getClass().getName() + " | " + o2.getClass().getName() + ": " + impulse);
 			if(o1 instanceof Spaceship) {
-				if(o2 instanceof Map)
+				if(o2 instanceof Map || o2 instanceof Projectile)
 					collisions.add(new CollisionInfo((Spaceship)o1, ((Spaceship) o1).body.getPosition(), impulse));
 			}
 			if(o2 instanceof Spaceship) {
-				if(o1 instanceof Map)
+				if(o1 instanceof Map || o2 instanceof Projectile)
 					collisions.add(new CollisionInfo((Spaceship)o2, ((Spaceship) o2).body.getPosition(), impulse));
 			}
 		}

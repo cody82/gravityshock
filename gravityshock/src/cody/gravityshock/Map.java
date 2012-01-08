@@ -174,6 +174,10 @@ public class Map {
 				Home home = new Home(world);
 				home.body.setTransform(x, -y, 0);
 			}
+			else if(text.equals("turret")){
+				Turret t = new Turret(world);
+				t.body.setTransform(x, -y, 0);
+			}
 		}
 	}
 	
