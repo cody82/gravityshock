@@ -9,6 +9,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,9 +17,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.graphics.Pixmap;
 
 import com.gemserk.util.ScreenshotSaver;
@@ -78,7 +82,54 @@ public class Main implements Screen {
 			players[i].score = 0;
 		}
     }
-    
+
+	ShapeRenderer r = new ShapeRenderer();
+    void drawbuttons() {
+		viewport(0, 0, window_width, window_height);
+
+/*
+		if(buttons == null) {
+		buttons = new Mesh(true, 4, 6, 
+				new VertexAttribute(Usage.Position, 3, "a_position"), 
+				new VertexAttribute(Usage.ColorPacked, 4,"a_color"));
+    		buttons.setVertices(new float[]{
+    				0, window_height - 100, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
+    				100, window_height - 100, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
+    				0, window_height, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
+    				100, window_height, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
+    		});
+    		buttons.setIndices(new short[]{
+    				0,1,2, 1,2,3
+    		});
+		}
+		*/
+		gl20.glEnable(GL20.GL_BLEND);
+    	Matrix4 m = new Matrix4();
+    	m.setToOrtho2D(0, window_height, window_width, -window_height);
+    	r.setProjectionMatrix(m);
+    	
+    	
+    	r.begin(ShapeType.FilledRectangle);
+
+    	r.setColor(1f, 0, 0, 0.5f);
+    	r.filledRect(0, window_height - 100, 100, 100);
+    	r.setColor(0.0f, 1f, 0, 0.5f);
+    	r.filledRect(150, window_height - 100, 100, 100);
+    	
+    	r.setColor(1f, 1f, 0.0f, 0.5f);
+    	r.filledRect(window_width -100, window_height - 250, 100, 100);
+    	r.setColor(0.0f, 0.0f, 1f, 0.5f);
+    	r.filledRect(window_width -100, window_height - 100, 100, 100);
+    	r.end();
+    	
+    	spriteBatch.begin();
+		font.draw(spriteBatch, "left", 20, 60);
+		font.draw(spriteBatch, "right", 170, 60);
+		font.draw(spriteBatch, "shoot", window_width - 60, 210);
+		font.draw(spriteBatch, "thrust", window_width - 60, 60);
+		spriteBatch.end();
+		
+    }
     void controls() {
     	float ax = 0f;//Gdx.input.getAccelerometerX();
     	
@@ -90,11 +141,17 @@ public class Main implements Screen {
     		if(Gdx.input.isTouched(i)) {
     			int x = Gdx.input.getX(i);
     			int y = Gdx.input.getY(i);
-    			if(x > window_width * 3 / 4) {
-    				if(y > window_height / 2)
-    					touch_shoot = true;
-    				else
-        				touch_thrust = true;
+    			if(x > window_width - 100 && y > window_height - 100) {
+        			touch_thrust = true;
+    			}
+    			else if(x > window_width - 100 && y > window_height - 250 && y < window_height - 150) {
+    				touch_shoot = true;
+    			}
+    			else if(y > window_height - 100 && x < 100) {
+					touch_direction = 1;
+    			}
+    			else if(y > window_height - 100 && x < 250 && x > 150) {
+					touch_direction = -1;
     			}
     			else {
     				
@@ -192,7 +249,7 @@ public class Main implements Screen {
 		font.setColor(Color.WHITE);
 		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
 		spriteBatch = new SpriteBatch();
-
+		
 		GL10 gl10 = Gdx.graphics.getGL10();
 		GL20 gl20 = Gdx.graphics.getGL20();
 		
@@ -351,15 +408,17 @@ public class Main implements Screen {
 			
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
-			font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, 20);
-			font.draw(spriteBatch, "score: " + Integer.toString(players[i].score) + "/" + Integer.toString(map.getGoalScore()), 20, 40);
-			font.draw(spriteBatch, "speed: " + Integer.toString((int)players[i].body.getLinearVelocity().len()) + "m/s", 20, 60);
-			font.draw(spriteBatch, "health: " + Integer.toString(players[i].health) + "%", 20, 80);
-			font.draw(spriteBatch, "lifes: " + Integer.toString(players[i].lifes), 20, 100);
-			font.draw(spriteBatch, "level: " + Integer.toString(level), 20, 120);
-			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, 140);
-			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, 160);
+			int y = window_height -150;
+			font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, y);
+			font.draw(spriteBatch, "score: " + Integer.toString(players[i].score) + "/" + Integer.toString(map.getGoalScore()), 20, y+20);
+			font.draw(spriteBatch, "speed: " + Integer.toString((int)players[i].body.getLinearVelocity().len()) + "m/s", 20, y+40);
+			font.draw(spriteBatch, "health: " + Integer.toString(players[i].health) + "%", 20, y+60);
+			font.draw(spriteBatch, "lifes: " + Integer.toString(players[i].lifes), 20, y+80);
+			font.draw(spriteBatch, "level: " + Integer.toString(level), 20, y+100);
+			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, y+120);
+			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, y+140);
 			spriteBatch.end();
+			drawbuttons();
 		}
 		}
 		
@@ -411,7 +470,6 @@ public class Main implements Screen {
 
 	@Override
 	public void resume () {
-
 	}
 
 	@Override
