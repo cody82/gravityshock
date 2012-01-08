@@ -104,5 +104,13 @@
          id="tspan2989-3"
          x="-330.48413"
          y="-9.19454">turret</tspan></text>
+    <path
+       style="fill:none;stroke:#1a1a1a;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -78.020863,9.9391023 -48.260327,17.6954537 -6.43471,-15.282437 -20.10847,28.151858 34.58657,8.847726 -4.82604,-15.282437 47.455993,-17.695453 z"
+       id="path3806"
+       inkscape:connector-curvature="0">
+      <desc
+         id="desc3808">nocollision</desc>
+    </path>
   </g>
 </svg>

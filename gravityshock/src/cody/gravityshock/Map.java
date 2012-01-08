@@ -144,17 +144,20 @@ public class Map {
 				enemy.body.setTransform(array.get(0).x, array.get(0).y, 0);
 			}
 			else {
-			colors.add(color);
-			points.add(array);
-			meshes.add(Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true));
-			ChainShape shape = new ChainShape();
-			shape.createLoop(array.toArray(new Vector2[0]));
-			shapes.add(shape);
-			Fixture fixture = body.createFixture(shape, 1);
-			fixture.setRestitution(0.2f);
-			if(!desc.contains("landingzone"))
-				fixture.setUserData(this);
-			fixtures.add(fixture);
+				colors.add(color);
+				points.add(array);
+				meshes.add(Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true));
+			
+				if(!desc.contains("nocollision")) {
+					ChainShape shape = new ChainShape();
+					shape.createLoop(array.toArray(new Vector2[0]));
+					shapes.add(shape);
+					Fixture fixture = body.createFixture(shape, 1);
+					fixture.setRestitution(0.2f);
+					if(!desc.contains("landingzone"))
+						fixture.setUserData(this);
+					fixtures.add(fixture);
+				}
 			}
 		}
 		
