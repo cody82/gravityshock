@@ -32,7 +32,7 @@ public class Spaceship extends Actor {
 		if(health <= 0)
 			return;
 		
-		float damage = Math.abs(i.impulse) * 0.06f;
+		float damage = Math.abs(i.impulse) * 0.06f * (i.isgear ? 0.05f : 1f);
 		if(damage < 0.5f)
 			return;
 		health -= damage;
@@ -57,14 +57,20 @@ public class Spaceship extends Actor {
 	static Mesh mesh2;
 	static Mesh mesh_thrust;
 	
+	public Fixture gear1, gear2;
 	public void create() {
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.DynamicBody;
 	    
 	    body = world.b2world.createBody(bdef);
 	    //body.setLinearDamping(1);
-	    //shape = new box2d.CircleShape()
-	    //shape.setRadius(10)
+	    CircleShape landinggear1 = new CircleShape();
+	    landinggear1.setRadius(1);
+	    landinggear1.setPosition(new Vector2(-9, -6));
+	    CircleShape landinggear2 = new CircleShape();
+	    landinggear2.setRadius(1);
+	    landinggear2.setPosition(new Vector2(9, -6));
+	    
 	    PolygonShape s = new PolygonShape();
 	    shape = s;
 	    s.set(new Vector2[]{new Vector2(0, 10), new Vector2(-10, -5), new Vector2(10, -5)});
@@ -72,6 +78,13 @@ public class Spaceship extends Actor {
 	    fixture = body.createFixture(shape, 0.1f);
 		fixture.setRestitution(0.5f);
 		fixture.setUserData(this);
+
+		gear1 = body.createFixture(landinggear1, 0.1f);
+		gear1.setRestitution(0.5f);
+		gear1.setUserData(this);
+		gear2 = body.createFixture(landinggear2, 0.1f);
+		gear2.setRestitution(0.5f);
+		gear2.setUserData(this);
 		
 		if(mesh == null) {
 			mesh = Util.createMesh(new Vector2[]{new Vector2(0, 10), new Vector2(-10, -5), new Vector2(10, -5),new Vector2(0, 10)}, new Color(1,1,1,1), 3);

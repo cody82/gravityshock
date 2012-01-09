@@ -14,14 +14,16 @@ public class World implements ContactListener {
 	Map map;
 	  
 	public class CollisionInfo {
-		public CollisionInfo(Spaceship _ship, Vector2 _pos, float _impulse) {
+		public CollisionInfo(Spaceship _ship, Vector2 _pos, float _impulse, boolean _isgear) {
 			ship = _ship;
 			pos = _pos;
 			impulse = _impulse;
+			isgear = _isgear;
 		}
 		public Spaceship ship;
 		public Vector2 pos;
 		public float impulse;
+		public boolean isgear;
 	}
 	ArrayList<CollisionInfo> collisions;
 	
@@ -102,11 +104,11 @@ public class World implements ContactListener {
 			//System.out.println(o1.getClass().getName() + " | " + o2.getClass().getName() + ": " + impulse);
 			if(o1 instanceof Spaceship) {
 				if(o2 instanceof Map || o2 instanceof Projectile)
-					collisions.add(new CollisionInfo((Spaceship)o1, ((Spaceship) o1).body.getPosition(), impulse));
+					collisions.add(new CollisionInfo((Spaceship)o1, ((Spaceship) o1).body.getPosition(), impulse, ((Spaceship)o1).gear1 == f1 || ((Spaceship)o1).gear2 == f1));
 			}
 			if(o2 instanceof Spaceship) {
 				if(o1 instanceof Map || o2 instanceof Projectile)
-					collisions.add(new CollisionInfo((Spaceship)o2, ((Spaceship) o2).body.getPosition(), impulse));
+					collisions.add(new CollisionInfo((Spaceship)o2, ((Spaceship) o2).body.getPosition(), impulse, ((Spaceship)o2).gear1 == f2 || ((Spaceship)o2).gear2 == f2));
 			}
 		}
 	}
