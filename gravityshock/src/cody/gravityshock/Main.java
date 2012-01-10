@@ -68,9 +68,14 @@ public class Main implements Screen {
 		players[index].create();
 		players[index].body.setTransform((index + 0.5f) * 22f - numplayers * 11f , 0, 0);
 		if(oldplayer != null) {
-			players[index].score = oldplayer.score;
+			players[index].pickups = oldplayer.pickups;
 			players[index].lifes = oldplayer.lifes;
 		}
+    }
+    
+    int bonusScore;
+    int calcScore() {
+    	return (level - 1) * 1000 + Math.max(1000 - (int)map.age, 0) + bonusScore;
     }
     
     void nextLevel() {
@@ -81,7 +86,7 @@ public class Main implements Screen {
 		for(int i =0;i<numplayers;++i)
 		{
 			createPlayer(i);
-			players[i].score = 0;
+			players[i].pickups = 0;
 		}
     }
 
@@ -300,7 +305,7 @@ public class Main implements Screen {
 	int getTotalScore() {
 		int score = 0;
 		for(Spaceship s : players) {
-			score += s.score;
+			score += s.pickups;
 		}
 		return score;
 	}
@@ -411,15 +416,16 @@ public class Main implements Screen {
 			
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
-			int y = window_height -150;
+			int y = window_height -170;
 			font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, y);
-			font.draw(spriteBatch, "score: " + Integer.toString(players[i].score) + "/" + Integer.toString(map.getGoalScore()), 20, y+20);
+			font.draw(spriteBatch, "pickups: " + Integer.toString(players[i].pickups) + "/" + Integer.toString(map.getGoalScore()), 20, y+20);
 			font.draw(spriteBatch, "speed: " + Integer.toString((int)players[i].body.getLinearVelocity().len()) + "m/s", 20, y+40);
 			font.draw(spriteBatch, "health: " + Integer.toString(players[i].health) + "%", 20, y+60);
 			font.draw(spriteBatch, "lifes: " + Integer.toString(players[i].lifes), 20, y+80);
 			font.draw(spriteBatch, "level: " + Integer.toString(level), 20, y+100);
 			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, y+120);
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, y+140);
+			font.draw(spriteBatch, "score: " + calcScore(), 20, y+160);
 			spriteBatch.end();
 			if(Gdx.app.getType() == ApplicationType.Android)
 				drawbuttons();
@@ -427,7 +433,8 @@ public class Main implements Screen {
 		}
 		
 		if(game_over) {
-			game.startMainMenu();
+			//game.startMainMenu();
+			game.setScreen(new GameOverScreen(game, calcScore()));
 			return;
 		}
 		

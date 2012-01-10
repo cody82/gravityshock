@@ -4,6 +4,7 @@ package cody.gravityshock;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -40,12 +41,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 
 public class MainMenu implements Screen {
-
-    String[] listEntries = {"This is a list entry", "And another one", "The meaning of life", "Is hard to come by",
-            "This is a list entry", "And another one", "The meaning of life", "Is hard to come by", "This is a list entry",
-            "And another one", "The meaning of life", "Is hard to come by", "This is a list entry", "And another one",
-            "The meaning of life", "Is hard to come by", "This is a list entry", "And another one", "The meaning of life",
-            "Is hard to come by"};
 
     Skin skin;
     Stage ui;
@@ -109,7 +104,7 @@ public class MainMenu implements Screen {
 
         // Group.debug = true;
 
-        final Button button = new Button("Start Singleplayer Game", skin.getStyle(ButtonStyle.class), "button-sl") {
+        final Button button = new Button("Start Game", skin.getStyle(ButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
         		game.numplayers = 1;
@@ -133,14 +128,25 @@ public class MainMenu implements Screen {
 				return isChecked;
         	}
         };
+        final Button highscorebutton = new Button("Highscore", skin.getStyle(ButtonStyle.class), "button-sl") {
+        	@Override
+        	public boolean touchDown(float x, float y, int pointer) {
+        		game.setScreen(new HighscoreScreen(game));
+				return isChecked;
+        	}
+        };
         //final Label fpsLabel = new Label("fps:", skin.getStyle(LabelStyle.class), "label");
 
         //window.debug();
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
         window.add(button).fill(0f, 0f);
+    	if(Gdx.app.getType() != ApplicationType.Android) {
+    		window.row();
+    		window.add(button2).fill(0f, 0f);
+    	}
         window.row();
-        window.add(button2).fill(0f, 0f);
+        window.add(highscorebutton).fill(0f, 0f);
         window.row();
         window.add(button3).fill(0f, 0f);
         /*window.add(buttonMulti);

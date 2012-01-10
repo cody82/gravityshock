@@ -164,7 +164,7 @@ public class Spaceship extends Actor {
 		  pickupjoint = world.b2world.createJoint(def);
 		  connected = true;
 	  }
-	  int score = 0;
+	  int pickups = 0;
 	  
 	  void disconnect(){
 		  world.b2world.destroyJoint(pickupjoint);
@@ -172,7 +172,7 @@ public class Spaceship extends Actor {
 		  connected = false;
 		  pickup.returned = true;
 		  pickup = null;
-		  score++;
+		  pickups++;
 	  }
 	  
 	  void shoot(){
