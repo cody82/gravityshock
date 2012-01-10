@@ -92,7 +92,7 @@ public class World implements ContactListener {
 		float[] impulses = contactimpulse.getNormalImpulses();
 		float impulse = 0;
 		for(float f : impulses)
-			impulse += f;
+			impulse += f < 100000 ? f : 0;
 				
 		Fixture f1 = contact.getFixtureA();
 		Fixture f2 = contact.getFixtureB();
