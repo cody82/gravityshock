@@ -66,6 +66,7 @@ public class Main implements Screen {
     	players[index] = new Spaceship();
 		world.add(players[index]);
 		players[index].create();
+		players[index].body.setTransform((index + 0.5f) * 22f - numplayers * 11f , 0, 0);
 		if(oldplayer != null) {
 			players[index].score = oldplayer.score;
 			players[index].lifes = oldplayer.lifes;
