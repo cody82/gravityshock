@@ -103,21 +103,16 @@ public class GameOverScreen implements Screen {
 	}
 
 	String[] LoadHighscore() {
-		FileHandle fh = Gdx.files.external(".gravityshock/highscore.txt");
-		if(!fh.exists())
+		
+		String data = game.data.LoadString("highscore.txt");
+		if(data==null)
 			return new String[0];
 		
-		String data = fh.readString();
 		String[] list = data.split("\n");
 		Arrays.sort(list, new HighscoreComparator());
 		return list;
 	}
 	private void SaveHighscore(String name, int score) {
-		FileHandle fh = Gdx.files.external(".gravityshock/highscore.txt");
-		//FileHandle dir = Gdx.files.external(".gravityshock/");
-		
-		//if(!dir.exists())
-		//	dir.mkdirs();
 		
 		String[] scores = LoadHighscore();
 		int lowest = scores.length > 0 ? Integer.parseInt(scores[0].split("\t")[1]) : -1;
@@ -136,17 +131,10 @@ public class GameOverScreen implements Screen {
 		
 		Arrays.sort(scores, new HighscoreComparator());
 		
-		try {
 			String tmp="";
 			for(String s : scores)
 				tmp+=s+"\n";
-			Writer w = fh.writer(false);
-			w.write(tmp);
-			w.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			game.data.SaveString("highscore.txt", tmp);
 		
 	}
 	

@@ -73,11 +73,8 @@ public class HighscoreScreen implements Screen {
 	}
 
 	String[] LoadHighscore() {
-		FileHandle fh = Gdx.files.external(".gravityshock/highscore.txt");
-		if(!fh.exists())
-			return new String[0];
+		String data = game.data.LoadString("highscore.txt");
 		
-		String data = fh.readString();
 		String[] list = data.split("\n");
 		Arrays.sort(list, new HighscoreComparator(true));
 		return list;
