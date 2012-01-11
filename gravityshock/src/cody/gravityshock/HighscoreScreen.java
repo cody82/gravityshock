@@ -74,6 +74,8 @@ public class HighscoreScreen implements Screen {
 
 	String[] LoadHighscore() {
 		String data = game.data.LoadString("highscore.txt");
+		if(data == null)
+			return new String[0];
 		
 		String[] list = data.split("\n");
 		Arrays.sort(list, new HighscoreComparator(true));
