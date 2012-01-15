@@ -134,21 +134,15 @@ public class Spaceship extends Actor {
 	    }
 	    
 	    Vector2 p1 = body.getWorldPoint(new Vector2(0, -5.5f)).cpy();
-	    Vector2 p2 = body.getWorldPoint(new Vector2(0, -15f)).cpy();
+	    Vector2 p2 = body.getWorldPoint(new Vector2(0, -20f)).cpy();
 	    
-	    Actor a = Util.RayCastNearestActor(world, p1, p2);
+	    Actor a = Util.RayCastNearestActor(world, p1, p2, pickup);
 	    if(!connected && a instanceof Pickup) {
 	    	  connect((Pickup)a);
 	    }
 	    else if(connected) {
-	    	for(Actor a2 : world.actors) {
-	    	if(a2.body == null|| !(a2 instanceof Home))
-	    		continue;
-		      float dist = body.getPosition().dst(a2.body.getPosition());
-		      if(dist < 25){
-		    	  disconnect();
-		      }
-		    }
+	    	if(a instanceof Home)
+		    	disconnect();
 	    }
 	  }
 	  

@@ -26,12 +26,12 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.2432572"
      inkscape:cx="-73.953715"
-     inkscape:cy="1265.3385"
+     inkscape:cy="1168.8178"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1600"
-     inkscape:window-height="844"
+     inkscape:window-height="846"
      inkscape:window-x="0"
      inkscape:window-y="26"
      inkscape:window-maximized="1" />
@@ -107,24 +107,10 @@
          y="-926.75714"
          id="tspan3011">enemy</tspan></text>
     <path
-       style="fill:none;stroke:#00ffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#cccccc;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 6.3669709,71.848635 0,-32.89601 24.4067231,0 0,-8.4893 -61.547387,0 0,7.42813 26.5290457,0 1.0611618,30.7737 z"
        id="path2992"
-       inkscape:connector-curvature="0">
-      <desc
-         id="desc3093">landingzone</desc>
-    </path>
-    <text
-       xml:space="preserve"
-       style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="1.3240098"
-       y="25.105045"
-       id="text2987-0"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan2989-9"
-         x="1.3240098"
-         y="25.105045">home</tspan></text>
+       inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:6,6;stroke-dashoffset:0"
        d="m 56.241578,-909.72607 -180.397518,64.73087 -217.53817,117.78897 -13.79511,129.46174 198.43727,145.37918 154.9296263,-38.20183 200.5595937,15.91743 84.89294,134.76755 -24.40672,216.47702 -276.963241,44.568795 -185.703319,-6.366971"
@@ -143,6 +129,15 @@
        sodipodi:nodetypes="cccccc">
       <title
          id="title3791">enemy</title>
+    </path>
+    <path
+       style="fill:none;stroke:#00ffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -27.347518,27.025879 54.695037,-0.804339 0,2.413017 -54.695037,0.413016 z"
+       id="path2997"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title2999">home</title>
     </path>
   </g>
 </svg>

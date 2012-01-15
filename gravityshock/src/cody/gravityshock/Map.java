@@ -143,6 +143,14 @@ public class Map {
 				Enemy enemy = new Enemy(world, array);
 				enemy.body.setTransform(array.get(0).x, array.get(0).y, 0);
 			}
+			else if(type.equals("home")) {
+				ChainShape shape = new ChainShape();
+				shape.createLoop(array.toArray(new Vector2[0]));
+				//shapes.add(shape);
+				Fixture fixture = body.createFixture(shape, 1);
+				fixture.setRestitution(0.2f);
+				Home home = new Home(world,Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true), fixture);
+			}
 			else {
 				colors.add(color);
 				points.add(array);

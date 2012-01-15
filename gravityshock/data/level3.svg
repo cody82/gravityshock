@@ -24,14 +24,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
+     inkscape:zoom="2"
      inkscape:cx="-73.953715"
-     inkscape:cy="1913.8241"
+     inkscape:cy="1093.8241"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1600"
-     inkscape:window-height="844"
+     inkscape:window-height="846"
      inkscape:window-x="0"
      inkscape:window-y="26"
      inkscape:window-maximized="1" />
@@ -86,24 +86,10 @@
          x="-1.6768303"
          y="-989.49213">pickup</tspan></text>
     <path
-       style="fill:none;stroke:#00ffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;stroke:#cccccc;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 6.3669709,71.848635 0,-32.89601 24.4067231,0 0,-8.4893 -61.547387,0 0,7.42813 26.5290457,0 1.0611618,30.7737 z"
        id="path2992"
-       inkscape:connector-curvature="0">
-      <desc
-         id="desc3049">landingzone</desc>
-    </path>
-    <text
-       xml:space="preserve"
-       style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="1.3240098"
-       y="25.105045"
-       id="text2987-0"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan2989-9"
-         x="1.3240098"
-         y="25.105045">home</tspan></text>
+       inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
        d="m -204.48009,-95.818004 345.98466,0.938838 33.39909,-178.454104 -73.60092,-217.45411 -264.37611,-80.44648 -189.75228,267.05809 z"
@@ -152,5 +138,14 @@
          id="tspan2989-95-3"
          x="-35.446907"
          y="-1106.4106">turret</tspan></text>
+    <path
+       style="fill:none;stroke:#00ffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -27.347518,27.253505 54.695036,-0.804339 0,2.413017 -54.695036,0.413016 z"
+       id="path2997"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title2999">home</title>
+    </path>
   </g>
 </svg>
