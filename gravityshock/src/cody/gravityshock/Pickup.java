@@ -36,6 +36,7 @@ public class Pickup extends Actor{
 	    
 	    fixture = body.createFixture(shape, 0.1f);
 		fixture.setRestitution(0.3f);
+		fixture.setUserData(this);
 		
 		if(mesh == null) {
 			mesh = Util.createMesh(array, new Color(0,0,1,1), 3, true);

@@ -133,17 +133,23 @@ public class Spaceship extends Actor {
 	    	}
 	    }
 	    
-	    for(Actor a : world.actors) {
-	    	if(a.body == null)
+	    Vector2 p1 = body.getWorldPoint(new Vector2(0, -5.5f)).cpy();
+	    Vector2 p2 = body.getWorldPoint(new Vector2(0, -15f)).cpy();
+	    
+	    Actor a = Util.RayCastNearestActor(world, p1, p2);
+	    if(!connected && a instanceof Pickup) {
+	    	  connect((Pickup)a);
+	    }
+	    else if(connected) {
+	    	for(Actor a2 : world.actors) {
+	    	if(a2.body == null|| !(a2 instanceof Home))
 	    		continue;
-		      float dist = body.getPosition().dst(a.body.getPosition());
-		      if(!connected && a instanceof Pickup && dist < 25){
-		    	  connect((Pickup)a);
-		      }
-		      else if(connected && a instanceof Home && dist < 25){
+		      float dist = body.getPosition().dst(a2.body.getPosition());
+		      if(dist < 25){
 		    	  disconnect();
 		      }
 		    }
+	    }
 	  }
 	  
 	  boolean connected = false;
@@ -158,8 +164,9 @@ public class Spaceship extends Actor {
 		  RopeJointDef def = new RopeJointDef();
 		  def.bodyA = body;
 		  def.bodyB = p.body;
+		  def.localAnchorA.y = -5.5f;
 		  def.collideConnected = true;
-		  def.maxLength = 25;
+		  def.maxLength = 10;
 		  def.type = JointDef.JointType.RopeJoint;
 		  pickupjoint = world.b2world.createJoint(def);
 		  connected = true;

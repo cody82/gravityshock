@@ -17,10 +17,68 @@ import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+
+class RayCaster implements RayCastCallback {
+	public Fixture nearest;
+	float dist = Float.MAX_VALUE;
+	@Override
+	public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+		Object obj = fixture.getUserData();
+
+		if(fraction < dist){
+			nearest = fixture;
+			dist = fraction;
+		}
+		return fraction;
+	}
+	
+}
+
+class ActorRayCaster implements RayCastCallback {
+	public ActorRayCaster(Actor _except) {
+		except = _except;
+	}
+	Actor except;
+	public Actor nearest;
+	float dist = Float.MAX_VALUE;
+	@Override
+	public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+		Object obj = fixture.getUserData();
+		if(fraction < dist && obj instanceof Actor && ((Actor)obj) != except){
+			nearest = (Actor)obj;
+			dist = fraction;
+		}
+		else {
+			return 1;
+		}
+		return fraction;
+	}
+	
+}
 
 public class Util {
 
+	public static Fixture RayCastNearestFixture(World world, Vector2 from, Vector2 to) {
+		RayCaster caster = new RayCaster();
+		world.b2world.rayCast(caster, from, to);
+		return caster.nearest;
+	}
+
+	public static Actor RayCastNearestActor(World world, Vector2 from, Vector2 to) {
+		ActorRayCaster caster = new ActorRayCaster(null);
+		world.b2world.rayCast(caster, from, to);
+		return caster.nearest;
+	}
+
+	public static Actor RayCastNearestActor(World world, Vector2 from, Vector2 to, Actor except) {
+		ActorRayCaster caster = new ActorRayCaster(except);
+		world.b2world.rayCast(caster, from, to);
+		return caster.nearest;
+	}
+	
 	public static float[] createVertices(Vector2 from, Vector2 to, float thickness, Color color) {
 		Vector2 dir = to.cpy();
 		dir.sub(from);
