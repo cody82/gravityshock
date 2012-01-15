@@ -54,10 +54,12 @@ public class GameOverScreen implements Screen {
 
     MainGame game;
     int score;
+    boolean win;
     
-    public GameOverScreen(MainGame _game, int _score) {
+    public GameOverScreen(MainGame _game, int _score, boolean _win) {
     	game = _game;
     	score = _score;
+    	win = _win;
     }
     
 	@Override
@@ -149,7 +151,7 @@ public class GameOverScreen implements Screen {
         window = new Window("window", "GravityShock", ui, skin.getStyle(WindowStyle.class), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         window.x = window.y = 0;
 
-      final Label fpsLabel = new Label("GAME OVER", skin.getStyle(LabelStyle.class), "label");
+      final Label fpsLabel = new Label(win ? "GAME COMPLETE" : "GAME OVER", skin.getStyle(LabelStyle.class), "label");
 
         //window.debug();
         window.defaults().spaceBottom(10);
@@ -160,13 +162,15 @@ public class GameOverScreen implements Screen {
         window.add(new Label(Integer.toString(score), skin.getStyle(LabelStyle.class), "label3")).fill(0f, 0f);
         window.row();
         window.add(new Label("Enter your name:", skin.getStyle(LabelStyle.class), "label4")).fill(0f, 0f);
-        window.add(namefield = new TextField("<NAME>", skin.getStyle(TextFieldStyle.class), "textfield1")).fill(0f, 0f);
+        window.add(namefield = new TextField("", skin.getStyle(TextFieldStyle.class), "textfield1")).fill(0f, 0f);
         window.row();
 
         final Button button = new Button("Done", skin.getStyle(ButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
-        		SaveHighscore(namefield.getText(), score);
+        		String name = namefield.getText();
+        		if(!name.isEmpty())
+        			SaveHighscore(namefield.getText(), score);
         		game.startMainMenu();
 				return isChecked;
         	}

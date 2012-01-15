@@ -43,6 +43,7 @@ public class Main implements Screen {
     Map map;
     
     int level = 0;
+    final int maxLevel = 4;
     
     boolean record = false;
     int frame = 1;
@@ -79,6 +80,10 @@ public class Main implements Screen {
     }
     
     void nextLevel() {
+    	if(level == maxLevel) {
+    		game.setScreen(new GameOverScreen(game, calcScore(), true));
+    		return;
+    	}
     	level++;
 		world = new World();
 		map = new Map();
@@ -434,7 +439,7 @@ public class Main implements Screen {
 		
 		if(game_over) {
 			//game.startMainMenu();
-			game.setScreen(new GameOverScreen(game, calcScore()));
+			game.setScreen(new GameOverScreen(game, calcScore(), false));
 			return;
 		}
 		
