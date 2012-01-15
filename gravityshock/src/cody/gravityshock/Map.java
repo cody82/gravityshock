@@ -151,6 +151,17 @@ public class Map {
 				fixture.setRestitution(0.2f);
 				Home home = new Home(world,Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true), fixture);
 			}
+			else if(type.equals("Actor")) {
+		    	PolygonShape shape = new PolygonShape();
+		    	shape.set(array.toArray(new Vector2[]{}));
+				//shapes.add(shape);
+				BodyDef def = new BodyDef();
+				def.type = BodyDef.BodyType.DynamicBody;
+				Body b = world.b2world.createBody(def);
+				Fixture fixture = b.createFixture(shape, 1);
+				fixture.setRestitution(0.2f);
+				Actor actor = new Actor(world,Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true), fixture, b);				
+			}
 			else {
 				colors.add(color);
 				points.add(array);

@@ -26,7 +26,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="2"
      inkscape:cx="-73.953715"
-     inkscape:cy="1093.8241"
+     inkscape:cy="1993.8241"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -146,6 +146,33 @@
        sodipodi:nodetypes="ccccc">
       <title
          id="title2999">home</title>
+    </path>
+    <path
+       style="fill:none;stroke:#c87137;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -28,-997.76282 -13.5,-18.49998 -22.5,17.49998 21,7.5 z"
+       id="path3025"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title3027">Actor</title>
+    </path>
+    <path
+       style="fill:none;stroke:#c87137;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -21.5,-1039.5128 -17,-21 -3,21 10.5,13.5 z"
+       id="path3025-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title3027-8">Actor</title>
+    </path>
+    <path
+       style="fill:none;stroke:#c87137;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -60.5,-1067.0128 -4.5,-21 -22.5,17.5 14.5,8 z"
+       id="path3025-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title3027-9">Actor</title>
     </path>
   </g>
 </svg>
