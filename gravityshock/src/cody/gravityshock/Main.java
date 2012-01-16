@@ -56,6 +56,8 @@ public class Main implements Screen {
 	
 	float zoom = 1f;
 	
+	float countdown;
+	
 	MainGame game;
 	public Main(MainGame _game) {
 		game = _game;
@@ -85,6 +87,7 @@ public class Main implements Screen {
     		return;
     	}
     	level++;
+    	countdown = 3;
 		world = new World();
 		map = new Map();
 		map.load(world, "data/level" + level + ".svg");
@@ -396,14 +399,25 @@ public class Main implements Screen {
 				spriteBatch.end();
 			}
 			else {
-				createPlayer(i);
-				players[i].lifes--;
+				if(players[i].countdown <= 0){
+					createPlayer(i);
+					players[i].lifes--;
+				}
 				game_over = false;
 			}
 		}
 		else if(getTotalScore() >= map.getGoalScore()) {
-			nextLevel();
+			countdown -= t;
 			game_over = false;
+			if(countdown <= 0) {
+				nextLevel();
+			}
+			else {
+				viewport(0, 0, window_width, window_height);
+				spriteBatch.begin();
+				font.draw(spriteBatch, "LEVEL COMPLETE", window_width * 0.5f- font.getSpaceWidth()*14, window_height * 0.5f + font.getLineHeight()/2);
+				spriteBatch.end();
+			}
 			break;
 		}
 		else {
@@ -438,9 +452,11 @@ public class Main implements Screen {
 		}
 		
 		if(game_over) {
-			//game.startMainMenu();
-			game.setScreen(new GameOverScreen(game, calcScore(), false));
-			return;
+			countdown -= t;
+			if(countdown <= 0){
+				game.setScreen(new GameOverScreen(game, calcScore(), false));
+				return;
+			}
 		}
 		
 		if(record) {

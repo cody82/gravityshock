@@ -27,6 +27,7 @@ public class Spaceship extends Actor {
 	public int health = 100;
 	public float fuel = 100;
     public int lifes = 5;
+	public float countdown = 3;
 	
 	public void damage(World.CollisionInfo i) {
 		if(health <= 0)
@@ -109,6 +110,9 @@ public class Spaceship extends Actor {
 	  
 	  void tick(float dtime) {
 		  shoot_time+=dtime;
+		  if(health <= 0 && countdown > 0) {
+			  countdown -= dtime;
+		  }
 		  
 		  
 	    if(control_thrust > 0 && fuel > 0f && health > 0){
