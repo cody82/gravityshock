@@ -133,7 +133,7 @@ public class Spaceship extends Actor {
 	    }
 	    
 	    if(control_shoot && health > 0){
-	    	if(shoot_time > 0.1f){
+	    	if(shoot_time > 0.20f){
 	    		shoot();
 	    		shoot_time = 0;
 	    	}

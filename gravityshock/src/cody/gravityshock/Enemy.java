@@ -21,6 +21,7 @@ public class Enemy extends Actor{
 	ArrayList<Vector2> path;
 	float path_pos = 0;
 	float path_speed = 10;
+	Vector2 turret;
 	
 	static Svg svg;
 	
@@ -53,9 +54,57 @@ public class Enemy extends Actor{
 	    if(mesh == null) {
 	    	mesh = Util.createMesh(svg, 3);
 	    }
+	    
+	    if(svg.textCount() > 0) {
+	    	SvgText t = svg.getText(0);
+	    	if(t.text.equals("turret")) {
+		    	turret = t.position;
+	    	}
+	    }
 	  }
-	  
+
+	float shoot_time = 1;
+	void target(Spaceship s) {
+		Vector2 dir = s.body.getPosition().cpy();
+		dir.sub(body.getWorldPoint(turret));
+		dir.nor();
+		dir.mul(20);
+		Vector2 pos = body.getPosition().cpy();
+		pos.add(dir);
+
+		float angle = dir.cpy().nor().angle() /180f * (float)Math.PI;
+
+		//body.setTransform(body.getPosition(), angle);
+		Projectile p = new Projectile(world);
+		p.body.setTransform(body.getWorldPoint(turret), angle);
+		p.body.setLinearVelocity(dir.mul(10));
+	}
+	
 	  void tick(float dtime) {
+
+		  if(turret != null) {
+			  
+		  shoot_time -=dtime;
+		  if(shoot_time <= 0) {
+		  for(Actor a : world.actors) {
+			  if(a instanceof Spaceship) {
+				  Spaceship s = (Spaceship)a;
+				  if(s.health > 0) {
+					  Actor s2 = Util.RayCastNearestActor(world, body.getWorldPoint(turret), s.body.getPosition());
+					  
+					  if(s2 == s) {
+						  target(s);
+						  shoot_time = 1;
+					  }
+					  break;
+				  }
+			  }
+		  }
+		  }
+
+		  }
+		  
+		  
 		  path_pos += path_speed * dtime;
 		  float p = path_pos;
 		  for(int i=0;i<path.size()-1;++i){
@@ -70,6 +119,8 @@ public class Enemy extends Actor{
 				  return;
 			  }
 		  }
+		  
+		  
 	  }
 	  
 	  static Mesh mesh;

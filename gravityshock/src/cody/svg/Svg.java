@@ -12,6 +12,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import cody.gravityshock.Home;
+import cody.gravityshock.Pickup;
+import cody.gravityshock.Turret;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -19,12 +23,14 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Svg {
 	ArrayList<SvgPath> paths;
+	ArrayList<SvgText> texts;
 	
 	public Svg(String gdxfile) {
 		this(Gdx.files.internal(gdxfile).read());
 	}
 	public Svg(java.io.InputStream stream){
 		paths = new ArrayList<SvgPath>();
+		texts = new ArrayList<SvgText>();
 		
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -99,6 +105,16 @@ public class Svg {
 			}
 			paths.add(new SvgPath(array.toArray(new Vector2[]{}),color));
 		}
+		
+		list = doc.getDocumentElement().getElementsByTagName("tspan");
+		for(int i=0;i<list.getLength();++i){
+			Node n=list.item(i);
+			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
+			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
+			String text = n.getTextContent();
+			Vector2 pos = new Vector2(x, -y);
+			texts.add(new SvgText(text, pos));
+		}
 	}
 	
 	public int pathCount(){
@@ -107,5 +123,13 @@ public class Svg {
 	
 	public SvgPath getPath(int i) {
 		return paths.get(i);
+	}
+	
+	public int textCount(){
+		return texts.size();
+	}
+	
+	public SvgText getText(int i) {
+		return texts.get(i);
 	}
 }
