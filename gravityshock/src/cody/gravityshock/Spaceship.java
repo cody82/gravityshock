@@ -88,7 +88,9 @@ public class Spaceship extends Actor {
 		gear2.setUserData(this);
 		
 		if(mesh == null) {
-			mesh = Util.createMesh(new Vector2[]{new Vector2(0, 10), new Vector2(-10, -5), new Vector2(10, -5),new Vector2(0, 10)}, new Color(1,1,1,1), 3);
+			mesh = Util.createMesh(new Vector2[]{new Vector2(0, 10), new Vector2(-10, -5), 
+					new Vector2(0, -3), 
+					new Vector2(10, -5),new Vector2(0, 10)}, new Color(1,1,1,1), 3);
 			mesh2 = Util.createMesh(new Vector2[]{new Vector2(0, 10), new Vector2(-10, -5), new Vector2(10, -5),new Vector2(0, 10)}, new Color(0.4f,0.4f,0.4f,1), 3);
 			mesh_thrust = Util.createMesh(new Vector2[]{new Vector2(0, -5), new Vector2(0, -15),new Vector2(-5, -5), new Vector2(-5, -15),new Vector2(5, -5), new Vector2(5, -15)}, new Color[]{new Color(1,1,0,1),new Color(1,1,0,1),new Color(1,1,0,1),new Color(1,1,0,1),new Color(1,1,0,1),new Color(1,1,0,1)}, 3);
 		}
