@@ -9,10 +9,14 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class FileData implements PersistantData {
 
+	final String dir = ".gravityshock";
+	
 	@Override
 	public void SaveString(String key, String value) {
-		FileHandle fh = Gdx.files.external(".gravityshock/" + key);
-		
+		FileHandle fh2 = Gdx.files.external(dir);
+		if(!fh2.exists())
+			fh2.mkdirs();
+		FileHandle fh = Gdx.files.external(dir + "/" + key);
 		try {
 			Writer w = fh.writer(false);
 			w.write(value);
@@ -25,7 +29,7 @@ public class FileData implements PersistantData {
 
 	@Override
 	public String LoadString(String key) {
-		FileHandle fh = Gdx.files.external(".gravityshock/" + key);
+		FileHandle fh = Gdx.files.external(dir + "/" + key);
 		if(!fh.exists())
 			return null;
 
