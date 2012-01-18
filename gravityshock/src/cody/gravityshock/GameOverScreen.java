@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
@@ -148,8 +150,10 @@ public class GameOverScreen implements Screen {
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        window = new Window("window", "GravityShock", ui, skin.getStyle(WindowStyle.class), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        window = new Window("window", skin.getStyle(WindowStyle.class));
         window.x = window.y = 0;
+        window.width = ui.width();
+        window.height= ui.height();
 
       final Label fpsLabel = new Label(win ? "GAME COMPLETE" : "GAME OVER", skin.getStyle(LabelStyle.class), "label");
 
@@ -162,17 +166,17 @@ public class GameOverScreen implements Screen {
         window.add(new Label(Integer.toString(score), skin.getStyle(LabelStyle.class), "label3")).fill(0f, 0f);
         window.row();
         window.add(new Label("Enter your name:", skin.getStyle(LabelStyle.class), "label4")).fill(0f, 0f);
-        window.add(namefield = new TextField("", skin.getStyle(TextFieldStyle.class), "textfield1")).fill(0f, 0f);
+        window.add(namefield = new TextField("", skin.getStyle(TextFieldStyle.class))).fill(0f, 0f);
         window.row();
 
-        final Button button = new Button("Done", skin.getStyle(ButtonStyle.class), "button-sl") {
+        final TextButton button = new TextButton("Done", skin.getStyle(TextButtonStyle.class)) {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
         		String name = namefield.getText();
         		if(!name.isEmpty())
         			SaveHighscore(namefield.getText(), score);
         		game.startMainMenu();
-				return isChecked;
+				return isChecked();
         	}
 
         };

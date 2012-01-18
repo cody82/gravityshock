@@ -5,18 +5,20 @@ package cody.gravityshock;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ComboBox;
-import com.badlogic.gdx.scenes.scene2d.ui.ComboBox.ComboBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -82,6 +84,7 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		if(ui!=null)
         ui.setViewport(width, height, false);
     }
 
@@ -96,43 +99,45 @@ public class MainMenu implements Screen {
 
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("data/uiskin.json"), Gdx.files.internal("data/uiskin.png"));
+
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        window = new Window("window", "GravityShock", ui, skin.getStyle(WindowStyle.class), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        window = new Window("window", skin.getStyle(WindowStyle.class));
         window.x = window.y = 0;
-
+        window.width = ui.width();
+        window.height= ui.height();
         // Group.debug = true;
 
-        final Button button = new Button("Start Game", skin.getStyle(ButtonStyle.class), "button-sl") {
+        final TextButton button = new TextButton("Start Game", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
         		game.numplayers = 1;
         		game.start();
-				return isChecked;
+				return isChecked();
         	}
         };
         
-        final Button button2 = new Button("Start Two-Player Splitscreen Game", skin.getStyle(ButtonStyle.class), "button-sl") {
+        final TextButton button2 = new TextButton("Start Two-Player Splitscreen Game", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
         		game.numplayers = 2;
         		game.start();
-				return isChecked;
+				return isChecked();
         	}
         };
-        final Button button3 = new Button("Quit", skin.getStyle(ButtonStyle.class), "button-sl") {
+        final TextButton button3 = new TextButton("Quit", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
         		Gdx.app.exit();
-				return isChecked;
+				return isChecked();
         	}
         };
-        final Button highscorebutton = new Button("Highscore", skin.getStyle(ButtonStyle.class), "button-sl") {
+        final TextButton highscorebutton = new TextButton("Highscore", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
         		game.setScreen(new HighscoreScreen(game));
-				return isChecked;
+				return isChecked();
         	}
         };
         //final Label fpsLabel = new Label("fps:", skin.getStyle(LabelStyle.class), "label");

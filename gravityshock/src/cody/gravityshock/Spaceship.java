@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.graphics.Color;
@@ -52,7 +53,9 @@ public class Spaceship extends Actor {
 		}
 	}
 	
-	
+	static Sound thrust_sound;
+	static Sound shoot_sound;
+	long play_thrust = -1;
 	
 	static Mesh mesh;
 	static Mesh mesh2;
@@ -60,6 +63,13 @@ public class Spaceship extends Actor {
 	
 	public Fixture gear1, gear2;
 	public void create() {
+		if(thrust_sound == null) {
+			thrust_sound = Gdx.audio.newSound(Gdx.files.internal("data/thrust.ogg"));
+		}
+		if(shoot_sound == null) {
+			shoot_sound = Gdx.audio.newSound(Gdx.files.internal("data/shoot1.ogg"));
+		}
+		
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.DynamicBody;
 	    
@@ -121,10 +131,18 @@ public class Spaceship extends Actor {
 	    	thrust=true;
 	      body.applyForceToCenter(body.getWorldVector(new Vector2(0,1000)));
 	      fuel -= dtime;
+	      if(play_thrust == -1) {
+	    	  play_thrust = thrust_sound.loop();
+	      }
 	    }
-	    else
+	    else {
 	    	thrust = false;
-	    
+
+		      if(play_thrust != -1) {
+		    	  thrust_sound.stop(play_thrust);
+		    	  play_thrust = -1;
+		      }
+	    }
 	    float omega = control_direction * 3f;
 	    
 	    if(fuel > 0 && health > 0) {
@@ -186,6 +204,7 @@ public class Spaceship extends Actor {
 		  Projectile p = new Projectile(world);
 		  p.body.setTransform(body.getWorldPoint(new Vector2(0,15)), body.getAngle());
 		  p.body.setLinearVelocity(body.getWorldVector(new Vector2(0,1000)));
+		  shoot_sound.play();
 	  }
 	  void render(OrthographicCamera cam) {
 		  Vector2 pos = body.getPosition();

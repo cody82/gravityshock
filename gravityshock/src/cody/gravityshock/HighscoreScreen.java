@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -89,8 +91,10 @@ public class HighscoreScreen implements Screen {
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        window = new Window("window", "GravityShock", ui, skin.getStyle(WindowStyle.class), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        window = new Window("window", skin.getStyle(WindowStyle.class));
         window.x = window.y = 0;
+        window.width = ui.width();
+        window.height= ui.height();
 
 
         //window.debug();
@@ -103,11 +107,11 @@ public class HighscoreScreen implements Screen {
             window.row();
         }
 
-        final Button button = new Button("Done", skin.getStyle(ButtonStyle.class), "button-sl") {
+        final TextButton button = new TextButton("Done", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
         		game.startMainMenu();
-				return isChecked;
+				return isChecked();
         	}
         };
         window.add(button).fill(0f, 0f);
