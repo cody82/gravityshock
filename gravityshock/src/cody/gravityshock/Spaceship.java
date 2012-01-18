@@ -30,6 +30,14 @@ public class Spaceship extends Actor {
     public int lifes = 5;
 	public float countdown = 3;
 	
+	@Override
+	public void dispose() {
+		super.dispose();
+	      if(play_thrust != -1) {
+	    	  thrust_sound.stop(play_thrust);
+	    	  play_thrust = -1;
+	      }
+	}
 	public void damage(World.CollisionInfo i) {
 		if(health <= 0)
 			return;
@@ -55,6 +63,8 @@ public class Spaceship extends Actor {
 	
 	static Sound thrust_sound;
 	static Sound shoot_sound;
+	static Sound return_sound;
+	
 	long play_thrust = -1;
 	
 	static Mesh mesh;
@@ -69,7 +79,9 @@ public class Spaceship extends Actor {
 		if(shoot_sound == null) {
 			shoot_sound = Gdx.audio.newSound(Gdx.files.internal("data/shoot1.ogg"));
 		}
-		
+		if(return_sound == null) {
+			return_sound = Gdx.audio.newSound(Gdx.files.internal("data/return.ogg"));
+		}
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.DynamicBody;
 	    
@@ -121,6 +133,9 @@ public class Spaceship extends Actor {
 	  public boolean control_shoot;
 	  
 	  void tick(float dtime) {
+		  if(body == null)
+			  return;
+		  
 		  shoot_time+=dtime;
 		  if(health <= 0 && countdown > 0) {
 			  countdown -= dtime;
@@ -198,6 +213,7 @@ public class Spaceship extends Actor {
 		  pickup.returned = true;
 		  pickup = null;
 		  pickups++;
+		  return_sound.play();
 	  }
 	  
 	  void shoot(){
@@ -207,6 +223,9 @@ public class Spaceship extends Actor {
 		  shoot_sound.play();
 	  }
 	  void render(OrthographicCamera cam) {
+		  if(body == null)
+			  return;
+		  
 		  Vector2 pos = body.getPosition();
 		  float rad = body.getAngle();
 

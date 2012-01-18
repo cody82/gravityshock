@@ -3,6 +3,7 @@ package cody.gravityshock;
 import cody.svg.Svg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
@@ -30,12 +31,20 @@ public class Explosion extends Actor{
 	
 	float age;
 	
+	static Sound sound;
+	
 	public void create() {
 		if(svg == null)
 			svg = new Svg("data/explosion1.svg");
 		if(mesh == null) {
 			mesh = Util.createMesh(svg, 3);
 		}
+
+		if(sound == null) {
+			sound = Gdx.audio.newSound(Gdx.files.internal("data/explosion1.ogg"));
+		}
+		
+		sound.play();
 	}
 	  
 	  void tick(float dtime) {
