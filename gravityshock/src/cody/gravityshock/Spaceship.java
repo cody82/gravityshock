@@ -64,6 +64,7 @@ public class Spaceship extends Actor {
 	static Sound thrust_sound;
 	static Sound shoot_sound;
 	static Sound return_sound;
+	static Sound pickup_sound;
 	
 	long play_thrust = -1;
 	
@@ -81,6 +82,9 @@ public class Spaceship extends Actor {
 		}
 		if(return_sound == null) {
 			return_sound = Gdx.audio.newSound(Gdx.files.internal("data/return.ogg"));
+		}
+		if(pickup_sound == null) {
+			pickup_sound = Gdx.audio.newSound(Gdx.files.internal("data/sound1.wav"));
 		}
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.DynamicBody;
@@ -203,6 +207,7 @@ public class Spaceship extends Actor {
 		  def.type = JointDef.JointType.RopeJoint;
 		  pickupjoint = world.b2world.createJoint(def);
 		  connected = true;
+		  pickup_sound.play();
 	  }
 	  int pickups = 0;
 	  
