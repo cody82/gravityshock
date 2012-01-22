@@ -43,7 +43,7 @@ public class Main implements Screen {
     Map map;
     
     int level = 0;
-    final int maxLevel = 4;
+    final int maxLevel = 6;
     
     boolean record = false;
     int frame = 1;
