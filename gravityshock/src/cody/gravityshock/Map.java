@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.IndexData;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.VertexData;
@@ -26,6 +27,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+class Image {
+	public float x;
+	public float y;
+	public Texture texture;
+	public float width;
+	public float height;
+}
+
 public class Map {
 	World world;
 	ArrayList<ChainShape> shapes;
@@ -37,6 +46,8 @@ public class Map {
 	ArrayList<Pickup> pickups;
 	float age;
 	ArrayList<Mesh> meshes;
+	
+	ArrayList<Image> images;
 	
 	public void load(World _world, String filename) {
 			    world = _world;
@@ -51,6 +62,7 @@ public class Map {
 		colors = new ArrayList<Color>();
 		pickups = new ArrayList<Pickup>();
 		meshes = new ArrayList<Mesh>();
+		images = new ArrayList<Image>();
 		
 		BodyDef bdef = new BodyDef();
 		bdef.type = BodyDef.BodyType.StaticBody;
@@ -201,6 +213,23 @@ public class Map {
 				t.body.setTransform(x, -y, 0);
 			}
 		}
+		
+		list = doc.getDocumentElement().getElementsByTagName("image");
+		for(int i=0;i<list.getLength();++i){
+			Node n=list.item(i);
+			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
+			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
+			float width = Float.parseFloat(n.getAttributes().getNamedItem("width").getTextContent());
+			float height = Float.parseFloat(n.getAttributes().getNamedItem("height").getTextContent());
+			String file = n.getAttributes().getNamedItem("xlink:href").getTextContent();
+			Image img = new Image();
+			img.x = x;
+			img.y = -y - height;
+			img.width = width;
+			img.height = height;
+			img.texture = new Texture(Gdx.files.internal("data" + file.substring(file.lastIndexOf("/"))));
+			images.add(img);
+		}
 	}
 	
 	public int getGoalScore() {
@@ -211,10 +240,18 @@ public class Map {
 		age += dtime;
 	}
 
-	static ShapeRenderer sr = new ShapeRenderer();
+	static SpriteBatch sb = new SpriteBatch();
 	public void render(OrthographicCamera cam) {
 
 		  Matrix4 matrix = cam.combined.cpy();
+
+		  sb.setProjectionMatrix(matrix);
+		  sb.begin();
+		  for(Image i : images) {
+			  sb.draw(i.texture, i.x, i.y, i.width, i.height);
+		  }
+		  sb.end();
+		  Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
 		//cam.apply(Gdx.graphics.getGL10());
 		for(Mesh m : meshes) {
 			Util.render(m, GL10.GL_TRIANGLES, matrix);
