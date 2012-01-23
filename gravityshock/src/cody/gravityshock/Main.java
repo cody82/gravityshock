@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
@@ -59,6 +60,8 @@ public class Main implements Screen {
 	float countdown;
 	
 	MainGame game;
+	Texture background;
+	
 	public Main(MainGame _game) {
 		game = _game;
 	}
@@ -270,6 +273,8 @@ public class Main implements Screen {
 		GL10 gl10 = Gdx.graphics.getGL10();
 		GL20 gl20 = Gdx.graphics.getGL20();
 		
+		background = new Texture(Gdx.files.internal("data/space.png"));
+		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		/*if(Gdx.graphics.isGL20Available()) {
 			framebuffer = new FrameBuffer(Pixmap.Format.RGB888, 128, 128, false);
 			framebuffer2 = new FrameBuffer(Pixmap.Format.RGB888, 512, 512, false);
@@ -343,7 +348,16 @@ public class Main implements Screen {
 		}
 		else {*/
 			viewport(0, 0, window_width / numplayers, window_height);
-			clear();
+			float x2 = cams[0].position.x * 0.01f;
+			float y2 = cams[0].position.y * 0.01f;
+
+			gl20.glDisable(GL20.GL_BLEND);
+			spriteBatch.begin();
+			spriteBatch.draw(background, 0, 0, window_width / numplayers, window_height, x2, y2, x2 + (window_width / numplayers / 64), y2 +  + (window_height / 64));
+			spriteBatch.end();
+			gl20.glEnable(GL20.GL_BLEND);
+			
+			//clear();
 			world.render(cams[0]);
 		//}
 		
@@ -357,7 +371,15 @@ public class Main implements Screen {
 				framebuffer2.end();
 			}
 			else {*/
+			x2 = cams[1].position.x * 0.01f;
+			y2 = cams[1].position.y * 0.01f;
 				viewport(window_width / 2, 0, window_width / numplayers, window_height);
+				gl20.glDisable(GL20.GL_BLEND);
+				spriteBatch.begin();
+				spriteBatch.draw(background, 0, 0, window_width / numplayers, window_height, x2, y2, x2 + (window_width / numplayers / 64), y2 +  + (window_height / 64));
+				spriteBatch.end();
+				gl20.glEnable(GL20.GL_BLEND);
+
 				world.render(cams[1]);
 			//}
 		}
