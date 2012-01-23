@@ -12,18 +12,17 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import cody.gravityshock.Home;
-import cody.gravityshock.Pickup;
-import cody.gravityshock.Turret;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public class Svg {
 	ArrayList<SvgPath> paths;
 	ArrayList<SvgText> texts;
+	public ArrayList<SvgImage> images;
 	
 	public Svg(String gdxfile) {
 		this(Gdx.files.internal(gdxfile).read());
@@ -31,6 +30,7 @@ public class Svg {
 	public Svg(java.io.InputStream stream){
 		paths = new ArrayList<SvgPath>();
 		texts = new ArrayList<SvgText>();
+		images = new ArrayList<SvgImage>();
 		
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -114,6 +114,23 @@ public class Svg {
 			String text = n.getTextContent();
 			Vector2 pos = new Vector2(x, -y);
 			texts.add(new SvgText(text, pos));
+		}
+		
+		list = doc.getDocumentElement().getElementsByTagName("image");
+		for(int i=0;i<list.getLength();++i){
+			Node n=list.item(i);
+			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
+			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
+			float width = Float.parseFloat(n.getAttributes().getNamedItem("width").getTextContent());
+			float height = Float.parseFloat(n.getAttributes().getNamedItem("height").getTextContent());
+			String file = n.getAttributes().getNamedItem("xlink:href").getTextContent();
+			SvgImage img = new SvgImage();
+			img.x = x;
+			img.y = -y - height;
+			img.width = width;
+			img.height = height;
+			img.texture = new Texture(Gdx.files.internal("data" + file.substring(file.lastIndexOf("/"))));
+			images.add(img);
 		}
 	}
 	

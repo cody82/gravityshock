@@ -1,13 +1,16 @@
 package cody.gravityshock;
 
 import cody.svg.Svg;
+import cody.svg.SvgImage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Matrix4;
@@ -56,18 +59,25 @@ public class Explosion extends Actor{
 	  }
 
 	  static Mesh mesh;
-	  
+
+		static SpriteBatch sb = new SpriteBatch();
 	  void render(OrthographicCamera cam) {
 		    Vector2 pos = position;
 		    float scale = (float)Math.sqrt((double)age) * 0.8f;
-
+		    float alpha = (3f - age)/3f;
 			  Matrix4 matrix = cam.combined.cpy();
 			  matrix.translate(pos.x, pos.y, 0);
 			  matrix.scale(scale, scale, 0);
-	//cam.apply(Gdx.graphics.getGL10());
-	//Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
-	//Gdx.graphics.getGL10().glScalef(scale, scale, 0);
 
-			Util.render(mesh, GL10.GL_TRIANGLES, matrix, (3f - age)/3f);
+			  sb.setProjectionMatrix(matrix);
+			  sb.begin();
+			  sb.setColor(1, 1, 1, alpha);
+			  for(SvgImage i : svg.images) {
+				  sb.draw(i.texture, i.x, i.y, i.width, i.height);
+			  }
+			  sb.end();
+			  Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+
+			Util.render(mesh, GL10.GL_TRIANGLES, matrix, alpha);
 	  }
 }
