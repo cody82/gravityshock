@@ -1,0 +1,5 @@
+^gravityshock/bin/
+^gravityshock-android/bin/
+^gravityshock-android/gen/
+.log$
+~$
