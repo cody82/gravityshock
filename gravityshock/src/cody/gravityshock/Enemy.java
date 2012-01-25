@@ -34,7 +34,7 @@ public class Enemy extends Actor{
 	
 	public void create() {
 		if(svg == null)
-			svg = new Svg("data/enemy.svg");
+			svg = Assets.getSvg("data/enemy.svg");
 		
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.StaticBody;

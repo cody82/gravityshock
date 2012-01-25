@@ -42,13 +42,27 @@ public class Map {
 	Body body;
 	ArrayList<Fixture> fixtures;
 	ArrayList<ArrayList<Vector2>> points;
-	ShaderProgram shader;
 	ArrayList<Pickup> pickups;
 	float age;
 	ArrayList<Mesh> meshes;
 	
 	ArrayList<Image> images;
 	
+	public void dispose() {
+		for(ChainShape shape : shapes) {
+			shape.dispose();
+		}
+		world.b2world.destroyBody(body);
+		for(Pickup p : pickups) {
+			p.dispose();
+		}
+		for(Mesh m : meshes) {
+			m.dispose();
+		}
+		for(Image i : images) {
+			i.texture.dispose();
+		}
+	}
 	public void load(World _world, String filename) {
 			    world = _world;
 			    world.map = this;

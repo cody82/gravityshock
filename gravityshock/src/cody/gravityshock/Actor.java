@@ -13,6 +13,7 @@ public class Actor {
 	  Fixture fixture;
 	  World world;
 	  Mesh mesh;
+	  boolean disposed;
 	  
 	  public Actor() {
 			  }
@@ -51,6 +52,9 @@ public class Actor {
 			  }
 
 			  public void dispose(){
+				  if(disposed)
+					  return;
+				  
 				  if(body != null) {
 					  body.destroyFixture(fixture);
 					  world.b2world.destroyBody(body);

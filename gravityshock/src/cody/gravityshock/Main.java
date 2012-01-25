@@ -92,7 +92,10 @@ public class Main implements Screen {
     	}
     	level++;
     	countdown = 3;
-		world = new World();
+		if(world != null)
+			world.dispose();
+    	world = new World();
+		
 		map = new Map();
 		map.load(world, "data/level" + level + ".svg");
 		for(int i =0;i<numplayers;++i)
@@ -106,22 +109,6 @@ public class Main implements Screen {
     void drawbuttons() {
 		viewport(0, 0, window_width, window_height);
 
-/*
-		if(buttons == null) {
-		buttons = new Mesh(true, 4, 6, 
-				new VertexAttribute(Usage.Position, 3, "a_position"), 
-				new VertexAttribute(Usage.ColorPacked, 4,"a_color"));
-    		buttons.setVertices(new float[]{
-    				0, window_height - 100, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
-    				100, window_height - 100, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
-    				0, window_height, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
-    				100, window_height, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
-    		});
-    		buttons.setIndices(new short[]{
-    				0,1,2, 1,2,3
-    		});
-		}
-		*/
 		gl20.glEnable(GL20.GL_BLEND);
     	Matrix4 m = new Matrix4();
     	m.setToOrtho2D(0, window_height, window_width, -window_height);
@@ -273,7 +260,7 @@ public class Main implements Screen {
 		GL10 gl10 = Gdx.graphics.getGL10();
 		GL20 gl20 = Gdx.graphics.getGL20();
 		
-		background = new Texture(Gdx.files.internal("data/space.png"));
+		background = Assets.getTexture("data/space.png");
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		/*if(Gdx.graphics.isGL20Available()) {
 			framebuffer = new FrameBuffer(Pixmap.Format.RGB888, 128, 128, false);
