@@ -52,8 +52,8 @@ public class Main implements Screen {
     FrameBuffer framebuffer;
     FrameBuffer framebuffer2;
 
-	GL10 gl10;
-	GL20 gl20;
+	static GL10 gl10;
+	static GL20 gl20;
 	
 	float zoom = 1f;
 	
@@ -270,8 +270,8 @@ public class Main implements Screen {
 		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
 		spriteBatch = new SpriteBatch();
 		
-		GL10 gl10 = Gdx.graphics.getGL10();
-		GL20 gl20 = Gdx.graphics.getGL20();
+		gl10 = Gdx.graphics.getGL10();
+		gl20 = Gdx.graphics.getGL20();
 		
 		background = new Texture(Gdx.files.internal("data/space.png"));
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
@@ -307,7 +307,22 @@ public class Main implements Screen {
 		}
 		
 	}
-	 
+	public static void blend(boolean b) {
+		if(gl10 != null) {
+			if(b)
+				gl10.glEnable(GL10.GL_BLEND);
+			else
+				gl10.glDisable(GL10.GL_BLEND);
+		}
+		else if(gl20 != null){
+			if(b)
+				gl20.glEnable(GL20.GL_BLEND);
+			else
+				gl20.glDisable(GL20.GL_BLEND);
+		}
+		
+	}
+	
 	void viewport(int x, int y, int width, int height) {
 		if(gl10 != null) {
 			gl10.glViewport(x, y, width, height);
@@ -351,11 +366,11 @@ public class Main implements Screen {
 			float x2 = cams[0].position.x * 0.01f;
 			float y2 = cams[0].position.y * 0.01f;
 
-			gl20.glDisable(GL20.GL_BLEND);
+			blend(false);
 			spriteBatch.begin();
 			spriteBatch.draw(background, 0, 0, window_width / numplayers, window_height, x2, y2, x2 + (window_width / numplayers / 64), y2 +  + (window_height / 64));
 			spriteBatch.end();
-			gl20.glEnable(GL20.GL_BLEND);
+			blend(true);
 			
 			//clear();
 			world.render(cams[0]);

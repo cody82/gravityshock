@@ -76,7 +76,7 @@ public class Explosion extends Actor{
 				  sb.draw(i.texture, i.x, i.y, i.width, i.height);
 			  }
 			  sb.end();
-			  Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+			  Main.blend(true);
 
 			Util.render(mesh, GL10.GL_TRIANGLES, matrix, alpha);
 	  }
