@@ -35,6 +35,8 @@ public class Enemy extends Actor{
 	public void create() {
 		if(svg == null)
 			svg = Assets.getSvg("data/enemy.svg");
+	    if(mesh == null)
+	    	mesh = Assets.getMesh("data/enemy.svg");
 		
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.StaticBody;
@@ -51,9 +53,6 @@ public class Enemy extends Actor{
 	    	fixture = body.createFixture(shape, 0.1f);
 	    }
 	    
-	    if(mesh == null) {
-	    	mesh = Util.createMesh(svg, 3);
-	    }
 	    
 	    if(svg.textCount() > 0) {
 	    	SvgText t = svg.getText(0);

@@ -40,7 +40,9 @@ public class World implements ContactListener {
 	  }
 	  
 	  public void dispose() {
+		  System.out.println("world.dispose1");
 		  map.dispose();
+		  System.out.println("world.dispose2");
 		  b2world.dispose();
 	  }
 	  
