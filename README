@@ -1,0 +1,10 @@
+This should be a game like Gravity Force.
+
+- Language: Scala and Java
+- IDE: NetBeans
+- Target OS: Linux, MacOS, Windows, Android
+- Graphics: OpenGL ES
+- Licence: GPL
+- Author: cody
+- Libs: libgdx
+
