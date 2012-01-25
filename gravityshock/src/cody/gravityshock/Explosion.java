@@ -44,7 +44,7 @@ public class Explosion extends Actor{
 		}
 
 		if(sound == null) {
-			sound = Gdx.audio.newSound(Gdx.files.internal("data/explosion1.ogg"));
+			sound = Assets.getSound("data/explosion1.ogg");
 		}
 		
 		sound.play();

@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
 	
@@ -61,5 +62,15 @@ public class Assets {
 			return t;
 		}
 		
+	}
+	
+	static Skin skin;
+	
+	public static Skin getSkin() {
+		if(skin != null)
+			return skin;
+
+        skin = new Skin(Gdx.files.internal("data/uiskin.json"), Gdx.files.internal("data/uiskin.png"));
+        return skin;
 	}
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.IndexData;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -242,6 +243,7 @@ public class Map {
 			img.width = width;
 			img.height = height;
 			img.texture = new Texture(Gdx.files.internal("data" + file.substring(file.lastIndexOf("/"))));
+			//img.texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			images.add(img);
 		}
 	}
