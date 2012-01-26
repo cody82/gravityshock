@@ -74,7 +74,6 @@ public class Main implements Screen {
 		players[index].create();
 		players[index].body.setTransform((index + 0.5f) * 22f - numplayers * 11f , 0, 0);
 		if(oldplayer != null) {
-			oldplayer.dispose();
 			players[index].pickups = oldplayer.pickups;
 			players[index].lifes = oldplayer.lifes;
 		}
@@ -92,7 +91,10 @@ public class Main implements Screen {
     	}
     	level++;
     	countdown = 3;
-		world = new World();
+		if(world != null)
+			world.dispose();
+    	world = new World();
+		
 		map = new Map();
 		map.load(world, "data/level" + level + ".svg");
 		for(int i =0;i<numplayers;++i)
@@ -106,22 +108,6 @@ public class Main implements Screen {
     void drawbuttons() {
 		viewport(0, 0, window_width, window_height);
 
-/*
-		if(buttons == null) {
-		buttons = new Mesh(true, 4, 6, 
-				new VertexAttribute(Usage.Position, 3, "a_position"), 
-				new VertexAttribute(Usage.ColorPacked, 4,"a_color"));
-    		buttons.setVertices(new float[]{
-    				0, window_height - 100, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
-    				100, window_height - 100, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
-    				0, window_height, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
-    				100, window_height, 0, new Color(1f, 0, 0, 0.5f).toFloatBits(),
-    		});
-    		buttons.setIndices(new short[]{
-    				0,1,2, 1,2,3
-    		});
-		}
-		*/
 		gl20.glEnable(GL20.GL_BLEND);
     	Matrix4 m = new Matrix4();
     	m.setToOrtho2D(0, window_height, window_width, -window_height);
@@ -273,7 +259,7 @@ public class Main implements Screen {
 		gl10 = Gdx.graphics.getGL10();
 		gl20 = Gdx.graphics.getGL20();
 		
-		background = new Texture(Gdx.files.internal("data/space.png"));
+		background = Assets.getTexture("data/space.png");
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		/*if(Gdx.graphics.isGL20Available()) {
 			framebuffer = new FrameBuffer(Pixmap.Format.RGB888, 128, 128, false);
@@ -473,7 +459,7 @@ public class Main implements Screen {
 			
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
-			int y = window_height -170;
+			int y = window_height -190;
 			font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, y);
 			font.draw(spriteBatch, "pickups: " + Integer.toString(players[i].pickups) + "/" + Integer.toString(map.getGoalScore()), 20, y+20);
 			font.draw(spriteBatch, "speed: " + Integer.toString((int)players[i].body.getLinearVelocity().len()) + "m/s", 20, y+40);
@@ -483,6 +469,7 @@ public class Main implements Screen {
 			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, y+120);
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, y+140);
 			font.draw(spriteBatch, "score: " + calcScore(), 20, y+160);
+			font.draw(spriteBatch, "box2d: " + world.b2world.getBodyCount() + " " + world.b2world.getJointCount(), 20, y+180);
 			spriteBatch.end();
 			if(Gdx.app.getType() == ApplicationType.Android)
 				drawbuttons();

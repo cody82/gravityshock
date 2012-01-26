@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.IndexData;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -42,13 +43,27 @@ public class Map {
 	Body body;
 	ArrayList<Fixture> fixtures;
 	ArrayList<ArrayList<Vector2>> points;
-	ShaderProgram shader;
 	ArrayList<Pickup> pickups;
 	float age;
 	ArrayList<Mesh> meshes;
 	
 	ArrayList<Image> images;
 	
+	public void dispose() {
+		for(ChainShape shape : shapes) {
+			shape.dispose();
+		}
+		world.b2world.destroyBody(body);
+		for(Pickup p : pickups) {
+			p.dispose();
+		}
+		for(Mesh m : meshes) {
+			m.dispose();
+		}
+		for(Image i : images) {
+			i.texture.dispose();
+		}
+	}
 	public void load(World _world, String filename) {
 			    world = _world;
 			    world.map = this;
@@ -228,6 +243,7 @@ public class Map {
 			img.width = width;
 			img.height = height;
 			img.texture = new Texture(Gdx.files.internal("data" + file.substring(file.lastIndexOf("/"))));
+			//img.texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			images.add(img);
 		}
 	}

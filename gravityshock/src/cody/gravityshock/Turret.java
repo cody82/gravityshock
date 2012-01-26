@@ -26,7 +26,7 @@ public class Turret extends Actor implements RayCastCallback {
 
 	public void create() {
 		if(svg == null)
-			svg = new Svg("data/turret.svg");
+			svg = Assets.getSvg("data/turret.svg");
 		
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.StaticBody;

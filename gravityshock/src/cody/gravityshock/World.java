@@ -39,8 +39,11 @@ public class World implements ContactListener {
 	    actor.world = this;
 	  }
 	  
-	  void dispose() {
-	    b2world.dispose();
+	  public void dispose() {
+		  System.out.println("world.dispose1");
+		  map.dispose();
+		  System.out.println("world.dispose2");
+		  b2world.dispose();
 	  }
 	  
 	  float last;

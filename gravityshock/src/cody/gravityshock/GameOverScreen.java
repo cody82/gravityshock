@@ -146,7 +146,7 @@ public class GameOverScreen implements Screen {
 	Window window;
 	@Override
 	public void show() {
-        skin = new Skin(Gdx.files.internal("data/uiskin.json"), Gdx.files.internal("data/uiskin.png"));
+        skin = Assets.getSkin();
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 

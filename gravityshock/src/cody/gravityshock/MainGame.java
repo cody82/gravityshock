@@ -3,6 +3,7 @@ package cody.gravityshock;
 import com.badlogic.gdx.Game;
 
 public class MainGame extends Game{
+	public int level = 1;
 	public int numplayers = 1;
 	public PersistantData data;
 	
@@ -16,6 +17,7 @@ public class MainGame extends Game{
 
 	public void start() {
 		Main main = new Main(this);
+		main.level = level - 1;
 		main.numplayers = numplayers;
 		this.setScreen(main);
 		
