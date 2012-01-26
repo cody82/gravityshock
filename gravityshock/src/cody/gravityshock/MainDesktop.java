@@ -7,8 +7,8 @@ public class MainDesktop {
 		MainGame main = new MainGame(new FileData());
 
 		for(int i = 0;i<argv.length;++i) {
-			if(argv[i].equals("--numplayers")) {
-				main.numplayers = Integer.parseInt(argv[i+1]);
+			if(argv[i].equals("--level")) {
+				main.level = Integer.parseInt(argv[i+1]);
 			}
 		}
 		

@@ -32,6 +32,9 @@ public class Spaceship extends Actor {
 	
 	@Override
 	public void dispose() {
+		if(disposed)
+			return;
+		
 		super.dispose();
 	      if(play_thrust != -1) {
 	    	  thrust_sound.stop(play_thrust);
@@ -75,16 +78,16 @@ public class Spaceship extends Actor {
 	public Fixture gear1, gear2;
 	public void create() {
 		if(thrust_sound == null) {
-			thrust_sound = Gdx.audio.newSound(Gdx.files.internal("data/thrust.ogg"));
+			thrust_sound = Assets.getSound("data/thrust.ogg");
 		}
 		if(shoot_sound == null) {
-			shoot_sound = Gdx.audio.newSound(Gdx.files.internal("data/shoot1.ogg"));
+			shoot_sound = Assets.getSound("data/shoot1.ogg");
 		}
 		if(return_sound == null) {
-			return_sound = Gdx.audio.newSound(Gdx.files.internal("data/return.ogg"));
+			return_sound = Assets.getSound("data/return.ogg");
 		}
 		if(pickup_sound == null) {
-			pickup_sound = Gdx.audio.newSound(Gdx.files.internal("data/sound1.wav"));
+			pickup_sound = Assets.getSound("data/sound1.wav");
 		}
 		BodyDef bdef = new BodyDef();
 	    bdef.type = BodyDef.BodyType.DynamicBody;

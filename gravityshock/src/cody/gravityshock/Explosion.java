@@ -38,13 +38,13 @@ public class Explosion extends Actor{
 	
 	public void create() {
 		if(svg == null)
-			svg = new Svg("data/explosion1.svg");
+			svg = Assets.getSvg("data/explosion1.svg");
 		if(mesh == null) {
-			mesh = Util.createMesh(svg, 3);
+			mesh = Assets.getMesh("data/explosion1.svg");
 		}
 
 		if(sound == null) {
-			sound = Gdx.audio.newSound(Gdx.files.internal("data/explosion1.ogg"));
+			sound = Assets.getSound("data/explosion1.ogg");
 		}
 		
 		sound.play();
