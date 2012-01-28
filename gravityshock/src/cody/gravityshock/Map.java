@@ -216,12 +216,29 @@ public class Map {
 		}
 		
 
-		list = doc.getDocumentElement().getElementsByTagName("tspan");
+		list = doc.getDocumentElement().getElementsByTagName("text");
 		for(int i=0;i<list.getLength();++i){
 			Node n=list.item(i);
 			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
 			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
-			String text = n.getTextContent();
+			String text = null;
+			String desc = "";
+			NodeList children = n.getChildNodes();
+			for(int k=0;k<children.getLength();++k){
+				Node n2 = children.item(k);
+				if(n2.getNodeName().equals("desc")){
+					desc = n2.getTextContent();
+					break;
+				}
+			}
+			for(int k=0;k<children.getLength();++k){
+				Node n2 = children.item(k);
+				if(n2.getNodeName().equals("tspan")){
+					text = n2.getTextContent();
+					break;
+				}
+			}
+			
 			if(text.equals("pickup")){
 				Pickup pickup = new Pickup(world);
 				pickup.body.setTransform(x, -y, 0);
@@ -234,6 +251,16 @@ public class Map {
 			else if(text.equals("turret")){
 				Turret t = new Turret(world);
 				t.body.setTransform(x, -y, 0);
+			}
+			else if(text.equals("gravity")){
+				String[] properties = desc.split("[ =]");
+				float strength = 10000000;
+				for(int j=0;j<properties.length; ++j) {
+					if(properties[j].equals("strength")) {
+						strength = Float.parseFloat(properties[j+1]);
+					}
+				}
+				Gravity g = new Gravity(world, new Vector2(x, -y), strength);
 			}
 		}
 		
@@ -254,6 +281,17 @@ public class Map {
 			//img.texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			images.add(img);
 		}
+		
+
+		list = doc.getDocumentElement().getElementsByTagName("dc:description");
+		for(int i=0;i<list.getLength();++i){
+			Node n=list.item(i);
+			String text = n.getTextContent();
+			if(text.contains("gravity=0")){
+				world.b2world.setGravity(new Vector2(0,0));
+			}
+		}
+		
 	}
 	
 	public int getGoalScore() {
