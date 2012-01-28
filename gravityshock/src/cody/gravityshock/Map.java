@@ -189,6 +189,14 @@ public class Map {
 				fixture.setRestitution(0.2f);
 				Actor actor = new Actor(world,Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true), fixture, b);				
 			}
+			else if(type.equals("Fuel")) {
+				ChainShape shape = new ChainShape();
+				shape.createLoop(array.toArray(new Vector2[0]));
+				//shapes.add(shape);
+				Fixture fixture = body.createFixture(shape, 1);
+				fixture.setRestitution(0.2f);
+				Fuel fuel = new Fuel(world,Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true), fixture);			
+			}
 			else {
 				colors.add(color);
 				points.add(array);

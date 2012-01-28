@@ -184,11 +184,13 @@ public class Spaceship extends Actor {
 	    
 	    Actor a = Util.RayCastNearestActor(world, p1, p2, pickup);
 	    if(!connected && a instanceof Pickup) {
-	    	  connect((Pickup)a);
+	    	connect((Pickup)a);
 	    }
-	    else if(connected) {
-	    	if(a instanceof Home)
-		    	disconnect();
+	    else if(connected && a instanceof Home) {
+		    disconnect();
+	    }
+	    else if(a instanceof Fuel) {
+	    	fuel = Math.min(100, fuel + dtime * 5f);
 	    }
 	  }
 	  
