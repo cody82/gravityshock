@@ -62,7 +62,7 @@ public class Enemy extends Actor{
 	    }
 	  }
 
-	float shoot_time = 1;
+	float shoot_time = 3;
 	void target(Spaceship s) {
 		Vector2 dir = s.body.getPosition().cpy();
 		dir.sub(body.getWorldPoint(turret));
@@ -93,7 +93,7 @@ public class Enemy extends Actor{
 					  
 					  if(s2 == s) {
 						  target(s);
-						  shoot_time = 1;
+						  shoot_time = 3;
 					  }
 					  break;
 				  }

@@ -25,14 +25,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.2432572"
+     inkscape:zoom="1"
      inkscape:cx="-73.953715"
-     inkscape:cy="2005.3301"
+     inkscape:cy="1359.89"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="846"
+     inkscape:window-width="1920"
+     inkscape:window-height="1146"
      inkscape:window-x="0"
      inkscape:window-y="26"
      inkscape:window-maximized="1" />
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -134,24 +134,25 @@
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <path
-       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:6,6;stroke-dashoffset:0"
-       d="m 56.241578,-909.72607 -180.397518,64.73087 -217.53817,117.78897 -13.79511,129.46174 198.43727,145.37918 154.9296263,-38.20183 200.5595937,15.91743 84.89294,134.76755 -24.40672,216.47702 -276.963241,44.568795 -185.703319,-6.366971"
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6, 6;stroke-dashoffset:0"
+       d="m 56.241578,-909.72607 -180.397518,64.73087 -217.53817,117.78897 -13.79511,129.46174 198.43727,145.37918 154.9296263,-38.20183 200.5595937,15.91743 84.89294,134.76755 -24.40672,216.47702 -276.963241,44.568795 -185.703319,-6.366971 -63.25693,-4.434501 338,53 206,-89.000003 17,-232 -105,-182 -131,126 -395,42"
        id="path3015"
        inkscape:connector-curvature="0"
        inkscape:export-filename="/home/cody/workspace/gravityshock/gravityshock/data/level2.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
+       inkscape:export-ydpi="90"
+       sodipodi:nodetypes="ccccccccccc">
       <desc
          id="desc3019">speed=10</desc>
       <title
          id="title3017">enemy</title>
     </path>
     <path
-       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:8,8;stroke-dashoffset:0"
-       d="M -164.48009,-43.818004 95.504566,-44.879166 57.30274,-216.78738 l -197.37611,-42.44648 -47.75228,53.05809 z"
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
+       d="M -313.48009,-59.818004 95.504566,-44.879166 57.30274,-216.78738 l -197.37611,-42.44648 -47.75228,53.05809 22.82565,169.537953 391,-39 67,-341.000003 -173,-167 -456,197 -21,-357 567,-317.99998 81,87.99998"
        id="path3789"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccc"
+       sodipodi:nodetypes="ccccc"
        inkscape:export-filename="/home/cody/workspace/gravityshock/gravityshock/data/level2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -174,7 +175,7 @@
        y="-1115.6857"
        x="-459.54297"
        id="image3723"
-       xlink:href="file:///home/cody/workspace/gravityshock/gravityshock/data/level2.png"
+       xlink:href="file:///home/cody/workspace/gravityshock/gravityshock-android/assets/data/level2.png"
        height="1241"
        width="829" />
   </g>
