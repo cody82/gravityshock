@@ -84,6 +84,20 @@ public class Main implements Screen {
     	return (level - 1) * 1000 + Math.max(1000 - (int)map.age, 0) + bonusScore;
     }
     
+
+	int LoadMaxLevel() {
+		String data = game.data.LoadString("maxfreelevel.txt");
+		if(data == null)
+			return 1;
+		
+		return Integer.parseInt(data);
+	}
+	
+	void SaveMaxLevel(int level) {
+		int l = LoadMaxLevel();
+		if(level > l || l > maxLevel)
+			game.data.SaveString("maxfreelevel.txt", Integer.toString(level));
+	}
     void nextLevel() {
     	if(level == maxLevel) {
     		game.setScreen(new GameOverScreen(game, calcScore(), true));
@@ -95,6 +109,7 @@ public class Main implements Screen {
 			world.dispose();
     	world = new World();
 		
+    	SaveMaxLevel(level);
 		map = new Map();
 		map.load(world, "data/level" + level + ".svg");
 		for(int i =0;i<numplayers;++i)

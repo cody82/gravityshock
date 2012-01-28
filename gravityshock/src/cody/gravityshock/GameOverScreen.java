@@ -66,19 +66,16 @@ public class GameOverScreen implements Screen {
     
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -86,8 +83,6 @@ public class GameOverScreen implements Screen {
 	public void render(float arg0) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-        //((Label)ui.findActor("label")).setText("fps: " + Gdx.graphics.getFramesPerSecond());
 
         ui.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         ui.draw();
@@ -102,7 +97,6 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -116,6 +110,7 @@ public class GameOverScreen implements Screen {
 		Arrays.sort(list, new HighscoreComparator());
 		return list;
 	}
+	
 	private void SaveHighscore(String name, int score) {
 		
 		String[] scores = LoadHighscore();
