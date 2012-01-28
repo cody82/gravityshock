@@ -1,5 +1,6 @@
 package cody.gravityshock;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
@@ -8,6 +9,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -87,23 +90,20 @@ public class LevelScreen implements Screen {
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
         
-        int maxfreelevel = LoadMaxLevel();
+       int maxfreelevel = LoadMaxLevel();
+       ArrayList<String> listentries = new ArrayList<String>();
         for(int i=1;i<=maxfreelevel;++i) {
-        	TextButton b = new TextButton("Level " + Integer.toString(i), skin.getStyle(TextButtonStyle.class), "label") {
-            	@Override
-            	public boolean touchDown(float x, float y, int pointer) {
-            		game.level = Integer.parseInt(this.getText().split(" ")[1]);
-            		game.startMainMenu();
-    				return isChecked();
-            	}
-            };
-            window.add(b).fill(0f, 0f);
-            window.row();
+        	listentries.add("Level " + Integer.toString(i));
+        	
         }
+        final List list = new List(listentries.toArray(), skin.getStyle(ListStyle.class), "list");
 
-        final TextButton button = new TextButton("Back", skin.getStyle(TextButtonStyle.class), "button-sl") {
+        window.add(list);
+        
+        final TextButton button = new TextButton("Done", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
+        		game.level = Integer.parseInt(list.getSelection().split(" ")[1]);
         		game.startMainMenu();
 				return isChecked();
         	}
