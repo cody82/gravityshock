@@ -55,7 +55,6 @@ public class MainMenu implements Screen {
     }
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -65,7 +64,6 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -73,8 +71,6 @@ public class MainMenu implements Screen {
 	public void render(float arg0) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-        //((Label)ui.findActor("label")).setText("fps: " + Gdx.graphics.getFramesPerSecond());
 
         ui.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         ui.draw();
@@ -90,7 +86,6 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
 		
 	}
 	Window window;
@@ -140,7 +135,13 @@ public class MainMenu implements Screen {
 				return isChecked();
         	}
         };
-        //final Label fpsLabel = new Label("fps:", skin.getStyle(LabelStyle.class), "label");
+        final TextButton levelbutton = new TextButton("Levels", skin.getStyle(TextButtonStyle.class), "button-sl") {
+        	@Override
+        	public boolean touchDown(float x, float y, int pointer) {
+        		game.setScreen(new LevelScreen(game));
+				return isChecked();
+        	}
+        };
 
         //window.debug();
         window.defaults().spaceBottom(10);
@@ -152,6 +153,8 @@ public class MainMenu implements Screen {
     	}
         window.row();
         window.add(highscorebutton).fill(0f, 0f);
+        window.row();
+        window.add(levelbutton).fill(0f, 0f);
         window.row();
         window.add(button3).fill(0f, 0f);
         /*window.add(buttonMulti);
