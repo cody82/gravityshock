@@ -149,6 +149,7 @@ public class GameOverScreen implements Screen {
         window.x = window.y = 0;
         window.width = ui.width();
         window.height= ui.height();
+        window.setMovable(false);
 
       final Label fpsLabel = new Label(win ? "GAME COMPLETE" : "GAME OVER", skin.getStyle(LabelStyle.class), "label");
 

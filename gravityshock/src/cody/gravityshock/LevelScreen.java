@@ -84,6 +84,7 @@ public class LevelScreen implements Screen {
         window.x = window.y = 0;
         window.width = ui.width();
         window.height= ui.height();
+        window.setMovable(false);
 
 
         //window.debug();

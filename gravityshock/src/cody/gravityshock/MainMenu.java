@@ -7,7 +7,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -67,14 +69,33 @@ public class MainMenu implements Screen {
 		
 	}
 
+	float x2 = 0;
 	@Override
 	public void render(float arg0) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+        float window_width = Gdx.graphics.getWidth();
+        float window_height = Gdx.graphics.getHeight();
+        float y2 = 0;
+        x2 += arg0;
+
+        batch.begin();
+ 		batch.enableBlending();
+ 		batch.setBlendFunction(GL20.GL_BLEND_SRC_ALPHA, GL20.GL_ONE);
+        batch.draw(background, 0, 0, window_width, window_height, x2, y2, x2 + (window_width / 256), y2 +  + (window_height / 256));
+        
+        batch.draw(background, 0, 0, window_width, window_height, x2 * 2, 0.3f + y2 * 2, x2 * 2 + (window_width / 256), 0.3f + y2 * 2 + (window_height / 256));
+		batch.end();
+		
+		
+		
         ui.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         ui.draw();
         //Table.drawDebug(ui);
+        batch.begin();
+        		batch.draw(title, 0, window_height - 128, window_width, 128);
+        batch.end();
 
 	}
 
@@ -89,19 +110,37 @@ public class MainMenu implements Screen {
 		
 	}
 	Window window;
+	Texture background;
+	Texture title;
+	
 	@Override
 	public void show() {
 
         batch = new SpriteBatch();
         skin = Assets.getSkin();
-
+        background = Assets.getTexture("data/space2.png");
+        background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+        title = Assets.getTexture("data/title.png");
+        
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        window = new Window("window", skin.getStyle(WindowStyle.class));
-        window.x = window.y = 0;
+        window = new Window("Gravity Shock", skin.getStyle(WindowStyle.class)){
+        	protected void drawBackground(SpriteBatch batch,
+                    float parentAlpha) {
+        		
+        	}
+        };
+        window.x = 0;
+        window.y = 0;
         window.width = ui.width();
-        window.height= ui.height();
+        window.height= ui.height() - 64;
+        window.setMovable(false);
+        window.color.r = 0f;
+        window.color.g = 0f;
+        window.color.b = 0f;
+        window.color.a = 0.8f;
+        
         // Group.debug = true;
 
         final TextButton button = new TextButton("Start Game", skin.getStyle(TextButtonStyle.class), "button-sl") {
@@ -143,20 +182,22 @@ public class MainMenu implements Screen {
         	}
         };
 
+        int width = (int)(window.width * 0.6f);
+        int height = (int)(window.height * 0.10f);
         //window.debug();
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
-        window.add(button).fill(0f, 0f);
+        window.add(button).width(width).height(height);
     	if(Gdx.app.getType() != ApplicationType.Android) {
     		window.row();
-    		window.add(button2).fill(0f, 0f);
+    		window.add(button2).width(width).height(height);
     	}
         window.row();
-        window.add(highscorebutton).fill(0f, 0f);
+        window.add(highscorebutton).width(width).height(height);
         window.row();
-        window.add(levelbutton).fill(0f, 0f);
+        window.add(levelbutton).width(width).height(height);
         window.row();
-        window.add(button3).fill(0f, 0f);
+        window.add(button3).width(width).height(height);
         /*window.add(buttonMulti);
         window.add(imgButton);
         window.add(imgToggleButton);
