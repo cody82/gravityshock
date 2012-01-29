@@ -79,10 +79,7 @@ public class Main implements Screen {
 		}
     }
     
-    int bonusScore;
-    int calcScore() {
-    	return (level - 1) * 1000 + Math.max(1000 - (int)map.age, 0) + bonusScore;
-    }
+    int score = 0;
     
 
 	int LoadMaxLevel() {
@@ -98,7 +95,17 @@ public class Main implements Screen {
 		if(level > l || l > maxLevel)
 			game.data.SaveString("maxfreelevel.txt", Integer.toString(level));
 	}
+	
+	int calcScore() {
+		int s = score;
+		for(Spaceship p : players) {
+			s += p.score;
+		}
+		return s;
+	}
     void nextLevel() {
+    	if(level > 0)
+    		score += 1000 + Math.max(0, 1000 - map.age);
     	if(level == maxLevel) {
     		game.setScreen(new GameOverScreen(game, calcScore(), true));
     		return;
@@ -494,7 +501,7 @@ public class Main implements Screen {
 		if(game_over) {
 			countdown -= t;
 			if(countdown <= 0){
-				game.setScreen(new GameOverScreen(game, calcScore(), false));
+				game.setScreen(new GameOverScreen(game, score, false));
 				return;
 			}
 		}

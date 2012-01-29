@@ -204,6 +204,8 @@ public class Spaceship extends Actor {
 	  Joint pickupjoint;
 	  Pickup pickup;
 	  
+	  public int score = 0;
+	  
 	  void connect(Pickup p) {
 		  if(p.returned || health <= 0)
 			  return;
@@ -230,6 +232,7 @@ public class Spaceship extends Actor {
 		  pickup = null;
 		  pickups++;
 		  return_sound.play();
+		  score += 100;
 	  }
 	  
 	  void shoot(){
