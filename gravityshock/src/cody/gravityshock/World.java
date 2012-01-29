@@ -14,16 +14,20 @@ public class World implements ContactListener {
 	Map map;
 	  
 	public class CollisionInfo {
-		public CollisionInfo(Spaceship _ship, Vector2 _pos, float _impulse, boolean _isgear) {
-			ship = _ship;
-			pos = _pos;
+		public CollisionInfo(Object _object1, Object _object2, Fixture _fixture1, Fixture _fixture2, float _impulse) {
 			impulse = _impulse;
-			isgear = _isgear;
+			object1 = _object1;
+			object2 = _object2;
+			fixture1 = _fixture1;
+			fixture2 = _fixture2;
 		}
-		public Spaceship ship;
-		public Vector2 pos;
+		public Object object1;
+		public Object object2;
+		
+		public Fixture fixture1;
+		public Fixture fixture2;
+		
 		public float impulse;
-		public boolean isgear;
 	}
 	ArrayList<CollisionInfo> collisions;
 	
@@ -78,7 +82,12 @@ public class World implements ContactListener {
 	  }
 
 	  void OnCollide(CollisionInfo s) {
-		  s.ship.damage(s);
+		  if(s.object1 instanceof Actor) {
+			  ((Actor)s.object1).onCollide(s.object2, s.impulse, s.fixture1, s.fixture2);
+		  }
+		  if(s.object2 instanceof Actor) {
+			  ((Actor)s.object2).onCollide(s.object1, s.impulse, s.fixture2, s.fixture1);
+		  }
 	  }
 	@Override
 	public void beginContact(Contact contact) {
@@ -86,7 +95,6 @@ public class World implements ContactListener {
 
 	@Override
 	public void endContact(Contact arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -105,20 +113,12 @@ public class World implements ContactListener {
 		
 		if(o1 != null && o2 != null) {
 			//System.out.println(o1.getClass().getName() + " | " + o2.getClass().getName() + ": " + impulse);
-			if(o1 instanceof Spaceship) {
-				if(o2 instanceof Map || o2 instanceof Projectile)
-					collisions.add(new CollisionInfo((Spaceship)o1, ((Spaceship) o1).body.getPosition(), impulse, ((Spaceship)o1).gear1 == f1 || ((Spaceship)o1).gear2 == f1));
-			}
-			if(o2 instanceof Spaceship) {
-				if(o1 instanceof Map || o2 instanceof Projectile)
-					collisions.add(new CollisionInfo((Spaceship)o2, ((Spaceship) o2).body.getPosition(), impulse, ((Spaceship)o2).gear1 == f2 || ((Spaceship)o2).gear2 == f2));
-			}
+			collisions.add(new CollisionInfo(o1, o2, f1, f2, impulse));
 		}
 	}
 
 	@Override
 	public void preSolve(Contact arg0, Manifold arg1) {
-		// TODO Auto-generated method stub
 		
 	}
 

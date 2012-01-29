@@ -41,18 +41,18 @@ public class Spaceship extends Actor {
 	    	  play_thrust = -1;
 	      }
 	}
-	public void damage(World.CollisionInfo i) {
+	public void damage(float impulse, boolean isgear) {
 		if(health <= 0)
 			return;
 		
-		float damage = Math.abs(i.impulse) * 0.06f * (i.isgear ? 0.05f : 1f);
+		float damage = Math.abs(impulse) * 0.06f * (isgear ? 0.05f : 1f);
 		if(damage < 0.5f)
 			return;
 		health -= damage;
 		
 		if(health <= 0) {
 			  Explosion x = new Explosion(world);
-			  x.position = i.pos.cpy();
+			  x.position = body.getPosition().cpy();
 			  if(connected) {
 				  world.b2world.destroyJoint(pickupjoint);
 				  pickupjoint = null;
@@ -132,6 +132,12 @@ public class Spaceship extends Actor {
 		mesh.setIndices(new short[] {0, 1, 2, 0});*/
 	  }
 
+	@Override
+	public void onCollide(Object other, float impulse, Fixture thisfixture, Fixture otherfixture) {
+		super.onCollide(other, impulse, thisfixture, otherfixture);
+		
+		this.damage(impulse, thisfixture == gear1 || thisfixture == gear2);
+	}
 	  float shoot_time;
 	  boolean thrust;
 	  
@@ -228,6 +234,7 @@ public class Spaceship extends Actor {
 	  
 	  void shoot(){
 		  Projectile p = new Projectile(world);
+		  p.source = this;
 		  p.body.setTransform(body.getWorldPoint(new Vector2(0,15)), body.getAngle());
 		  p.body.setLinearVelocity(body.getWorldVector(new Vector2(0,1000)));
 		  shoot_sound.play();
