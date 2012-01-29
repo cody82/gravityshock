@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 public class Enemy extends Actor{
@@ -31,7 +33,35 @@ public class Enemy extends Actor{
 	}
 	public Enemy() {
 	}
-	
+
+	public int health = 1000;
+	public void damage(float impulse, boolean isgear) {
+		if(health <= 0)
+			return;
+		
+		float damage = Math.abs(impulse) * 0.06f * (isgear ? 0.05f : 1f);
+		if(damage < 0.5f)
+			return;
+		health -= damage;
+		
+		if(health <= 0) {
+			  Explosion x = new Explosion(world);
+			  x.position = body.getPosition().cpy();
+			  body.setType(BodyType.DynamicBody);
+			  body.setAwake(true);
+			  //world.actors.remove(this);
+			  //dispose();
+		}
+	}
+	@Override
+	  public void onCollide(Object other, float impulse, Fixture thisfixture, Fixture otherfixture) {
+		  super.onCollide(other, impulse, thisfixture, otherfixture);
+		  
+		  if(other instanceof Projectile) {
+			  if(((Projectile)other).source != this)
+			  	damage(impulse, false);
+		  }
+	  }
 	public void create() {
 		if(svg == null)
 			svg = Assets.getSvg("data/enemy.svg");
@@ -51,6 +81,7 @@ public class Enemy extends Actor{
 	    	s.set(svg.getPath(i).points);
 	    
 	    	fixture = body.createFixture(shape, 0.1f);
+	    	fixture.setUserData(this);
 	    }
 	    
 	    
@@ -75,12 +106,15 @@ public class Enemy extends Actor{
 
 		//body.setTransform(body.getPosition(), angle);
 		Projectile p = new Projectile(world);
+		p.source = this;
 		p.body.setTransform(body.getWorldPoint(turret), angle);
 		p.body.setLinearVelocity(dir.mul(10));
 	}
 	
 	  void tick(float dtime) {
-
+		  if(health <= 0)
+			  return;
+		  
 		  if(turret != null) {
 			  
 		  shoot_time -=dtime;
@@ -131,9 +165,7 @@ public class Enemy extends Actor{
 		  Matrix4 matrix = cam.combined.cpy();
 		  matrix.translate(pos.x, pos.y, 0);
 		  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
-	//Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
-	//Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
 		  
-	Util.render(mesh, GL10.GL_TRIANGLES, matrix);
+	Util.render(mesh, GL10.GL_TRIANGLES, matrix, health > 0 ? 1f : 0.6f);
 	  }
 }

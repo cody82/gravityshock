@@ -23,6 +23,8 @@ public class Projectile extends Actor{
 	public Projectile() {
 	}
 	
+	public Actor source;
+	
 	float age;
 	public void create() {
 		BodyDef bdef = new BodyDef();

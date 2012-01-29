@@ -47,6 +47,9 @@ public class Actor {
 			    }
 			  }
 			  
+			  public void onCollide(Object other, float impulse, Fixture thisfixture, Fixture otherfixture) {
+				  
+			  }
 			  
 			  void tick(float dtime) {
 			  }
