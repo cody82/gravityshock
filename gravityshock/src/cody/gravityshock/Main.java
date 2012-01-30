@@ -104,7 +104,7 @@ public class Main implements Screen {
 		return s;
 	}
     void nextLevel() {
-    	if(level > 0)
+    	if(level > 0 && map != null)
     		score += 1000 + Math.max(0, 1000 - map.age);
     	if(level == maxLevel) {
     		game.setScreen(new GameOverScreen(game, calcScore(), true));
