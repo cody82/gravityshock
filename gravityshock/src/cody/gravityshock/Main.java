@@ -164,6 +164,16 @@ public class Main implements Screen {
     	float touch_direction = 0f;
     	boolean touch_thrust = false;
     	
+
+	    if(Gdx.input.isKeyPressed(Input.Keys.O)){
+	    	zoom += 0.01f;
+	    	resize(window_width, window_height);
+	    }
+	    else if(Gdx.input.isKeyPressed(Input.Keys.I)){
+	    	zoom -= 0.01f;
+	    	resize(window_width, window_height);
+	    }
+	    
     	if(Gdx.app.getType() == ApplicationType.Android)
     	for(int i=0;i<5;++i) {
     		if(Gdx.input.isTouched(i)) {
