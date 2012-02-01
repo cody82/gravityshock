@@ -17,7 +17,7 @@ public class MainAndroid extends AndroidApplication {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.equals(exit)) {
-			maingame.startMainMenu();
+			maingame.beginMainMenu();
 		}
 		return true;
 		
