@@ -5,6 +5,7 @@ package cody.gravityshock;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
@@ -113,6 +114,7 @@ public class MainMenu implements Screen {
 	Texture background;
 	Texture title;
 	
+	
 	@Override
 	public void show() {
 
@@ -125,6 +127,8 @@ public class MainMenu implements Screen {
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
+        Util.playMusic();
+        
         window = new Window("Gravity Shock", skin.getStyle(WindowStyle.class)){
         	protected void drawBackground(SpriteBatch batch,
                     float parentAlpha) {

@@ -8,6 +8,7 @@ import cody.svg.Svg;
 import cody.svg.SvgPath;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
@@ -62,7 +63,20 @@ class ActorRayCaster implements RayCastCallback {
 }
 
 public class Util {
+	static Music music;
+	public static void playMusic() {
+		if(music == null)
+			music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
 
+		if(!music.isPlaying())
+			music.play();
+	}
+    
+	public static void stopMusic() {
+		if(music != null) {
+			music.stop();
+		}
+	}
 	public static Fixture RayCastNearestFixture(World world, Vector2 from, Vector2 to) {
 		RayCaster caster = new RayCaster();
 		world.b2world.rayCast(caster, from, to);
