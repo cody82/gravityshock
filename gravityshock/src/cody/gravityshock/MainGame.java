@@ -15,6 +15,15 @@ public class MainGame extends Game{
 		this.setScreen(new MainMenu(this));
 	}
 
+	@Override
+	public void render() {
+		
+		super.render();
+		if(gotoMainMenu) {
+			gotoMainMenu = false;
+			startMainMenu();
+		}
+	}
 	public void start() {
 		Main main = new Main(this);
 		main.level = level - 1;
@@ -23,6 +32,10 @@ public class MainGame extends Game{
 		
 	}
 
+	boolean gotoMainMenu = false;
+	public void beginMainMenu() {
+		gotoMainMenu = true;
+	}
 	public void startMainMenu() {
 		this.setScreen(new MainMenu(this));
 		
