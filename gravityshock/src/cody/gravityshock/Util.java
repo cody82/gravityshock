@@ -65,11 +65,19 @@ class ActorRayCaster implements RayCastCallback {
 public class Util {
 	static Music music;
 	public static void playMusic() {
-		if(music == null)
-			music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
+		if(music == null) {
+				music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
+		}
+		
 
-		if(!music.isPlaying())
+		try {
+			if(!music.isPlaying())
+				music.play();
+		}
+		catch(NullPointerException e) {
+			music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
 			music.play();
+		}
 	}
     
 	public static void stopMusic() {
