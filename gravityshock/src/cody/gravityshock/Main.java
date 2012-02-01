@@ -283,6 +283,7 @@ public class Main implements Screen {
     }
 	@Override
 	public void show () {
+        Util.stopMusic();
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
