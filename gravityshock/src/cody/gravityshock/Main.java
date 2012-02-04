@@ -592,7 +592,9 @@ public class Main implements Screen {
 		window_width = width;
 		window_height = height;
 		for(int i=0;i<numplayers;++i) {
-			cams[i].setToOrtho(false, ((float)(width/numplayers) / zoom), ((float)height / zoom));
+			//cams[i].setToOrtho(false, ((float)(width/numplayers) / zoom), ((float)height / zoom));
+			cams[i].viewportWidth = ((float)(width/numplayers) / zoom);
+			cams[i].viewportHeight = ((float)(height/numplayers) / zoom);
 			
 			spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width/numplayers, height);
 		}
