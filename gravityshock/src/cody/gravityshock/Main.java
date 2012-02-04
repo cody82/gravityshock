@@ -3,6 +3,8 @@ package cody.gravityshock;
 import java.io.File;
 import java.io.IOException;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.ApplicationListener;
@@ -138,14 +140,14 @@ public class Main implements Screen {
     	
     	r.begin(ShapeType.FilledRectangle);
 
-    	r.setColor(1f, 0, 0, 0.5f);
+    	r.setColor(1f, 0, 0, touch_direction > 0 ? 0.7f : 0.5f);
     	r.filledRect(0, window_height - 100, 100, 100);
-    	r.setColor(0.0f, 1f, 0, 0.5f);
+    	r.setColor(0.0f, 1f, 0, touch_direction < 0 ? 0.7f : 0.5f);
     	r.filledRect(150, window_height - 100, 100, 100);
     	
-    	r.setColor(1f, 1f, 0.0f, 0.5f);
+    	r.setColor(1f, 1f, 0.0f, touch_shoot ? 0.7f : 0.5f);
     	r.filledRect(window_width -100, window_height - 250, 100, 100);
-    	r.setColor(0.0f, 0.0f, 1f, 0.5f);
+    	r.setColor(0.0f, 0.0f, 1f, touch_thrust ? 0.7f : 0.5f);
     	r.filledRect(window_width -100, window_height - 100, 100, 100);
     	r.end();
     	
@@ -157,12 +159,34 @@ public class Main implements Screen {
 		spriteBatch.end();
 		
     }
+    
+    boolean zoom_enable = false;
+    float zoom_start;
+    
+    int[] getTouches() {
+    	ArrayList<Integer> l = new ArrayList<Integer>();
+    	
+    	for(int i=0;i<5;++i) {
+    		if(Gdx.input.isTouched(i))
+    			l.add(i);
+    	}
+    	int[] a = new int[l.size()];
+    	for(int i=0;i<l.size();++i) {
+    		a[i] = l.get(i);
+    	}
+    	return a;
+    }
+
+	boolean touch_shoot = false;
+	float touch_direction = 0f;
+	boolean touch_thrust = false;
+	
     void controls() {
     	float ax = 0f;//Gdx.input.getAccelerometerX();
     	
-    	boolean touch_shoot = false;
-    	float touch_direction = 0f;
-    	boolean touch_thrust = false;
+    	touch_shoot = false;
+    	touch_direction = 0f;
+    	touch_thrust = false;
     	
 
 	    if(Gdx.input.isKeyPressed(Input.Keys.O)){
@@ -174,25 +198,30 @@ public class Main implements Screen {
 	    	resize(window_width, window_height);
 	    }
 	    
-    	if(Gdx.app.getType() == ApplicationType.Android)
+    	if(Gdx.app.getType() == ApplicationType.Android) {
+
+    		boolean button_pressed = false;
     	for(int i=0;i<5;++i) {
     		if(Gdx.input.isTouched(i)) {
     			int x = Gdx.input.getX(i);
     			int y = Gdx.input.getY(i);
     			if(x > window_width - 100 && y > window_height - 100) {
         			touch_thrust = true;
+        			button_pressed = true;
     			}
     			else if(x > window_width - 100 && y > window_height - 250 && y < window_height - 150) {
     				touch_shoot = true;
+        			button_pressed = true;
     			}
     			else if(y > window_height - 100 && x < 100) {
 					touch_direction = 1;
+        			button_pressed = true;
     			}
     			else if(y > window_height - 100 && x < 250 && x > 150) {
 					touch_direction = -1;
+        			button_pressed = true;
     			}
     			else {
-    				
     				float vx = cams[0].position.x + x - window_width/2;
     				float vy = cams[0].position.y - y + window_height/2;
     				Vector2 dir = new Vector2(vx, vy).sub(players[0].body.getPosition());
@@ -200,7 +229,6 @@ public class Main implements Screen {
     				float angle2 = players[0].body.getAngle() * 180f / (float)Math.PI;
     				angle2 = (((int)angle2) % 360 + 360) % 360;
     				angle1 = (((int)angle1) % 360 + 360) % 360;
-    				//float diff = angle1 - angle2;
     				if(angle2 > 180) {
     					if(angle1 < angle2 && angle1 > angle2 -180) {
     						touch_direction = -1;
@@ -218,14 +246,38 @@ public class Main implements Screen {
     					}
     					
     				}
-    				//System.out.println(Float.toString(angle1) + " " + Float.toString(angle2));
     			}
-    			/*if(y > window_height * 3 / 4 && x < window_width / 2) {
-    				touch_direction = -(float)(x - (window_width / 4)) / (float)(window_width / 2);
-    			}*/
     			
     		}
     	}
+    	
+    	if(!button_pressed) {
+    		int[] t = getTouches();
+    	    Vector2 zoom_pos1;
+    	    Vector2 zoom_pos2;
+    		boolean z = t.length == 2;
+
+    		if(z) {
+    			zoom_pos1 = new Vector2(Gdx.input.getX(t[0]), Gdx.input.getY(t[0]));
+    			zoom_pos2 = new Vector2(Gdx.input.getX(t[1]), Gdx.input.getY(t[1]));
+    			if(zoom_enable) {
+    				zoom = zoom_pos1.dst(zoom_pos2) / zoom_start;
+    		    	resize(window_width, window_height);
+    			} else {
+    				zoom_start = zoom_pos1.dst(zoom_pos2);
+    				zoom_enable = true;
+    			}
+    		} else {
+    			zoom_enable = false;
+    		}
+    	}
+    	else {
+    		zoom_enable = false;
+    	}
+    	
+    	}
+    	
+    	
     	
     	{
 	    if(Gdx.input.isKeyPressed(Input.Keys.UP) || touch_thrust){
