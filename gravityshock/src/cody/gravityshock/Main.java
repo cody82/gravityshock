@@ -46,7 +46,7 @@ public class Main implements Screen {
     Map map;
     
     int level = 0;
-    final int maxLevel = 7;
+    final int maxLevel = 8;
     
     boolean record = false;
     int frame = 1;
@@ -89,7 +89,7 @@ public class Main implements Screen {
 		if(data == null)
 			return 1;
 		
-		return Integer.parseInt(data);
+		return Integer.parseInt(data.trim());
 	}
 	
 	void SaveMaxLevel(int level) {
