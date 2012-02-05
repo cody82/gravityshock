@@ -70,7 +70,7 @@ public class LevelScreen implements Screen {
 		if(data == null)
 			return 1;
 		
-		return Integer.parseInt(data);
+		return Integer.parseInt(data.trim());
 	}
 	
 	Window window;
