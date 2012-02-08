@@ -242,6 +242,16 @@ public class Util {
 		
 		return standardShader;
 	}
+
+	public static ShaderProgram getEtc1Shader() {
+		GL20 gl = Gdx.graphics.getGL20();
+		if(etc1Shader != null){
+			return etc1Shader;
+		}
+		etc1Shader = new ShaderProgram(etc1VertexShader, etc1FragmentShader);
+		
+		return etc1Shader;
+	}
 	
 	public static void render(Mesh mesh, int primitiveType, Matrix4 projModelView) {
 		render(mesh, primitiveType, projModelView, 1f);
@@ -267,6 +277,7 @@ public class Util {
 	}
 
 	static ShaderProgram standardShader;
+	static ShaderProgram etc1Shader;
 	
 	static final String standardVertexShader = "attribute vec4 a_position; \n" +
 			"attribute vec4 a_color; \n" +
@@ -286,5 +297,26 @@ public class Util {
 			"void main() \n" +
 			"{ \n" +
 			" gl_FragColor = v_color * u_alpha;\n" +
+			"} \n";
+	
+	static final String etc1VertexShader = "attribute vec4 a_position; \n" +
+			"attribute vec4 a_texture; \n" + 
+			"uniform mat4 u_projModelView; \n" + 
+			"varying vec4 v_texture; \n" + 
+			"void main() \n" +
+			"{ \n" +
+			" gl_Position = u_projModelView * a_position; \n" +
+			" v_texture = a_texture; \n" +
+			"} \n";
+	
+	static final String etc1FragmentShader = "#ifdef GL_ES\n" +
+			"precision mediump float;\n" +
+			"#endif\n" +
+			"uniform sampler2D u_colortexture; \n" +
+			"uniform sampler2D u_alphatexture; \n" +
+			"varying vec4 v_texture; \n" + 
+			"void main() \n" +
+			"{ \n" +
+			" gl_FragColor = vec4(texture2D(u_colortexture,v_texture).xyz, texture2D(u_alphatexture,v_texture).x);\n" +
 			"} \n";
 }
