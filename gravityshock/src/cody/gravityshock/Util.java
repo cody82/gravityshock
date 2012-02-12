@@ -13,8 +13,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -276,6 +279,30 @@ public class Util {
 		}
 	}
 
+	static Texture background;
+	static SpriteBatch batch = new SpriteBatch();
+	static float x2 = 0;
+	public static void drawMenuBackground(float dtime) {
+        float window_width = Gdx.graphics.getWidth();
+        float window_height = Gdx.graphics.getHeight();
+        float y2 = 0;
+        x2 += dtime;
+
+        if(background == null) {
+            background = Assets.getTexture("data/space2.png");
+            background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+        }
+        
+        batch.begin();
+ 		batch.enableBlending();
+ 		batch.setBlendFunction(GL20.GL_BLEND_SRC_ALPHA, GL20.GL_ONE);
+        batch.draw(background, 0, 0, window_width, window_height, x2, y2, x2 + (window_width / 256), y2 +  + (window_height / 256));
+        
+        batch.draw(background, 0, 0, window_width, window_height, x2 * 2, 0.3f + y2 * 2, x2 * 2 + (window_width / 256), 0.3f + y2 * 2 + (window_height / 256));
+		batch.end();
+	}
+	
+	
 	static ShaderProgram standardShader;
 	static ShaderProgram etc1Shader;
 	
