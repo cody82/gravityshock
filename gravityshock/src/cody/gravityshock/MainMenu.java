@@ -70,27 +70,17 @@ public class MainMenu implements Screen {
 		
 	}
 
-	float x2 = 0;
 	@Override
 	public void render(float arg0) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+        Util.drawMenuBackground(arg0);
+		
+		
+
         float window_width = Gdx.graphics.getWidth();
         float window_height = Gdx.graphics.getHeight();
-        float y2 = 0;
-        x2 += arg0;
-
-        batch.begin();
- 		batch.enableBlending();
- 		batch.setBlendFunction(GL20.GL_BLEND_SRC_ALPHA, GL20.GL_ONE);
-        batch.draw(background, 0, 0, window_width, window_height, x2, y2, x2 + (window_width / 256), y2 +  + (window_height / 256));
-        
-        batch.draw(background, 0, 0, window_width, window_height, x2 * 2, 0.3f + y2 * 2, x2 * 2 + (window_width / 256), 0.3f + y2 * 2 + (window_height / 256));
-		batch.end();
-		
-		
-		
         ui.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         ui.draw();
         //Table.drawDebug(ui);
@@ -104,6 +94,8 @@ public class MainMenu implements Screen {
 	public void resize(int width, int height) {
 		if(ui!=null)
         ui.setViewport(width, height, false);
+		ui.dispose();
+		show();
     }
 
 	@Override
@@ -111,20 +103,21 @@ public class MainMenu implements Screen {
 		
 	}
 	Window window;
-	Texture background;
 	Texture title;
 	
 	
 	@Override
 	public void show() {
 
-        batch = new SpriteBatch();
-        skin = Assets.getSkin();
-        background = Assets.getTexture("data/space2.png");
-        background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-        title = Assets.getTexture("data/title.png");
+		//if(batch == null)
+			batch = new SpriteBatch();
+		if(skin == null)
+			skin = Assets.getSkin();
+		if(title == null)
+			title = Assets.getTexture("data/title.png");
         
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        
         Gdx.input.setInputProcessor(ui);
 
         Util.playMusic();
@@ -200,8 +193,11 @@ public class MainMenu implements Screen {
         window.add(highscorebutton).width(width).height(height);
         window.row();
         window.add(levelbutton).width(width).height(height);
-        window.row();
-        window.add(button3).width(width).height(height);
+
+    	if(Gdx.app.getType() != ApplicationType.Android) {
+    		window.row();
+    		window.add(button3).width(width).height(height);
+    	}
         /*window.add(buttonMulti);
         window.add(imgButton);
         window.add(imgToggleButton);

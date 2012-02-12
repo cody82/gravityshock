@@ -6,6 +6,7 @@ import java.util.Arrays;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -49,6 +50,8 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+        Util.drawMenuBackground(arg0);
+        
         ui.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         ui.draw();
 		
@@ -80,11 +83,20 @@ public class LevelScreen implements Screen {
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        window = new Window("window", skin.getStyle(WindowStyle.class));
+        window = new Window("window", skin.getStyle(WindowStyle.class)){
+        	protected void drawBackground(SpriteBatch batch,
+                    float parentAlpha) {
+        		
+        	}
+        };
         window.x = window.y = 0;
         window.width = ui.width();
         window.height= ui.height();
         window.setMovable(false);
+        window.color.r = 0f;
+        window.color.g = 0f;
+        window.color.b = 0f;
+        window.color.a = 0.8f;
 
 
         //window.debug();
