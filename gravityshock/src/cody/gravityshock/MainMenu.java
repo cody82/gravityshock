@@ -160,7 +160,8 @@ public class MainMenu implements Screen {
         final TextButton button3 = new TextButton("Quit", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
-        		Gdx.app.exit();
+        		System.exit(0);
+        		//Gdx.app.exit();
 				return isChecked();
         	}
         };
@@ -194,10 +195,8 @@ public class MainMenu implements Screen {
         window.row();
         window.add(levelbutton).width(width).height(height);
 
-    	if(Gdx.app.getType() != ApplicationType.Android) {
     		window.row();
     		window.add(button3).width(width).height(height);
-    	}
         /*window.add(buttonMulti);
         window.add(imgButton);
         window.add(imgToggleButton);
