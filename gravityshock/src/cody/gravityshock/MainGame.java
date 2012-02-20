@@ -40,4 +40,9 @@ public class MainGame extends Game{
 		this.setScreen(new MainMenu(this));
 		
 	}
+	
+	@Override
+	public void dispose() {
+		System.exit(0);
+	}
 }
