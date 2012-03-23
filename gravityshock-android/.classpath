@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry excluding="**/.svn/*" kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-android.jar"/>
-	<classpathentry kind="lib" path="libs/gdx.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/gravityshock"/>
+	<classpathentry kind="lib" path="/gravityshock/libs/gdx.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
