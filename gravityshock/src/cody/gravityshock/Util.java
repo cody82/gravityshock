@@ -53,7 +53,7 @@ class ActorRayCaster implements RayCastCallback {
 	@Override
 	public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 		Object obj = fixture.getUserData();
-		if(obj instanceof Actor && fraction < dist && _class.isAssignableFrom(obj.getClass()) && ((Actor)obj) != except){
+		if(true){//if(obj instanceof Actor && fraction < dist && _class.isAssignableFrom(obj.getClass()) && ((Actor)obj) != except){
 			nearest = (Actor)obj;
 			dist = fraction;
 		}
@@ -68,6 +68,7 @@ class ActorRayCaster implements RayCastCallback {
 public class Util {
 	static Music music;
 	public static void playMusic() {
+		/*
 		if(music == null) {
 				music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
 		}
@@ -80,13 +81,14 @@ public class Util {
 		catch(NullPointerException e) {
 			music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
 			music.play();
-		}
+		}*/
 	}
     
 	public static void stopMusic() {
+		/*
 		if(music != null) {
 			music.stop();
-		}
+		}*/
 	}
 	public static Fixture RayCastNearestFixture(World world, Vector2 from, Vector2 to) {
 		RayCaster caster = new RayCaster();
@@ -270,12 +272,12 @@ public class Util {
 			shader.end();
 		}
 		else {
-			GL10 gl = Gdx.graphics.getGL10();
+			/*GL10 gl = Gdx.graphics.getGL10();
 			gl.glMatrixMode(GL10.GL_PROJECTION);
 			gl.glLoadIdentity();
 			gl.glMatrixMode(GL10.GL_MODELVIEW);
 			gl.glLoadMatrixf(projModelView.getValues(),0);
-			mesh.render(primitiveType);
+			mesh.render(primitiveType);*/
 		}
 	}
 

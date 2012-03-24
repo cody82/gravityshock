@@ -1,6 +1,6 @@
 package cody.gravityshock;
 
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -47,6 +47,6 @@ Vector2 pos = body.getPosition();
 	  matrix.translate(pos.x, pos.y, 0);
 	  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
 
-	Util.render(mesh, GL10.GL_TRIANGLES, matrix);
+	Util.render(mesh, GL20.GL_TRIANGLES, matrix);
 	  }
 }

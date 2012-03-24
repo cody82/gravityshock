@@ -8,7 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.VertexAttribute;
@@ -159,7 +159,7 @@ public class Spaceship extends Actor {
 	    	thrust=true;
 	      body.applyForceToCenter(body.getWorldVector(new Vector2(0,1000)));
 	      fuel -= dtime;
-	      if(play_thrust == -1) {
+	      if(play_thrust == -1 && thrust_sound != null) {
 	    	  play_thrust = thrust_sound.loop();
 	      }
 	    }
@@ -220,7 +220,8 @@ public class Spaceship extends Actor {
 		  def.type = JointDef.JointType.RopeJoint;
 		  pickupjoint = world.b2world.createJoint(def);
 		  connected = true;
-		  pickup_sound.play();
+		  if(pickup_sound != null)
+			  pickup_sound.play();
 	  }
 	  int pickups = 0;
 	  
@@ -231,7 +232,8 @@ public class Spaceship extends Actor {
 		  pickup.returned = true;
 		  pickup = null;
 		  pickups++;
-		  return_sound.play();
+		  if(return_sound != null)
+			  return_sound.play();
 		  score += 100;
 	  }
 	  
@@ -240,7 +242,9 @@ public class Spaceship extends Actor {
 		  p.source = this;
 		  p.body.setTransform(body.getWorldPoint(new Vector2(0,15)), body.getAngle());
 		  p.body.setLinearVelocity(body.getWorldVector(new Vector2(0,1000)));
-		  shoot_sound.play();
+
+		  if(shoot_sound != null)
+			  shoot_sound.play();
 	  }
 	  void render(OrthographicCamera cam) {
 		  if(body == null)
@@ -254,10 +258,10 @@ public class Spaceship extends Actor {
 		  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
 		  
 	if(health > 0)
-		Util.render(mesh, GL10.GL_TRIANGLES, matrix);
+		Util.render(mesh, GL20.GL_TRIANGLES, matrix);
 	else
-		Util.render(mesh2, GL10.GL_TRIANGLES, matrix);
+		Util.render(mesh2, GL20.GL_TRIANGLES, matrix);
 	if(thrust)
-		Util.render(mesh_thrust, GL10.GL_TRIANGLES, matrix);
+		Util.render(mesh_thrust, GL20.GL_TRIANGLES, matrix);
 	  }
 }

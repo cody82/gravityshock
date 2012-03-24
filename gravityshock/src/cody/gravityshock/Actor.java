@@ -3,7 +3,7 @@ package cody.gravityshock;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -43,7 +43,7 @@ public class Actor {
 					  Matrix4 matrix = cam.combined.cpy();
 					  matrix.translate(pos.x, pos.y, 0);
 					  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
-					Util.render(mesh, GL10.GL_TRIANGLES, matrix);
+					Util.render(mesh, GL20.GL_TRIANGLES, matrix);
 			    }
 			  }
 			  

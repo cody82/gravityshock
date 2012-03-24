@@ -2,7 +2,7 @@ package cody.gravityshock;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -60,7 +60,7 @@ public class Projectile extends Actor{
 		  matrix.translate(pos.x, pos.y, 0);
 		  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
 
-		  Util.render(mesh, GL10.GL_TRIANGLES, matrix, (3f - age)/3f);
+		  Util.render(mesh, GL20.GL_TRIANGLES, matrix, (3f - age)/3f);
 	  }
 
 

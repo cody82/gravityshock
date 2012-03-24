@@ -160,7 +160,7 @@ public class MainMenu implements Screen {
         final TextButton button3 = new TextButton("Quit", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
-        		System.exit(0);
+        		//System.exit(0);
         		//Gdx.app.exit();
 				return isChecked();
         	}
