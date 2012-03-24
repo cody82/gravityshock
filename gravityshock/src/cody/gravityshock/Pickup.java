@@ -3,7 +3,7 @@ package cody.gravityshock;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -58,13 +58,10 @@ public class Pickup extends Actor{
 		  Matrix4 matrix = cam.combined.cpy();
 		  matrix.translate(pos.x, pos.y, 0);
 		  matrix.rotate(0, 0, 1, rad*180f/(float)Math.PI);
-	//cam.apply(Gdx.graphics.getGL10());
-	//Gdx.graphics.getGL10().glTranslatef(pos.x, pos.y, 0);
-	//Gdx.graphics.getGL10().glRotatef(rad*180f/(float)Math.PI, 0, 0, 1);
 		  
 	if(!returned)
-		Util.render(mesh, GL10.GL_TRIANGLES, matrix);
+		Util.render(mesh, GL20.GL_TRIANGLES, matrix);
 	else
-		Util.render(mesh2, GL10.GL_TRIANGLES, matrix);
+		Util.render(mesh2, GL20.GL_TRIANGLES, matrix);
 	  }
 }

@@ -47,7 +47,8 @@ public class Explosion extends Actor{
 			sound = Assets.getSound("data/explosion1.ogg");
 		}
 		
-		sound.play();
+		if(sound != null)
+			sound.play();
 	}
 	  
 	  void tick(float dtime) {

@@ -43,6 +43,6 @@ public class MainGame extends Game{
 	
 	@Override
 	public void dispose() {
-		System.exit(0);
+		//System.exit(0);
 	}
 }

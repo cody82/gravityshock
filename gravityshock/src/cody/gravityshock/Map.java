@@ -283,7 +283,6 @@ public class Map {
 		  }
 		  sb.end();
 		  Main.blend(true);
-		//cam.apply(Gdx.graphics.getGL10());
 		for(Mesh m : meshes) {
 			Util.render(m, GL10.GL_TRIANGLES, matrix);
 		}

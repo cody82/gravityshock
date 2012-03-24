@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg3027"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="level4.svg">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     inkscape:document-units="mm"
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="409.85477"
+     inkscape:cy="1134.1488"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1174"
+     inkscape:window-height="674"
+     inkscape:window-x="1"
+     inkscape:window-y="54"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#d45500;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -13.428571,52.362183 125.71429,89.50504 257.14286,-24.780675 l 176,-42.285715 142.14285,-9.71428 188,10.57142 249.28569,9.85715 44.2857,-57.46429 -26.7142,-35.46428 -60.7143,-22.46429 3.2857,-45.46429 146.1428,-83 -30.4285,-76.28571 -51,-120 -30,-26 -88.28574,-22 -122.14286,-21 -88,41 -22.14286,55.57143 -56,20.42857 -23.42857,36.42857 -45,71.42857 -99.85714,18.14286 L 320.42857,-406.63782 242,-456.3521 l -273.428571,228.71428 -31.428572,28.57143 -65.714287,91.42857 -2.85714,68.571431 2.85714,80 25.71429,28.571429 z"
+       id="path3033"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccccccccccccccccccccccc" />
+    <path
+       style="fill:none;stroke:#cccccc;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 12.081256,57.91906 0,-32.89601 24.406723,0 0,-8.4893 -61.547387,0 0,7.42813 26.529046,0 1.061162,30.7737 z"
+       id="path2992"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#00ffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -21.633233,13.32393 54.695036,-0.804339 0,2.413017 -54.695036,0.413016 z"
+       id="path2997"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title2999">home</title>
+    </path>
+    <path
+       style="fill:none;stroke:#c87137;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 613.5,-313.76283 -13.5,-18.49998 -22.5,17.49998 21,7.5 z"
+       id="path3025"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title3027">Actor</title>
+    </path>
+    <path
+       style="fill:none;stroke:#c87137;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 587.5,-327.76283 -13.5,-18.49998 -22.5,17.49998 21,7.5 z"
+       id="path3025-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title3027-91">Actor</title>
+    </path>
+    <path
+       style="fill:none;stroke:#c87137;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 602,-350.01281 -5.5,-15 -21.5,11.5 14.5,8 z"
+       id="path3025-0-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc">
+      <title
+         id="title3027-9-2">Actor</title>
+    </path>
+    <text
+       xml:space="preserve"
+       style="font-size:15.19573402px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="882.79498"
+       y="-365.44565"
+       id="text2987-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2989-8"
+         x="882.79498"
+         y="-365.44565">pickup</tspan></text>
+    <path
+       style="fill:none;stroke:#008000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 865.23702,-354.34118 -11.83793,24.46788 53.20182,-1.06116 -7.96024,-24.40672 z"
+       id="path2985-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:none;stroke:#d45500;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 565,-319.63782 -98,19 21,64 127,31 165,5 169,28.5 3,-47.5 -43,-112 -82,4 -41,55 -153,-6 z"
+       id="path3009"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccc" />
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+t:assets.txt
+i:data/title.png
+i:data/space.png
+i:data/space2.png
+t:data/uiskin.json
+i:data/uiskin.png
+t:data/default.fnt
+i:data/default.png
+t:data/enemy.svg
+i:data/level1.png
+t:data/level1.svg
+i:data/explosion1.png
+t:data/explosion1.svg

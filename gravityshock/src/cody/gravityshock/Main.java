@@ -14,7 +14,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -54,7 +53,6 @@ public class Main implements Screen {
     FrameBuffer framebuffer;
     FrameBuffer framebuffer2;
 
-	static GL10 gl10;
 	static GL20 gl20;
 	
 	float zoom = 1f;
@@ -85,6 +83,9 @@ public class Main implements Screen {
     
 
 	int LoadMaxLevel() {
+		if(game.data == null)
+			return 1;
+		
 		String data = game.data.LoadString("maxfreelevel.txt");
 		if(data == null)
 			return 1;
@@ -93,6 +94,9 @@ public class Main implements Screen {
 	}
 	
 	void SaveMaxLevel(int level) {
+		if(game.data == null)
+			return;
+		
 		int l = LoadMaxLevel();
 		if(level > l || l > maxLevel)
 			game.data.SaveString("maxfreelevel.txt", Integer.toString(level));
@@ -335,13 +339,16 @@ public class Main implements Screen {
     }
 	@Override
 	public void show () {
+		if(cams != null)
+			return;
+		
         Util.stopMusic();
-		font = new BitmapFont();
+		
+        font = new BitmapFont(Gdx.files.internal("data/default.fnt"), Gdx.files.internal("data/default.png"),false);
 		font.setColor(Color.WHITE);
-		//texture = new Texture(Gdx.files.internal("badlogic.jpg"))
+
 		spriteBatch = new SpriteBatch();
 		
-		gl10 = Gdx.graphics.getGL10();
 		gl20 = Gdx.graphics.getGL20();
 		
 		background = Assets.getTexture("data/space.png");
@@ -368,24 +375,14 @@ public class Main implements Screen {
 
 	void clear() {
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
-		if(gl10 != null) {
-			gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
-			gl10.glEnable(GL10.GL_BLEND);
-		}
-		else if(gl20 != null){
+        if(gl20 != null){
 			gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			gl20.glEnable(GL20.GL_BLEND);
 		}
 		
 	}
 	public static void blend(boolean b) {
-		if(gl10 != null) {
-			if(b)
-				gl10.glEnable(GL10.GL_BLEND);
-			else
-				gl10.glDisable(GL10.GL_BLEND);
-		}
-		else if(gl20 != null){
+		if(gl20 != null){
 			if(b)
 				gl20.glEnable(GL20.GL_BLEND);
 			else
@@ -394,11 +391,7 @@ public class Main implements Screen {
 		
 	}
 	
-	void viewport(int x, int y, int width, int height) {
-		if(gl10 != null) {
-			gl10.glViewport(x, y, width, height);
-		}
-		else if(gl20 != null){
+	void viewport(int x, int y, int width, int height) {if(gl20 != null){
 			gl20.glViewport(x, y, width, height);
 		}
 	}
@@ -411,13 +404,15 @@ public class Main implements Screen {
 	}
 	@Override
 	public void render (float t2) {
+		if(cams == null)
+			show();
+		
 		float t = Gdx.graphics.getDeltaTime();
 		if(record) {
 			// 30 FPS
 			t = 1f/30f;
 		}
 
-		gl10 = Gdx.graphics.getGL10();
 		gl20 = Gdx.graphics.getGL20();
 
 		cams[0].update();
@@ -544,17 +539,17 @@ public class Main implements Screen {
 			
 			int fps = (int)(1f/t);
 			spriteBatch.begin();
-			int y = window_height -190;
+			int y = window_height - 280;
 			font.draw(spriteBatch, "fps: " + Integer.toString(fps), 20, y);
-			font.draw(spriteBatch, "pickups: " + Integer.toString(players[i].pickups) + "/" + Integer.toString(map.getGoalScore()), 20, y+20);
-			font.draw(spriteBatch, "speed: " + Integer.toString((int)players[i].body.getLinearVelocity().len()) + "m/s", 20, y+40);
-			font.draw(spriteBatch, "health: " + Integer.toString(players[i].health) + "%", 20, y+60);
-			font.draw(spriteBatch, "lifes: " + Integer.toString(players[i].lifes), 20, y+80);
-			font.draw(spriteBatch, "level: " + Integer.toString(level), 20, y+100);
-			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, y+120);
-			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, y+140);
-			font.draw(spriteBatch, "score: " + calcScore(), 20, y+160);
-			font.draw(spriteBatch, "box2d: " + world.b2world.getBodyCount() + " " + world.b2world.getJointCount(), 20, y+180);
+			font.draw(spriteBatch, "pickups: " + Integer.toString(players[i].pickups) + "/" + Integer.toString(map.getGoalScore()), 20, y+30);
+			font.draw(spriteBatch, "speed: " + Integer.toString((int)players[i].body.getLinearVelocity().len()) + "m/s", 20, y+60);
+			font.draw(spriteBatch, "health: " + Integer.toString(players[i].health) + "%", 20, y+90);
+			font.draw(spriteBatch, "lifes: " + Integer.toString(players[i].lifes), 20, y+120);
+			font.draw(spriteBatch, "level: " + Integer.toString(level), 20, y+150);
+			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, y+180);
+			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, y+210);
+			font.draw(spriteBatch, "score: " + calcScore(), 20, y+240);
+			font.draw(spriteBatch, "box2d: " + world.b2world.getBodyCount() + " " + world.b2world.getJointCount(), 20, y+270);
 			spriteBatch.end();
 			if(Gdx.app.getType() == ApplicationType.Android)
 				drawbuttons();
@@ -568,7 +563,7 @@ public class Main implements Screen {
 				return;
 			}
 		}
-		
+		/*
 		if(record) {
 			
 		try {
@@ -579,7 +574,7 @@ public class Main implements Screen {
 			e.printStackTrace();
 		}
 		}
-		
+		*/
 		world.tick(t);
 		map.tick(t);
 	}

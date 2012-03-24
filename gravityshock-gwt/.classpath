@@ -6,5 +6,7 @@
 	<classpathentry kind="lib" path="libs/gdx-backend-gwt.jar"/>
 	<classpathentry kind="lib" path="/gravityshock/libs/gdx.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/gravityshock"/>
+	<classpathentry kind="lib" path="/home/cody/workspace/gravityshock/gravityshock-gwt/libs/gdx-backend-gwt-sources.jar"/>
+	<classpathentry kind="lib" path="/home/cody/workspace/gravityshock/gravityshock/libs/gdx-sources.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
