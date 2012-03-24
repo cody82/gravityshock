@@ -3,7 +3,12 @@ package cody.gravityshock;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.w3c.dom.NodeList;
+
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.files.FileHandle;
@@ -18,15 +23,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 class Image {
 	public float x;
@@ -85,34 +81,24 @@ public class Map {
 		
 		FileHandle fh = Gdx.files.internal(filename);
 		java.io.InputStream stream = fh.read();
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder;
+		
+		XmlReader reader = new XmlReader();
+		 
+		 Element doc;
 		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
-		}
-		Document doc;
-		try {
-			doc = dBuilder.parse(stream);
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
+			doc = reader.parse(stream);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
-		doc.getDocumentElement().normalize();
+		 
+		Array<Element> list = doc.getChildrenByNameRecursively("path");
 		
-		NodeList list = doc.getDocumentElement().getElementsByTagName("path");
-		for(int i=0;i<list.getLength();++i){
-			Node n=list.item(i);
-			String d = n.getAttributes().getNamedItem("d").getTextContent();
-			String style = n.getAttributes().getNamedItem("style").getTextContent();
+		for(int i=0;i<list.size;++i){
+			Element n=list.get(i);
+			String d = n.getAttribute("d");
+			String style = n.getAttribute("style");
 			
 			String[] split = d.split(" ");
 			char cmd = ' ';
@@ -122,23 +108,15 @@ public class Map {
 			color.a = 1;
 			
 			String type = "";
-			NodeList children = n.getChildNodes();
-			for(int k=0;k<children.getLength();++k){
-				Node n2 = children.item(k);
-				if(n2.getNodeName().equals("title")){
-					type = n2.getTextContent();
-					break;
-				}
-			}
-			
+
+			Element type_element = n.getChildByName("title");
+			if(type_element != null)
+				type = type_element.getText();
+
 			String desc = "";
-			for(int k=0;k<children.getLength();++k){
-				Node n2 = children.item(k);
-				if(n2.getNodeName().equals("desc")){
-					desc = n2.getTextContent();
-					break;
-				}
-			}
+			Element desc_element = n.getChildByName("desc");
+			if(desc_element != null)
+				desc = desc_element.getText();
 			
 			int stroke = style.indexOf("stroke:");
 			if(stroke >= 0){
@@ -215,29 +193,21 @@ public class Map {
 			}
 		}
 		
-
-		list = doc.getDocumentElement().getElementsByTagName("text");
-		for(int i=0;i<list.getLength();++i){
-			Node n=list.item(i);
-			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
-			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
+		list = doc.getChildrenByNameRecursively("text");
+		for(int i=0;i<list.size;++i){
+			Element n=list.get(i);
+			float x = Float.parseFloat(n.getAttribute("x"));
+			float y = Float.parseFloat(n.getAttribute("y"));
 			String text = null;
 			String desc = "";
-			NodeList children = n.getChildNodes();
-			for(int k=0;k<children.getLength();++k){
-				Node n2 = children.item(k);
-				if(n2.getNodeName().equals("desc")){
-					desc = n2.getTextContent();
-					break;
-				}
-			}
-			for(int k=0;k<children.getLength();++k){
-				Node n2 = children.item(k);
-				if(n2.getNodeName().equals("tspan")){
-					text = n2.getTextContent();
-					break;
-				}
-			}
+			Element desc_element = n.getChildByName("desc");
+			if(desc_element != null)
+				desc = desc_element.getText();
+
+			Element tspan_element = n.getChildByName("tspan");
+			if(tspan_element != null)
+				text = tspan_element.getText();
+			
 			
 			if(text.equals("pickup")){
 				Pickup pickup = new Pickup(world);
@@ -263,15 +233,15 @@ public class Map {
 				Gravity g = new Gravity(world, new Vector2(x, -y), strength);
 			}
 		}
-		
-		list = doc.getDocumentElement().getElementsByTagName("image");
-		for(int i=0;i<list.getLength();++i){
-			Node n=list.item(i);
-			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
-			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
-			float width = Float.parseFloat(n.getAttributes().getNamedItem("width").getTextContent());
-			float height = Float.parseFloat(n.getAttributes().getNamedItem("height").getTextContent());
-			String file = n.getAttributes().getNamedItem("xlink:href").getTextContent();
+
+		list = doc.getChildrenByNameRecursively("image");
+		for(int i=0;i<list.size;++i){
+			Element n=list.get(i);
+			float x = Float.parseFloat(n.getAttribute("x"));
+			float y = Float.parseFloat(n.getAttribute("y"));
+			float width = Float.parseFloat(n.getAttribute("width"));
+			float height = Float.parseFloat(n.getAttribute("height"));
+			String file = n.getAttribute("xlink:href");
 			Image img = new Image();
 			img.x = x;
 			img.y = -y - height;
@@ -282,11 +252,10 @@ public class Map {
 			images.add(img);
 		}
 		
-
-		list = doc.getDocumentElement().getElementsByTagName("dc:description");
-		for(int i=0;i<list.getLength();++i){
-			Node n=list.item(i);
-			String text = n.getTextContent();
+		list = doc.getChildrenByNameRecursively("dc:description");
+		for(int i=0;i<list.size;++i){
+			Element n=list.get(i);
+			String text = n.getText();
 			if(text.contains("gravity=0")){
 				world.b2world.setGravity(new Vector2(0,0));
 			}
