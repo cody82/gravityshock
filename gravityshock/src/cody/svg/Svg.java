@@ -3,15 +3,9 @@ package cody.svg;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -32,34 +26,22 @@ public class Svg {
 		texts = new ArrayList<SvgText>();
 		images = new ArrayList<SvgImage>();
 		
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder;
+		XmlReader reader = new XmlReader();
+		 
+		 Element doc;
 		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
-		}
-		Document doc;
-		try {
-			doc = dBuilder.parse(stream);
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
+			doc = reader.parse(stream);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
-		doc.getDocumentElement().normalize();
 		
-		NodeList list = doc.getDocumentElement().getElementsByTagName("path");
-		for(int i=0;i<list.getLength();++i){
-			Node n=list.item(i);
-			String d = n.getAttributes().getNamedItem("d").getTextContent();
-			String style = n.getAttributes().getNamedItem("style").getTextContent();
+		Array<Element> list = doc.getChildrenByNameRecursively("path");
+		for(int i=0;i<list.size;++i){
+			Element n=list.get(i);
+			String d = n.getAttribute("d");
+			String style = n.getAttribute("style");
 			
 			String[] split = d.split(" ");
 			char cmd = ' ';
@@ -69,14 +51,9 @@ public class Svg {
 			color.a = 1;
 			
 			String type = "";
-			NodeList children = n.getChildNodes();
-			for(int k=0;k<children.getLength();++k){
-				Node n2 = children.item(k);
-				if(n2.getNodeName().equals("title")){
-					type = n2.getTextContent();
-					break;
-				}
-			}
+			Element type_element = n.getChildByName("title");
+			if(type_element != null)
+				type = type_element.getText();
 			
 			int stroke = style.indexOf("stroke:");
 			if(stroke >= 0){
@@ -105,25 +82,26 @@ public class Svg {
 			}
 			paths.add(new SvgPath(array.toArray(new Vector2[]{}),color));
 		}
+
 		
-		list = doc.getDocumentElement().getElementsByTagName("tspan");
-		for(int i=0;i<list.getLength();++i){
-			Node n=list.item(i);
-			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
-			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
-			String text = n.getTextContent();
+		list = doc.getChildrenByNameRecursively("tspan");
+		for(int i=0;i<list.size;++i){
+			Element n=list.get(i);
+			float x = Float.parseFloat(n.getAttribute("x"));
+			float y = Float.parseFloat(n.getAttribute("y"));
+			String text = n.getText();
 			Vector2 pos = new Vector2(x, -y);
 			texts.add(new SvgText(text, pos));
 		}
 		
-		list = doc.getDocumentElement().getElementsByTagName("image");
-		for(int i=0;i<list.getLength();++i){
-			Node n=list.item(i);
-			float x = Float.parseFloat(n.getAttributes().getNamedItem("x").getTextContent());
-			float y = Float.parseFloat(n.getAttributes().getNamedItem("y").getTextContent());
-			float width = Float.parseFloat(n.getAttributes().getNamedItem("width").getTextContent());
-			float height = Float.parseFloat(n.getAttributes().getNamedItem("height").getTextContent());
-			String file = n.getAttributes().getNamedItem("xlink:href").getTextContent();
+		list = doc.getChildrenByNameRecursively("image");
+		for(int i=0;i<list.size;++i){
+			Element n=list.get(i);
+			float x = Float.parseFloat(n.getAttribute("x"));
+			float y = Float.parseFloat(n.getAttribute("y"));
+			float width = Float.parseFloat(n.getAttribute("width"));
+			float height = Float.parseFloat(n.getAttribute("height"));
+			String file = n.getAttribute("xlink:href");
 			SvgImage img = new SvgImage();
 			img.x = x;
 			img.y = -y - height;
