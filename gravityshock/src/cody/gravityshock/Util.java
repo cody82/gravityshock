@@ -41,19 +41,25 @@ class RayCaster implements RayCastCallback {
 	
 }
 
-class ActorRayCaster implements RayCastCallback {
-	public ActorRayCaster(Actor _except, Class c) {
+class ActorRayCaster<T> implements RayCastCallback {
+	public ActorRayCaster(Actor _except) {
 		except = _except;
-		_class = c;
 	}
-	Class _class;
+
 	Actor except;
 	public Actor nearest;
 	float dist = Float.MAX_VALUE;
 	@Override
 	public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 		Object obj = fixture.getUserData();
-		if(obj instanceof Actor && fraction < dist /*&& _class.isAssignableFrom(obj.getClass())*/ && ((Actor)obj) != except){
+		if(obj instanceof Actor && fraction < dist && ((Actor)obj) != except){
+			try {
+				T test = (T)obj;
+			}
+			catch(Exception e)
+			{
+				return fraction;
+			}
 			nearest = (Actor)obj;
 			dist = fraction;
 		}
@@ -68,7 +74,7 @@ class ActorRayCaster implements RayCastCallback {
 public class Util {
 	static Music music;
 	public static void playMusic() {
-		/*
+		
 		if(music == null) {
 				music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
 		}
@@ -81,14 +87,14 @@ public class Util {
 		catch(NullPointerException e) {
 			music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
 			music.play();
-		}*/
+		}
 	}
     
 	public static void stopMusic() {
-		/*
+		
 		if(music != null) {
 			music.stop();
-		}*/
+		}
 	}
 	public static Fixture RayCastNearestFixture(World world, Vector2 from, Vector2 to) {
 		RayCaster caster = new RayCaster();
@@ -97,18 +103,18 @@ public class Util {
 	}
 
 	public static Actor RayCastNearestActor(World world, Vector2 from, Vector2 to) {
-		ActorRayCaster caster = new ActorRayCaster(null, Actor.class);
+		ActorRayCaster caster = new ActorRayCaster<Actor>(null);
 		world.b2world.rayCast(caster, from, to);
 		return caster.nearest;
 	}
 
-	public static Actor RayCastNearestActor(World world, Vector2 from, Vector2 to, Actor except) {
-		ActorRayCaster caster = new ActorRayCaster(except, Actor.class);
+	public static Actor RayCastNearestActor2(World world, Vector2 from, Vector2 to, Actor except) {
+		ActorRayCaster caster = new ActorRayCaster<Actor>(except);
 		world.b2world.rayCast(caster, from, to);
 		return caster.nearest;
 	}
-	public static Actor RayCastNearestActor(World world, Vector2 from, Vector2 to, Actor except, Class c) {
-		ActorRayCaster caster = new ActorRayCaster(except,c);
+	public static <T> Actor RayCastNearestActor(World world, Vector2 from, Vector2 to, Actor except) {
+		ActorRayCaster<T> caster = new ActorRayCaster<T>(except);
 		world.b2world.rayCast(caster, from, to);
 		return caster.nearest;
 	}

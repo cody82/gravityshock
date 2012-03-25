@@ -53,15 +53,15 @@ public class Assets {
 	}
 
 	public static Sound getSound(String name) {
-		return null;
-		/*if(sounds.containsKey(name)) {
+		//return null;
+		if(sounds.containsKey(name)) {
 			return sounds.get(name);
 		}
 		else {
 			Sound t = Gdx.audio.newSound(Gdx.files.internal(name));
 			sounds.put(name, t);
 			return t;
-		}*/
+		}
 		
 	}
 	
