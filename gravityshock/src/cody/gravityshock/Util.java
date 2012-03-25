@@ -53,7 +53,7 @@ class ActorRayCaster implements RayCastCallback {
 	@Override
 	public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 		Object obj = fixture.getUserData();
-		if(true){//if(obj instanceof Actor && fraction < dist && _class.isAssignableFrom(obj.getClass()) && ((Actor)obj) != except){
+		if(obj instanceof Actor && fraction < dist /*&& _class.isAssignableFrom(obj.getClass())*/ && ((Actor)obj) != except){
 			nearest = (Actor)obj;
 			dist = fraction;
 		}
