@@ -15,6 +15,15 @@ public class GravityShockGwt extends GwtApplication {
 
   @Override
     public ApplicationListener getApplicationListener () {
+	  
+	  String value = com.google.gwt.user.client.Window.Location.getParameter("audio");
+	  if(value != null){
+		  Assets.audio = value.compareTo("false") != 0;
+	  }
+	  else {
+		  Assets.audio = false;
+	  }
+	  
       return new MainGame();
     }
 }

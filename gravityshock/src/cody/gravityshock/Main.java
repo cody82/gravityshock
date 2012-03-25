@@ -339,7 +339,7 @@ public class Main implements Screen {
 		if(cams != null)
 			return;
 		
-        Util.stopMusic();
+		Assets.stopMusic();
 		
         font = new BitmapFont(Gdx.files.internal("data/default.fnt"), Gdx.files.internal("data/default.png"),false);
 		font.setColor(Color.WHITE);

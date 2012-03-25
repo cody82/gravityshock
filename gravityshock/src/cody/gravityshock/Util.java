@@ -72,30 +72,6 @@ class ActorRayCaster<T> implements RayCastCallback {
 }
 
 public class Util {
-	static Music music;
-	public static void playMusic() {
-		
-		if(music == null) {
-				music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
-		}
-		
-
-		try {
-			if(!music.isPlaying())
-				music.play();
-		}
-		catch(NullPointerException e) {
-			music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
-			music.play();
-		}
-	}
-    
-	public static void stopMusic() {
-		
-		if(music != null) {
-			music.stop();
-		}
-	}
 	public static Fixture RayCastNearestFixture(World world, Vector2 from, Vector2 to) {
 		RayCaster caster = new RayCaster();
 		world.b2world.rayCast(caster, from, to);
