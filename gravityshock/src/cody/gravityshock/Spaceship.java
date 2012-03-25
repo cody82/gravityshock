@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -211,14 +212,26 @@ public class Spaceship extends Actor {
 			  return;
 		  
 		  pickup = p;
-		  RopeJointDef def = new RopeJointDef();
-		  def.bodyA = body;
-		  def.bodyB = p.body;
-		  def.localAnchorA.y = -5.5f;
-		  def.collideConnected = true;
-		  def.maxLength = 10;
-		  def.type = JointDef.JointType.RopeJoint;
-		  pickupjoint = world.b2world.createJoint(def);
+		  if(Gdx.app.getType() != ApplicationType.WebGL) {
+			  RopeJointDef def = new RopeJointDef();
+			  def.bodyA = body;
+			  def.bodyB = p.body;
+			  def.localAnchorA.y = -5.5f;
+			  def.collideConnected = true;
+			  def.maxLength = 10;
+			  def.type = JointDef.JointType.RopeJoint;
+			  pickupjoint = world.b2world.createJoint(def);
+		  }
+		  else {
+			  DistanceJointDef def = new DistanceJointDef();
+			  def.bodyA = body;
+			  def.bodyB = p.body;
+			  def.localAnchorA.y = -5.5f;
+			  def.collideConnected = true;
+			  def.length = 10;
+			  def.type = JointDef.JointType.DistanceJoint;
+			  pickupjoint = world.b2world.createJoint(def);
+		  }
 		  connected = true;
 		  if(pickup_sound != null)
 			  pickup_sound.play();
