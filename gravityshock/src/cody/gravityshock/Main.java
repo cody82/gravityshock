@@ -10,6 +10,7 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input;
@@ -31,7 +32,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 
 import com.gemserk.util.ScreenshotSaver;
 
-public class Main implements Screen {
+public class Main implements Screen, InputProcessor {
 	SpriteBatch spriteBatch;
 	Texture texture;
 	BitmapFont font;
@@ -57,6 +58,7 @@ public class Main implements Screen {
 	static GL20 gl20;
 	
 	float zoom = 1f;
+	boolean pause = false;
 	
 	float countdown;
 	
@@ -339,6 +341,7 @@ public class Main implements Screen {
 		if(cams != null)
 			return;
 		
+		Gdx.input.setInputProcessor(this);
 		Assets.stopMusic();
 		
         font = new BitmapFont(Gdx.files.internal("data/default.fnt"), Gdx.files.internal("data/default.png"),false);
@@ -408,6 +411,10 @@ public class Main implements Screen {
 		if(record) {
 			// 30 FPS
 			t = 1f/30f;
+		}
+		
+		if(pause) {
+			t = 0f;
 		}
 
 		gl20 = Gdx.graphics.getGL20();
@@ -616,5 +623,55 @@ public class Main implements Screen {
 	@Override
 	public void hide () {
 
+	}
+
+	@Override
+	public boolean keyDown(int arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char arg0) {
+		if(arg0 == 'p') {
+			pause = !pause;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchMoved(int arg0, int arg1) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
