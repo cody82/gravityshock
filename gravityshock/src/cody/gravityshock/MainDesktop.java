@@ -4,7 +4,7 @@ import com.badlogic.gdx.backends.jogl.JoglApplication;
 
 public class MainDesktop {
 	public static void main (String[] argv) {
-		MainGame main = new MainGame(new FileData());
+		MainGame main = new MainGame();
 		int resx = 800;
 		int resy = 450;
 		

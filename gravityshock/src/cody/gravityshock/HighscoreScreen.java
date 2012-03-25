@@ -3,6 +3,7 @@ package cody.gravityshock;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.files.FileHandle;
@@ -75,14 +76,16 @@ public class HighscoreScreen implements Screen {
 	}
 
 	String[] LoadHighscore() {
-		String data = game.data.LoadString("highscore.txt");
-		if(data == null)
+		Preferences prefs = Gdx.app.getPreferences("highscore");
+		String data = prefs.getString("list");
+		if(data==null)
 			return new String[0];
 		
 		String[] list = data.split("\n");
-		Arrays.sort(list, new HighscoreComparator(true));
+		Arrays.sort(list, new HighscoreComparator());
 		return list;
 	}
+	
 	
 	Window window;
 	@Override

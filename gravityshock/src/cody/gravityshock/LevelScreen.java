@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -69,11 +70,8 @@ public class LevelScreen implements Screen {
 	}
 
 	int LoadMaxLevel() {
-		String data = game.data.LoadString("maxfreelevel.txt");
-		if(data == null)
-			return 1;
-		
-		return Integer.parseInt(data.trim());
+		Preferences prefs = Gdx.app.getPreferences("levels");
+		return prefs.getInteger("maxfreelevel", 1);
 	}
 	
 	Window window;

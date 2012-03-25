@@ -10,6 +10,7 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
@@ -83,23 +84,19 @@ public class Main implements Screen {
     
 
 	int LoadMaxLevel() {
-		if(game.data == null)
-			return 1;
-		
-		String data = game.data.LoadString("maxfreelevel.txt");
-		if(data == null)
-			return 1;
-		
-		return Integer.parseInt(data.trim());
+		Preferences prefs = Gdx.app.getPreferences("levels");
+		int i = prefs.getInteger("maxfreelevel", 1);
+		return i;
 	}
 	
 	void SaveMaxLevel(int level) {
-		if(game.data == null)
-			return;
 		
 		int l = LoadMaxLevel();
-		if(level > l || l > maxLevel)
-			game.data.SaveString("maxfreelevel.txt", Integer.toString(level));
+		if(level > l || l > maxLevel){
+			Preferences prefs = Gdx.app.getPreferences("levels");
+			prefs.putInteger("maxfreelevel", level);
+			prefs.flush();
+		}
 	}
 	
 	int calcScore() {

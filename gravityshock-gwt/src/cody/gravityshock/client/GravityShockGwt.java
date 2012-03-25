@@ -15,6 +15,6 @@ public class GravityShockGwt extends GwtApplication {
 
   @Override
     public ApplicationListener getApplicationListener () {
-      return new MainGame(null);
+      return new MainGame();
     }
 }
