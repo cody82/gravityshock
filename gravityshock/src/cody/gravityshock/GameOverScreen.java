@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.files.FileHandle;
@@ -103,8 +104,8 @@ public class GameOverScreen implements Screen {
 	}
 
 	String[] LoadHighscore() {
-		
-		String data = game.data.LoadString("highscore.txt");
+		Preferences prefs = Gdx.app.getPreferences("highscore");
+		String data = prefs.getString("list");
 		if(data==null)
 			return new String[0];
 		
@@ -135,7 +136,9 @@ public class GameOverScreen implements Screen {
 			String tmp="";
 			for(String s : scores)
 				tmp+=s+"\n";
-			game.data.SaveString("highscore.txt", tmp);
+		Preferences prefs = Gdx.app.getPreferences("highscore");
+		prefs.putString("list", tmp);
+		prefs.flush();
 		
 	}
 	
