@@ -120,7 +120,7 @@ public class MainMenu implements Screen {
         
         Gdx.input.setInputProcessor(ui);
 
-        Util.playMusic();
+        Assets.playMusic();
         
         window = new Window("Gravity Shock", skin.getStyle(WindowStyle.class)){
         	protected void drawBackground(SpriteBatch batch,

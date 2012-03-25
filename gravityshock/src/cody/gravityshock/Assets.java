@@ -6,6 +6,7 @@ import java.util.HashMap;
 import cody.svg.Svg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Texture;
@@ -52,8 +53,12 @@ public class Assets {
 		
 	}
 
+	public static boolean audio = true;
+	
 	public static Sound getSound(String name) {
-		//return null;
+		if(!audio)
+			return null;
+		
 		if(sounds.containsKey(name)) {
 			return sounds.get(name);
 		}
@@ -63,6 +68,34 @@ public class Assets {
 			return t;
 		}
 		
+	}
+	
+
+	static Music music;
+	public static void playMusic() {
+		if(!audio)
+			return;
+		
+		if(music == null) {
+				music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
+		}
+		
+
+		try {
+			if(!music.isPlaying())
+				music.play();
+		}
+		catch(NullPointerException e) {
+			music = Gdx.audio.newMusic(Gdx.files.internal("data/playin_old_games.ogg"));
+			music.play();
+		}
+	}
+    
+	public static void stopMusic() {
+		
+		if(music != null) {
+			music.stop();
+		}
 	}
 	
 	static Skin skin;
