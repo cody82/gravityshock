@@ -24,6 +24,13 @@ public class GravityShockGwt extends GwtApplication {
 		  Assets.audio = false;
 	  }
 	  
-      return new MainGame();
+	  MainGame game = new MainGame();
+	  
+	  value = com.google.gwt.user.client.Window.Location.getParameter("level");
+	  if(value != null){
+		  game.level = Integer.parseInt(value);
+	  }
+	  
+      return game;
     }
 }
