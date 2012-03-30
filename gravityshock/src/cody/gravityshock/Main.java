@@ -46,7 +46,7 @@ public class Main implements Screen, InputProcessor {
     Spaceship[] players;
     Map map;
     
-    int level = 0;
+    public int level = 0;
     final int maxLevel = 8;
     
     boolean record = false;

@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="libs/gdx-natives.jar"/>
 	<classpathentry kind="lib" path="libs/gdx.jar"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-jogl-natives.jar"/>
+	<classpathentry kind="lib" path="/home/cody/workspace/gravityshock/gravityshock/libs/kryonet-1.04/onejar/kryonet-1.04-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
