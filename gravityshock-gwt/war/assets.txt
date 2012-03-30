@@ -24,3 +24,9 @@ t:data/level7.svg
 t:data/level8.svg
 i:data/explosion1.png
 t:data/explosion1.svg
+t:bloom/bloom.fragment
+t:bloom/blurspace.vertex
+t:bloom/gaussian.fragment
+t:bloom/maskedtreshold.fragment
+t:bloom/screenspace.vertex
+t:bloom/treshold.fragment

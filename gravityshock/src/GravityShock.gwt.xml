@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
 <module>
-	<source path="gravityshock">
-		<exclude name="**/gravityshock/MainDesktop.java"/>
+	<source path="cody/gravityshock">
+		<exclude name="**/cody/gravityshock/MainDesktop.java"/>
 	</source>
-	<source path="svg"/>
+	<source path="cody/svg"/>
+	<source path="bloom"/>
 </module>
