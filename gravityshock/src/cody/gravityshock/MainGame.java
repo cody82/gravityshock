@@ -12,10 +12,17 @@ public class MainGame extends Game{
 	
 	public MainGame() {
 	}
+	
+	void createbloom() {
+		bloom = new Bloom();
+		//bloom.setOriginalIntesity(1.2f);
+		bloom.setTreshold(0.3f);
+		bloom.setBloomIntesity(1.5f);
+	}
 	@Override
 	public void create() {
 		if(enable_bloom)
-			bloom = new Bloom();
+			createbloom();
 		this.setScreen(new MainMenu(this));
 	}
 
@@ -32,6 +39,14 @@ public class MainGame extends Game{
 		if(b)
 			bloom.render();
 	}
+	
+	public void resize(int width, int height) {
+		if(bloom != null) {
+			bloom.dispose();
+			createbloom();
+		}
+	}
+	
 	public void start() {
 		Main main = new Main(this);
 		main.level = level - 1;
