@@ -31,6 +31,11 @@ public class GravityShockGwt extends GwtApplication {
 		  game.level = Integer.parseInt(value);
 	  }
 	  
+	  value = com.google.gwt.user.client.Window.Location.getParameter("bloom");
+	  if(value != null){
+		  game.enable_bloom = value.compareTo("false") != 0;
+	  }
+	  
       return game;
     }
 }
