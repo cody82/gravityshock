@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class World implements ContactListener {
 	com.badlogic.gdx.physics.box2d.World b2world;
-	ArrayList<Actor> actors;
+	public ArrayList<Actor> actors;
 	Map map;
 	  
 	public class CollisionInfo {

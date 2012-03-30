@@ -15,6 +15,11 @@ public class Actor {
 	  Mesh mesh;
 	  boolean disposed;
 	  
+	  public Object net;
+	  
+	  public void visit(Visitor v) {
+		  v.visit(this);
+	  }
 	  public Actor() {
 			  }
 	  

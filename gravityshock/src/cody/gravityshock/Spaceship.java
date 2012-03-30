@@ -25,7 +25,10 @@ public class Spaceship extends Actor {
 	}
 	public Spaceship() {
 	}
-	
+	  public void visit(Visitor v) {
+		  v.visit(this);
+	  }
+	  
 	public int health = 100;
 	public float fuel = 100;
     public int lifes = 5;
