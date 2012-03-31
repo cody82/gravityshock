@@ -103,44 +103,6 @@ public class GameOverScreen implements Screen {
 		
 	}
 
-	String[] LoadHighscore() {
-		Preferences prefs = Gdx.app.getPreferences("highscore");
-		String data = prefs.getString("list");
-		if(data==null)
-			return new String[0];
-		
-		String[] list = data.split("\n");
-		Arrays.sort(list, new HighscoreComparator());
-		return list;
-	}
-	
-	private void SaveHighscore(String name, int score) {
-		
-		String[] scores = LoadHighscore();
-		int lowest = scores.length > 0 ? Integer.parseInt(scores[0].split("\t")[1]) : -1;
-		if(scores.length < 8) {
-			String[] scores2 = new String[scores.length + 1];
-			for(int i=1;i<=scores.length;++i)
-				scores2[i] = scores[i-1];
-			scores2[0] = name + "\t" + Integer.toString(score);
-			scores=scores2;
-		}
-		else if(score >= lowest) {
-			scores[0] = name + "\t" + Integer.toString(score);
-		}
-		else
-			return;
-		
-		Arrays.sort(scores, new HighscoreComparator());
-		
-			String tmp="";
-			for(String s : scores)
-				tmp+=s+"\n";
-		Preferences prefs = Gdx.app.getPreferences("highscore");
-		prefs.putString("list", tmp);
-		prefs.flush();
-		
-	}
 	
 	TextField namefield;
 	Window window;
@@ -185,7 +147,7 @@ public class GameOverScreen implements Screen {
         	public boolean touchDown(float x, float y, int pointer) {
         		String name = namefield.getText();
         		if(!name.isEmpty())
-        			SaveHighscore(namefield.getText(), score);
+        			Util.SaveHighscore(namefield.getText(), score);
         		game.startMainMenu();
 				return isChecked();
         	}

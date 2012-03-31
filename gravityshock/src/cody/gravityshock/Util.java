@@ -1,6 +1,7 @@
 package cody.gravityshock;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -8,6 +9,7 @@ import cody.svg.Svg;
 import cody.svg.SvgPath;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -330,4 +332,51 @@ public class Util {
 			"{ \n" +
 			" gl_FragColor = vec4(texture2D(u_colortexture,v_texture).xyz, texture2D(u_alphatexture,v_texture).x);\n" +
 			"} \n";
+	
+
+	public static String[] LoadHighscore() {
+		Preferences prefs = Gdx.app.getPreferences("highscore");
+		String data = prefs.getString("list");
+		if(data==null)
+			return new String[0];
+		
+		String[] list = data.split("\n");
+		ArrayList<String> list2 = new ArrayList<String>();
+		for(String s : list) {
+			if(s.length()>0)
+				list2.add(s);
+		}
+		list = list2.toArray(new String[0]);
+		
+		Arrays.sort(list, new HighscoreComparator());
+		return list;
+	}
+	
+	public static void SaveHighscore(String name, int score) {
+		
+		String[] scores = LoadHighscore();
+		int lowest = scores.length > 0 ? Integer.parseInt(scores[0].split("\t")[1]) : -1;
+		if(scores.length < 8) {
+			String[] scores2 = new String[scores.length + 1];
+			for(int i=1;i<=scores.length;++i)
+				scores2[i] = scores[i-1];
+			scores2[0] = name + "\t" + Integer.toString(score);
+			scores=scores2;
+		}
+		else if(score >= lowest) {
+			scores[0] = name + "\t" + Integer.toString(score);
+		}
+		else
+			return;
+		
+		Arrays.sort(scores, new HighscoreComparator());
+		
+			String tmp="";
+			for(String s : scores)
+				tmp+=s+"\n";
+		Preferences prefs = Gdx.app.getPreferences("highscore");
+		prefs.putString("list", tmp);
+		prefs.flush();
+		
+	}
 }

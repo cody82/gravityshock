@@ -74,18 +74,6 @@ public class HighscoreScreen implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
-
-	String[] LoadHighscore() {
-		Preferences prefs = Gdx.app.getPreferences("highscore");
-		String data = prefs.getString("list");
-		if(data==null)
-			return new String[0];
-		
-		String[] list = data.split("\n");
-		Arrays.sort(list, new HighscoreComparator());
-		return list;
-	}
-	
 	
 	Window window;
 	@Override
@@ -114,7 +102,7 @@ public class HighscoreScreen implements Screen {
         //window.debug();
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
-        for(String s : LoadHighscore()) {
+        for(String s : Util.LoadHighscore()) {
         	String[] split = s.split("\t");
             window.add(new Label(split[0], skin.getStyle(LabelStyle.class), "label")).fill(0f, 0f);
             window.add(new Label(split[1], skin.getStyle(LabelStyle.class), "label2")).fill(0f, 0f);
