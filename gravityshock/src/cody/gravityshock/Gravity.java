@@ -40,7 +40,7 @@ public class Gravity extends Actor{
 			  Vector2 d = position.cpy().sub(b.getPosition());
 			  float d2 = d.len2();
 			  d.nor();
-			  d.mul(strength/d2);
+			  d.mul(b.getMass() * strength/d2);
 			  b.applyForceToCenter(d);
 		  }
 	  }
