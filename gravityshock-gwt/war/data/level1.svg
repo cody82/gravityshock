@@ -28,14 +28,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="-73.953715"
+     inkscape:zoom="2"
+     inkscape:cx="18.046875"
      inkscape:cy="1105.7542"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="846"
+     inkscape:window-width="1920"
+     inkscape:window-height="1146"
      inkscape:window-x="0"
      inkscape:window-y="26"
      inkscape:window-maximized="1" />
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -284,8 +284,19 @@
        y="-141.13782"
        x="-371.5"
        id="image3587"
-       xlink:href="file:///home/cody/workspace/gravityshock/gravityshock/data/level1.png"
+       xlink:href="file:///home/cody/workspace/gravityshock/gravityshock-android/assets/data/level1.png"
        height="261"
        width="603" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-370.5"
+       y="-174.13782"
+       id="text3105"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3107"
+         x="-370.5"
+         y="-174.13782">Hover over the blue box to pick it up</tspan></text>
   </g>
 </svg>
