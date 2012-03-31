@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.0606602"
+     inkscape:zoom="0.99851214"
      inkscape:cx="-6.3417703"
-     inkscape:cy="782.45539"
+     inkscape:cy="411.90406"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -59,10 +59,10 @@
      id="layer1">
     <path
        style="fill:none;stroke:#d45500;stroke-width:0.74434358px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 274.16326,89.31279 58.35986,62.07566 -73.16042,114.9276 -174.51996,39.68917 -220.12019,-21.07567 -96.60002,-80.54437 6.36016,-113.695715 99.71442,28.225355 L -5.7455835,70.947605 148.59745,125.83752 184.40337,87.31279 z"
+       d="M 274.16326,89.31279 332.52312,151.38845 400,322.36218 l 20,240 10,210 -50,180 -140,50.00002 -40,-60.00002 60,-160 60,-80 -40,-180 -10,-140 -10.6373,-116.04613 -174.51996,39.68917 -220.12019,-21.07567 -96.60002,-80.54437 6.36016,-113.695715 99.71442,28.225355 L -5.7455835,70.947605 148.59745,125.83752 184.40337,87.31279 z"
        id="path3002"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccccc"
+       sodipodi:nodetypes="cccccccccccccccccccccc"
        inkscape:export-filename="/home/cody/workspace/gravityshock/gravityshock/data/level2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
@@ -152,6 +152,8 @@
        id="path3025-9"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3091">density=0.5</desc>
       <title
          id="title3027-9">Actor</title>
     </path>
@@ -355,6 +357,8 @@
        id="path3025-9-72"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3093">density=0.5</desc>
       <title
          id="title3027-9-9">Actor</title>
     </path>
@@ -364,6 +368,8 @@
        id="path3025-9-5"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3089">density=0.5</desc>
       <title
          id="title3027-9-2">Actor</title>
     </path>
@@ -373,6 +379,8 @@
        id="path3025-9-0"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3087">density=0.5</desc>
       <title
          id="title3027-9-36">Actor</title>
     </path>
@@ -382,6 +390,8 @@
        id="path3025-9-72-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3085">density=0.5</desc>
       <title
          id="title3027-9-9-3">Actor</title>
     </path>
@@ -391,6 +401,8 @@
        id="path3025-9-5-2"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3083">density=0.5</desc>
       <title
          id="title3027-9-2-2">Actor</title>
     </path>
@@ -400,6 +412,8 @@
        id="path3025-9-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3077">density=0.5</desc>
       <title
          id="title3027-9-5">Actor</title>
     </path>
@@ -409,6 +423,8 @@
        id="path3025-9-72-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3081">density=0.5</desc>
       <title
          id="title3027-9-9-0">Actor</title>
     </path>
@@ -418,6 +434,8 @@
        id="path3025-9-5-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc">
+      <desc
+         id="desc3079">density=0.5</desc>
       <title
          id="title3027-9-2-69">Actor</title>
     </path>

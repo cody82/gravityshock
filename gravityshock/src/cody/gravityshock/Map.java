@@ -144,6 +144,16 @@ public class Map {
 				}
 			}
 			
+			String[] desc_lines = desc.split("\n");
+			float attrib_density = 1;
+			for(String desc_line : desc_lines) {
+				String[] line_split = desc_line.split("=");
+				if(line_split.length == 2) {
+					if(line_split[0].equals("density"))
+						attrib_density = Float.parseFloat(line_split[1]);
+				}
+			}
+
 			if(type.equals("enemy")){
 				Enemy enemy = new Enemy(world, array);
 				enemy.body.setTransform(array.get(0).x, array.get(0).y, 0);
@@ -163,7 +173,7 @@ public class Map {
 				BodyDef def = new BodyDef();
 				def.type = BodyDef.BodyType.DynamicBody;
 				Body b = world.b2world.createBody(def);
-				Fixture fixture = b.createFixture(shape, 1);
+				Fixture fixture = b.createFixture(shape, attrib_density);
 				fixture.setRestitution(0.2f);
 				Actor actor = new Actor(world,Util.createMesh(array.toArray(new Vector2[]{}), color, 3, true), fixture, b);				
 			}
