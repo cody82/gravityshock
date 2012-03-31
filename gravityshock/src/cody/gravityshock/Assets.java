@@ -8,8 +8,10 @@ import cody.svg.Svg;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
@@ -70,7 +72,16 @@ public class Assets {
 		
 	}
 	
-
+	static BitmapFont font;
+	
+	public static BitmapFont getFont() {
+		if(font == null) {
+			font = new BitmapFont(Gdx.files.internal("data/default.fnt"), Gdx.files.internal("data/default.png"),false);
+			font.setColor(Color.WHITE);
+		}
+		return font;
+	}
+	
 	static Music music;
 	public static void playMusic() {
 		if(!audio)

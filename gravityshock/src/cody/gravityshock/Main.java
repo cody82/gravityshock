@@ -344,8 +344,7 @@ public class Main implements Screen, InputProcessor {
 		Gdx.input.setInputProcessor(this);
 		Assets.stopMusic();
 		
-        font = new BitmapFont(Gdx.files.internal("data/default.fnt"), Gdx.files.internal("data/default.png"),false);
-		font.setColor(Color.WHITE);
+        font = Assets.getFont();
 
 		spriteBatch = new SpriteBatch();
 		
@@ -375,20 +374,15 @@ public class Main implements Screen, InputProcessor {
 
 	void clear() {
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
-        if(gl20 != null){
 			gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			gl20.glEnable(GL20.GL_BLEND);
-		}
 		
 	}
 	public static void blend(boolean b) {
-		if(gl20 != null){
 			if(b)
 				gl20.glEnable(GL20.GL_BLEND);
 			else
 				gl20.glDisable(GL20.GL_BLEND);
-		}
-		
 	}
 	
 	void viewport(int x, int y, int width, int height) {if(gl20 != null){
@@ -404,8 +398,6 @@ public class Main implements Screen, InputProcessor {
 	}
 	@Override
 	public void render (float t2) {
-		if(cams == null)
-			show();
 		
 		float t = Gdx.graphics.getDeltaTime();
 		if(record) {

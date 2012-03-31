@@ -232,6 +232,10 @@ public class Map {
 				}
 				Gravity g = new Gravity(world, new Vector2(x, -y), strength);
 			}
+			else {
+				Text t = new Text(world, text);
+				t.body.setTransform(x, -y, 0);
+			}
 		}
 
 		list = doc.getChildrenByNameRecursively("image");
