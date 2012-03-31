@@ -14,6 +14,9 @@ public class MainDesktop {
 				resx = Integer.parseInt(s[0]);
 				resy = Integer.parseInt(s[1]);
 			}
+			else if(argv[i].equals("--level")) {
+				main.level = Integer.parseInt(argv[i+1]);
+			}
 		}
 		
 		new JoglApplication(main, "Gravity Shock", resx, resy, true);
