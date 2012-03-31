@@ -287,16 +287,5 @@
        xlink:href="file:///home/cody/workspace/gravityshock/gravityshock-android/assets/data/level1.png"
        height="261"
        width="603" />
-    <text
-       xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-370.5"
-       y="-174.13782"
-       id="text3105"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3107"
-         x="-370.5"
-         y="-174.13782">Hover over the blue box to pick it up</tspan></text>
   </g>
 </svg>

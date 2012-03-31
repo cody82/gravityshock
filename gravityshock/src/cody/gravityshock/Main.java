@@ -184,6 +184,10 @@ public class Main implements Screen, InputProcessor {
 	float touch_direction = 0f;
 	boolean touch_thrust = false;
 	
+	boolean user_knows_shoot = false;
+	boolean user_knows_left_or_right = false;
+	boolean user_knows_thrust = false;
+	
     void controls() {
     	float ax = 0f;//Gdx.input.getAccelerometerX();
     	
@@ -302,6 +306,7 @@ public class Main implements Screen, InputProcessor {
 	    }
 	    omega = Math.max(-1f, Math.min(1f, omega));
 	    
+	    
 	    players[0].control_direction = omega;
 	    
 	    if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || touch_shoot){
@@ -309,6 +314,16 @@ public class Main implements Screen, InputProcessor {
 	    }
 	    else {
 	    	players[0].control_shoot = false;
+	    }
+
+	    if(omega > 0.1f || omega < 0.1f) {
+	    	user_knows_left_or_right = true;
+	    }
+	    if(players[0].control_thrust > 0.1f) {
+	    	user_knows_thrust = true;
+	    }
+	    if(players[0].control_shoot) {
+	    	user_knows_shoot = true;
 	    }
     	}
 	    
@@ -352,14 +367,6 @@ public class Main implements Screen, InputProcessor {
 		
 		background = Assets.getTexture("data/space.png");
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		/*if(Gdx.graphics.isGL20Available()) {
-			framebuffer = new FrameBuffer(Pixmap.Format.RGB888, 128, 128, false);
-			framebuffer2 = new FrameBuffer(Pixmap.Format.RGB888, 512, 512, false);
-		}*/
-
-		//var musicfile = Gdx.files.internal("data/2ND_PM.ogg")
-		//var music = Gdx.audio.newMusic(musicfile)
-		//music.play
     
 		cams = new OrthographicCamera[numplayers];
 		players = new Spaceship[numplayers];
@@ -368,8 +375,6 @@ public class Main implements Screen, InputProcessor {
 			cams[i] = new OrthographicCamera(256, 256);
 		
 		nextLevel();
-		
-		//this.setScreen(new MainMenu());
 	}
 
 	void clear() {
@@ -396,6 +401,9 @@ public class Main implements Screen, InputProcessor {
 		}
 		return score;
 	}
+	
+	public String info = "";
+	
 	@Override
 	public void render (float t2) {
 		
@@ -416,14 +424,6 @@ public class Main implements Screen, InputProcessor {
 		controls();
 		
 		
-		/*if(gl20 != null) {
-			framebuffer2.begin();
-			viewport(0, 0, window_width / numplayers, window_height);
-			clear();
-			world.render(cams[0]);
-			framebuffer2.end();
-		}
-		else {*/
 			viewport(0, 0, window_width / numplayers, window_height);
 			float x2 = cams[0].position.x * 0.01f;
 			float y2 = cams[0].position.y * 0.01f;
@@ -434,20 +434,11 @@ public class Main implements Screen, InputProcessor {
 			spriteBatch.end();
 			blend(true);
 			
-			//clear();
 			world.render(cams[0]);
-		//}
 		
 		if(numplayers > 1){
 			cams[1].update();
 			
-			/*if(gl20 != null) {
-				framebuffer2.begin();
-				viewport(window_width / 2, 0, window_width / numplayers, window_height);
-				world.render(cams[1]);
-				framebuffer2.end();
-			}
-			else {*/
 			x2 = cams[1].position.x * 0.01f;
 			y2 = cams[1].position.y * 0.01f;
 				viewport(window_width / 2, 0, window_width / numplayers, window_height);
@@ -458,36 +449,7 @@ public class Main implements Screen, InputProcessor {
 				gl20.glEnable(GL20.GL_BLEND);
 
 				world.render(cams[1]);
-			//}
 		}
-
-		
-		/*if(gl20 != null) {
-			Texture texture = framebuffer.getColorBufferTexture();
-			Texture texture2 = framebuffer2.getColorBufferTexture();
-
-			SpriteBatch spriteBatch2 = new SpriteBatch();
-			
-
-			framebuffer.begin();
-			spriteBatch2.begin();
-			spriteBatch2.setProjectionMatrix(spriteBatch2.getProjectionMatrix().setToOrtho2D(0, 1, 1, -1));
-			spriteBatch2.disableBlending();
-			spriteBatch2.draw(texture2, 0, 0, 1, 1);
-			spriteBatch2.end();
-
-			framebuffer.end();
-
-			spriteBatch2.begin();
-			spriteBatch2.setColor(1, 1, 1, 1);
-			spriteBatch2.draw(texture2, 0, 0, 1, 1);
-			spriteBatch2.setColor(1, 1, 1, 1);
-			spriteBatch2.enableBlending();
-			spriteBatch2.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE);
-			spriteBatch2.draw(texture, 0, 0, 1, 1);
-			spriteBatch2.end();
-			spriteBatch2.dispose();
-		}*/
 
 		boolean game_over = true;
 		for(int i=0;i<numplayers;++i) {
@@ -545,7 +507,8 @@ public class Main implements Screen, InputProcessor {
 			font.draw(spriteBatch, "fuel: " + Integer.toString((int)players[i].fuel), 20, y+180);
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, y+210);
 			font.draw(spriteBatch, "score: " + calcScore(), 20, y+240);
-			font.draw(spriteBatch, "box2d: " + world.b2world.getBodyCount() + " " + world.b2world.getJointCount(), 20, y+270);
+			//font.draw(spriteBatch, "box2d: " + world.b2world.getBodyCount() + " " + world.b2world.getJointCount(), 20, y+270);
+			font.draw(spriteBatch, info, 20, 40);
 			spriteBatch.end();
 			if(Gdx.app.getType() == ApplicationType.Android)
 				drawbuttons();
@@ -557,6 +520,24 @@ public class Main implements Screen, InputProcessor {
 			if(countdown <= 0){
 				game.setScreen(new GameOverScreen(game, score, false));
 				return;
+			}
+			info = "";
+		}
+		else if(level <= 2){
+			if(players[0].connected) {
+				info = "Return the box to your base platform.";
+			}
+			else {
+				info = "Pick up a blue box by hovering over it. " + (map.getGoalScore() - getTotalScore()) + " boxes left.";
+			}
+
+			if(level == 1) {
+				if(!user_knows_thrust)
+					info = "Press UP-arrow or touch for thrust.";
+				else if(!user_knows_shoot)
+					info = "Press SPACE or touch to shoot.";
+				else if(!user_knows_left_or_right)
+					info = "Press LEFT/RIGHT-arrow or touch to rotate left/right.";
 			}
 		}
 		/*
@@ -583,19 +564,11 @@ public class Main implements Screen, InputProcessor {
 		window_width = width;
 		window_height = height;
 		for(int i=0;i<numplayers;++i) {
-			//cams[i].setToOrtho(false, ((float)(width/numplayers) / zoom), ((float)height / zoom));
 			cams[i].viewportWidth = ((float)(width/numplayers) / zoom);
 			cams[i].viewportHeight = ((float)(height/numplayers) / zoom);
 			
 			spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width/numplayers, height);
 		}
-
-			/*if(Gdx.graphics.isGL20Available()) {
-				framebuffer.dispose();
-				framebuffer2.dispose();
-				framebuffer = new FrameBuffer(Pixmap.Format.RGB888, width / 4, height / 4, false);
-				framebuffer2 = new FrameBuffer(Pixmap.Format.RGB888, width, height, false);
-			}*/
 	}
 
 	@Override
