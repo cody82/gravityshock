@@ -79,7 +79,7 @@ public class Bloom {
 	 */
 	public Bloom() {
 		initialize(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4,
-				null, true, false, true);
+				null, true, true, true);
 	}
 
 	/**
@@ -254,6 +254,7 @@ public class Bloom {
 		if (blending) {
 			Gdx.gl.glEnable(GL10.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+			//Gdx.gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE);
 		}
 
 		pingPongTex1.bind(1);
