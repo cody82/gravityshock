@@ -47,7 +47,7 @@ public class Main implements Screen, InputProcessor {
     Map map;
     
     int level = 0;
-    final int maxLevel = 8;
+    final int maxLevel = 9;
     
     boolean record = false;
     int frame = 1;
