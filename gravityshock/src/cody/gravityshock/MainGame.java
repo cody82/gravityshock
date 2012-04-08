@@ -7,10 +7,29 @@ import com.badlogic.gdx.Game;
 public class MainGame extends Game{
 	public int level = 1;
 	public int numplayers = 1;
-	public boolean enable_bloom = true;
+	
+	public static MainGame Instance;
+	
 	Bloom bloom;
 	
+	void setBloom(boolean enable) {
+		if(enable == getBloom())
+			return;
+		
+		if(enable)
+			createbloom();
+		else{
+			bloom.dispose();
+			bloom = null;
+		}
+	}
+	
+	public boolean getBloom() {
+		return bloom != null;
+	}
+	
 	public MainGame() {
+		Instance = this;
 	}
 	
 	void createbloom() {
@@ -21,8 +40,8 @@ public class MainGame extends Game{
 	}
 	@Override
 	public void create() {
-		if(enable_bloom)
-			createbloom();
+		setBloom(Util.getBloomOption());
+		
 		this.setScreen(new MainMenu(this));
 	}
 
