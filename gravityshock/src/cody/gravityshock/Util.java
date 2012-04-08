@@ -352,6 +352,17 @@ public class Util {
 		return list;
 	}
 	
+	public static boolean getBloomOption() {
+		Preferences prefs = Gdx.app.getPreferences("options");
+		return prefs.getBoolean("bloom", false);
+	}
+	public static void setBloomOption(boolean bloom) {
+		Preferences prefs = Gdx.app.getPreferences("options");
+		prefs.putBoolean("bloom", bloom);
+		prefs.flush();
+	}
+	
+	
 	public static void SaveHighscore(String name, int score) {
 		
 		String[] scores = LoadHighscore();

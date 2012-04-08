@@ -160,7 +160,7 @@ public class MainMenu implements Screen {
         final TextButton button3 = new TextButton("Quit", skin.getStyle(TextButtonStyle.class), "button-sl") {
         	@Override
         	public boolean touchDown(float x, float y, int pointer) {
-        		//System.exit(0);
+        		System.exit(0);
         		//Gdx.app.exit();
 				return isChecked();
         	}
@@ -179,7 +179,14 @@ public class MainMenu implements Screen {
 				return isChecked();
         	}
         };
-
+        final TextButton optionsbutton = new TextButton("Options", skin.getStyle(TextButtonStyle.class), "button-sl") {
+        	@Override
+        	public boolean touchDown(float x, float y, int pointer) {
+        		game.setScreen(new OptionsMenu(game));
+				return isChecked();
+        	}
+        };
+        
         int width = (int)(window.width * 0.6f);
         int height = (int)(window.height * 0.10f);
         //window.debug();
@@ -195,22 +202,11 @@ public class MainMenu implements Screen {
         window.row();
         window.add(levelbutton).width(width).height(height);
 
+        window.row();
+        window.add(optionsbutton).width(width).height(height);
+        
     		window.row();
     		window.add(button3).width(width).height(height);
-        /*window.add(buttonMulti);
-        window.add(imgButton);
-        window.add(imgToggleButton);
-        window.row();
-        window.add(checkBox);
-        window.add(slider).minWidth(100).fillX().colspan(3);
-        window.row();
-        window.add(combobox);
-        window.add(textfield).minWidth(100).expandX().fillX().colspan(3);
-        window.row();
-        window.add(splitPane).fill().expand().colspan(4).minHeight(200);
-        window.row();
-        window.add(fpsLabel).colspan(4);
-*/
 
         ui.addActor(window);
 

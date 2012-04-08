@@ -508,7 +508,7 @@ public class Main implements Screen, InputProcessor {
 			font.draw(spriteBatch, "time: " + Integer.toString((int)map.age), 20, y+210);
 			font.draw(spriteBatch, "score: " + calcScore(), 20, y+240);
 			//font.draw(spriteBatch, "box2d: " + world.b2world.getBodyCount() + " " + world.b2world.getJointCount(), 20, y+270);
-			font.draw(spriteBatch, info, 20, 40);
+			font.draw(spriteBatch, info, 20, 140);
 			spriteBatch.end();
 			if(Gdx.app.getType() == ApplicationType.Android)
 				drawbuttons();
