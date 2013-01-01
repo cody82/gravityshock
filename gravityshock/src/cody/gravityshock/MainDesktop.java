@@ -1,6 +1,6 @@
 package cody.gravityshock;
 
-import com.badlogic.gdx.backends.jogl.JoglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;;
 
 public class MainDesktop {
 	public static void main (String[] argv) {
@@ -19,6 +19,6 @@ public class MainDesktop {
 			}
 		}
 		
-		new JoglApplication(main, "Gravity Shock", resx, resy, true);
+		new LwjglApplication(main, "Gravity Shock", resx, resy, true);
 	}
 }

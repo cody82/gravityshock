@@ -611,6 +611,12 @@ public class Main implements Screen, InputProcessor {
 	}
 
 	@Override
+	public boolean mouseMoved(int arg0, int arg1) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public boolean scrolled(int arg0) {
 		// TODO Auto-generated method stub
 		return false;
@@ -629,14 +635,9 @@ public class Main implements Screen, InputProcessor {
 	}
 
 	@Override
-	public boolean touchMoved(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 }

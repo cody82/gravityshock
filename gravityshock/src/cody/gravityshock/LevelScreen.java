@@ -9,6 +9,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
@@ -81,20 +83,15 @@ public class LevelScreen implements Screen {
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        window = new Window("window", skin.getStyle(WindowStyle.class)){
+        window = new Window("window", skin){
         	protected void drawBackground(SpriteBatch batch,
                     float parentAlpha) {
         		
         	}
         };
-        window.x = window.y = 0;
-        window.width = ui.width();
-        window.height= ui.height();
+        window.setBounds(0,0,ui.getWidth(),ui.getHeight());
         window.setMovable(false);
-        window.color.r = 0f;
-        window.color.g = 0f;
-        window.color.b = 0f;
-        window.color.a = 0.8f;
+        window.setColor(0, 0, 0, 0.8f);
 
 
         //window.debug();
@@ -107,18 +104,21 @@ public class LevelScreen implements Screen {
         	listentries.add("Level " + Integer.toString(i));
         	
         }
-        final List list = new List(listentries.toArray(), skin.getStyle(ListStyle.class), "list");
+        final List list = new List(listentries.toArray(), skin);
 
         window.add(list);
         
-        final TextButton button = new TextButton("Done", skin.getStyle(TextButtonStyle.class), "button-sl") {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
-        		game.level = Integer.parseInt(list.getSelection().split(" ")[1]);
-        		game.startMainMenu();
-				return isChecked();
-        	}
-        };
+        final TextButton button = new TextButton("Done", skin);
+
+        button.addListener(
+        	new InputListener() {
+        		@Override
+        	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            		game.level = Integer.parseInt(list.getSelection().split(" ")[1]);
+            		game.startMainMenu();
+				return true;
+        	}});
+        
         window.add(button).fill(0f, 0f);
 
         ui.addActor(window);

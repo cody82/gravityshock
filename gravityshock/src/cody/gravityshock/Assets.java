@@ -115,7 +115,7 @@ public class Assets {
 		if(skin != null)
 			return skin;
 
-        skin = new Skin(Gdx.files.internal("data/uiskin.json"), Gdx.files.internal("data/uiskin.png"));
+        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
         return skin;
 	}
 }

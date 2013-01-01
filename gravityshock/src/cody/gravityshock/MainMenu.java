@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
@@ -22,7 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -33,7 +34,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider.ValueChangedListener;
 import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SplitPane.SplitPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -41,7 +41,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 
 
@@ -122,73 +121,84 @@ public class MainMenu implements Screen {
 
         Assets.playMusic();
         
-        window = new Window("Gravity Shock", skin.getStyle(WindowStyle.class)){
+        window = new Window("Gravity Shock", skin){
         	protected void drawBackground(SpriteBatch batch,
                     float parentAlpha) {
         		
         	}
         };
-        window.x = 0;
-        window.y = 0;
-        window.width = ui.width();
-        window.height= ui.height() - 64;
+
+        window.setBounds(0, 0, ui.getWidth(), ui.getHeight() - 64);
         window.setMovable(false);
-        window.color.r = 0f;
-        window.color.g = 0f;
-        window.color.b = 0f;
-        window.color.a = 0.8f;
+        window.setColor(0, 0, 0, 0.8f);
         
         // Group.debug = true;
 
-        final TextButton button = new TextButton("Start Game", skin.getStyle(TextButtonStyle.class), "button-sl") {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
-        		game.numplayers = 1;
-        		game.start();
-				return isChecked();
-        	}
-        };
+        final TextButton button = new TextButton("Start Game", skin);
+        button.addListener(
+            	new InputListener() {
+            		@Override
+            	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                		game.numplayers = 1;
+                		game.start();
+    				return true;
+            	}});
         
-        final TextButton button2 = new TextButton("Start Two-Player Splitscreen Game", skin.getStyle(TextButtonStyle.class), "button-sl") {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
-        		game.numplayers = 2;
-        		game.start();
-				return isChecked();
-        	}
-        };
-        final TextButton button3 = new TextButton("Quit", skin.getStyle(TextButtonStyle.class), "button-sl") {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
-        		System.exit(0);
-        		//Gdx.app.exit();
-				return isChecked();
-        	}
-        };
-        final TextButton highscorebutton = new TextButton("Highscore", skin.getStyle(TextButtonStyle.class), "button-sl") {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
-        		game.setScreen(new HighscoreScreen(game));
-				return isChecked();
-        	}
-        };
-        final TextButton levelbutton = new TextButton("Levels", skin.getStyle(TextButtonStyle.class), "button-sl") {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
-        		game.setScreen(new LevelScreen(game));
-				return isChecked();
-        	}
-        };
-        final TextButton optionsbutton = new TextButton("Options", skin.getStyle(TextButtonStyle.class), "button-sl") {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
-        		game.setScreen(new OptionsMenu(game));
-				return isChecked();
-        	}
-        };
+        final TextButton button2 = new TextButton("Start Two-Player Splitscreen Game", skin);
+
+        button2.addListener(
+            	new InputListener() {
+            		@Override
+            	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                		game.numplayers = 2;
+                		game.start();
+    				return true;
+            	}});
         
-        int width = (int)(window.width * 0.6f);
-        int height = (int)(window.height * 0.10f);
+        final TextButton button3 = new TextButton("Quit", skin);
+
+        button3.addListener(
+            	new InputListener() {
+            		@Override
+            	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                		System.exit(0);
+                		//Gdx.app.exit();
+    				return true;
+            	}});
+        
+        final TextButton highscorebutton = new TextButton("Highscore", skin);
+
+        highscorebutton.addListener(
+            	new InputListener() {
+            		@Override
+            	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                		game.setScreen(new HighscoreScreen(game));
+    				return true;
+            	}});
+        
+        
+        final TextButton levelbutton = new TextButton("Levels", skin);
+
+        levelbutton.addListener(
+            	new InputListener() {
+            		@Override
+            	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                		game.setScreen(new LevelScreen(game));
+    				return true;
+            	}});
+        
+        final TextButton optionsbutton = new TextButton("Options", skin);
+
+        optionsbutton.addListener(
+            	new InputListener() {
+            		@Override
+            	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                		game.setScreen(new OptionsMenu(game));
+    				return true;
+            	}});
+        
+        int width = (int)(window.getWidth() * 0.6f);
+        int height = (int)(window.getHeight() * 0.10f);
         //window.debug();
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
