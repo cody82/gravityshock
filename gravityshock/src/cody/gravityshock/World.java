@@ -102,9 +102,10 @@ public class World implements ContactListener {
 	public void postSolve(Contact contact, ContactImpulse contactimpulse) {
 		float[] impulses = contactimpulse.getNormalImpulses();
 		float impulse = 0;
+
 		for(float f : impulses)
-			impulse += f < 100000 ? f : 0;
-				
+			impulse += Math.abs(f) < 100000 ? f : 0;
+
 		Fixture f1 = contact.getFixtureA();
 		Fixture f2 = contact.getFixtureB();
 		
