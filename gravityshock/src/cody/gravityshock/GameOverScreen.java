@@ -14,6 +14,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
@@ -113,46 +115,43 @@ public class GameOverScreen implements Screen {
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        window = new Window("window", skin.getStyle(WindowStyle.class)){
+        window = new Window("window", skin){
         	protected void drawBackground(SpriteBatch batch,
                     float parentAlpha) {
         		
         	}
         };
-        window.x = window.y = 0;
-        window.width = ui.width();
-        window.height= ui.height();
-        window.setMovable(false);
-        window.color.r = 0f;
-        window.color.g = 0f;
-        window.color.b = 0f;
-        window.color.a = 0.8f;
 
-      final Label fpsLabel = new Label(win ? "GAME COMPLETE" : "GAME OVER", skin.getStyle(LabelStyle.class), "label");
+        window.setBounds(0, 0, ui.getWidth(), ui.getHeight());
+        window.setMovable(false);
+        window.setColor(0f, 0f, 0f, 0.8f);
+
+      final Label fpsLabel = new Label(win ? "GAME COMPLETE" : "GAME OVER", skin);
 
         //window.debug();
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
         window.add(fpsLabel).fill(0f, 0f);
         window.row();
-        window.add(new Label("Your score:", skin.getStyle(LabelStyle.class), "label2")).fill(0f, 0f);
-        window.add(new Label(Integer.toString(score), skin.getStyle(LabelStyle.class), "label3")).fill(0f, 0f);
+        window.add(new Label("Your score:", skin)).fill(0f, 0f);
+        window.add(new Label(Integer.toString(score), skin)).fill(0f, 0f);
         window.row();
-        window.add(new Label("Enter your name:", skin.getStyle(LabelStyle.class), "label4")).fill(0f, 0f);
-        window.add(namefield = new TextField("", skin.getStyle(TextFieldStyle.class))).fill(0f, 0f);
+        window.add(new Label("Enter your name:", skin)).fill(0f, 0f);
+        window.add(namefield = new TextField("", skin)).fill(0f, 0f);
         window.row();
 
-        final TextButton button = new TextButton("Done", skin.getStyle(TextButtonStyle.class)) {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
+        final TextButton button = new TextButton("Done", skin);
+        button.addListener(
+        	new InputListener() {
+        		@Override
+        	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String name = namefield.getText();
         		if(!name.isEmpty())
         			Util.SaveHighscore(namefield.getText(), score);
         		game.startMainMenu();
-				return isChecked();
-        	}
+				return true;
+        	}});
 
-        };
         window.add(button).fill(0f, 0f);
 
         ui.addActor(window);

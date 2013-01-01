@@ -9,6 +9,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
@@ -78,47 +80,47 @@ public class OptionsMenu implements Screen {
         ui = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         Gdx.input.setInputProcessor(ui);
 
-        window = new Window("window", skin.getStyle(WindowStyle.class)){
+        window = new Window("window", skin){
         	protected void drawBackground(SpriteBatch batch,
                     float parentAlpha) {
         		
         	}
         };
-        window.x = window.y = 0;
-        window.width = ui.width();
-        window.height= ui.height();
-        window.setMovable(false);
-        window.color.r = 0f;
-        window.color.g = 0f;
-        window.color.b = 0f;
-        window.color.a = 0.8f;
 
+        window.setBounds(0, 0, ui.getWidth(), ui.getHeight());
+        window.setMovable(false);
+        window.setColor(0, 0, 0, 0.8f);
 
         //window.debug();
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
         
-        final CheckBox bloom = new CheckBox("Enable Bloom", skin.getStyle(CheckBoxStyle.class), "button-sl") {
+        final CheckBox bloom = new CheckBox("Enable Bloom", skin);
+        bloom.addListener(new InputListener()
+        {
         	@Override
-        	public void touchUp(float x, float y, int pointer) {
-        		super.touchUp(x, y, pointer);
-        		boolean b = isChecked();
+        	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+        		super.touchUp(event, x, y, pointer, button);
+        		boolean b = bloom.isChecked();
         		game.setBloom(b);
         		Util.setBloomOption(b);
         	}
-        };
+        });
+
         
         bloom.setChecked(Util.getBloomOption());
         
         window.add(bloom).fill(0f, 0f);
         
-        final TextButton button = new TextButton("Done", skin.getStyle(TextButtonStyle.class), "button-sl") {
-        	@Override
-        	public boolean touchDown(float x, float y, int pointer) {
-        		game.startMainMenu();
-				return isChecked();
-        	}
-        };
+        final TextButton button = new TextButton("Done", skin);
+        button.addListener(
+            	new InputListener() {
+            		@Override
+            	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                		game.startMainMenu();
+    				return true;
+            	}});
+        
         window.add(button).fill(0f, 0f);
 
         ui.addActor(window);
